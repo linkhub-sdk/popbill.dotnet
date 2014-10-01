@@ -24,7 +24,7 @@ namespace Popbill
         [DataMember]
         public String BizType;
         [DataMember]
-        public String Bizclass;
+        public String BizClass;
         [DataMember]
         public String ID;
         [DataMember]
