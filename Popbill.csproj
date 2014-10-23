@@ -49,6 +49,9 @@
     <Compile Include="Base\JoinForm.cs" />
     <Compile Include="Base\PopbillException.cs" />
     <Compile Include="Base\Response.cs" />
+    <Compile Include="Message\Message.cs" />
+    <Compile Include="Message\MessageResult.cs" />
+    <Compile Include="Message\MessageService.cs" />
     <Compile Include="Taxinvoice\AttachedFile.cs" />
     <Compile Include="Taxinvoice\EmailPublicKey.cs" />
     <Compile Include="Taxinvoice\TaxinvoiceAddContact.cs" />
