@@ -257,9 +257,7 @@ namespace Popbill
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
 
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
-            byte[] boundarybytes = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
-
-
+           
             request.ContentType = "multipart/form-data; boundary=" + boundary;
             request.KeepAlive = true;
             request.Method = "POST";
@@ -288,9 +286,9 @@ namespace Popbill
             if (String.IsNullOrEmpty(form) == false)
             {
                 String formBody = "--" + boundary + CRLF;
-                formBody += "content-disposition: form-data; name=\"form=\"" + CRLF;
-                formBody += "content-type: Application/json; charset=utf-8" + CRLF + CRLF;
-                formBody += form + "\r\n";
+                formBody += "content-disposition: form-data; name=\"form\"" + CRLF;
+                formBody += "content-type: Application/json" + CRLF + CRLF;
+                formBody += form;
                 byte[] btFormBody = Encoding.UTF8.GetBytes(formBody);
 
                 wstream.Write(btFormBody, 0, btFormBody.Length);
@@ -298,7 +296,7 @@ namespace Popbill
 
             foreach (UploadFile f in UploadFiles)
             {
-                String fileHeader = "--" + boundary + CRLF;
+                String fileHeader = CRLF + "--" + boundary + CRLF;
                 fileHeader += "content-disposition: form-data; name=\"" + f.FieldName + "\"; filename=\"" + f.FileName + "\"" + CRLF;
                 fileHeader += "content-type: Application/octet-stream" + CRLF + CRLF;
 
@@ -319,7 +317,6 @@ namespace Popbill
 
             wstream.Write(btboundaryFooter, 0, btboundaryFooter.Length);
 
-            //wstream.Flush();
             wstream.Close();
             try
             {

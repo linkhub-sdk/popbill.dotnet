@@ -49,6 +49,9 @@
     <Compile Include="Base\JoinForm.cs" />
     <Compile Include="Base\PopbillException.cs" />
     <Compile Include="Base\Response.cs" />
+    <Compile Include="Fax\FaxReceiver.cs" />
+    <Compile Include="Fax\FaxResult.cs" />
+    <Compile Include="Fax\FaxService.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageResult.cs" />
     <Compile Include="Message\MessageService.cs" />
