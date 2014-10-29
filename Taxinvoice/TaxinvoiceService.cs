@@ -7,7 +7,7 @@ using Popbill;
 
 namespace Popbill.Taxinvoice
 {
-    public enum MgtKeyType {SELL , BUY , TRUST};
+    public enum MgtKeyType {SELL , BUY , TRUSTEE};
 
     public class TaxinvoiceService : BaseService
     {
