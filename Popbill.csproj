@@ -49,6 +49,10 @@
     <Compile Include="Base\JoinForm.cs" />
     <Compile Include="Base\PopbillException.cs" />
     <Compile Include="Base\Response.cs" />
+    <Compile Include="Cashbill\Cashbill.cs" />
+    <Compile Include="Cashbill\CashbillLog.cs" />
+    <Compile Include="Cashbill\CashbillInfo.cs" />
+    <Compile Include="Cashbill\CashbillService.cs" />
     <Compile Include="Fax\FaxReceiver.cs" />
     <Compile Include="Fax\FaxResult.cs" />
     <Compile Include="Fax\FaxService.cs" />
