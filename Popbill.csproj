@@ -59,6 +59,13 @@
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageResult.cs" />
     <Compile Include="Message\MessageService.cs" />
+    <Compile Include="Statement\AttachedFile.cs" />
+    <Compile Include="Statement\propertyBag.cs" />
+    <Compile Include="Statement\Statement.cs" />
+    <Compile Include="Statement\StatementDetail.cs" />
+    <Compile Include="Statement\StatementInfo.cs" />
+    <Compile Include="Statement\StatementLog.cs" />
+    <Compile Include="Statement\StatementService.cs" />
     <Compile Include="Taxinvoice\AttachedFile.cs" />
     <Compile Include="Taxinvoice\EmailPublicKey.cs" />
     <Compile Include="Taxinvoice\TaxinvoiceAddContact.cs" />
