@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -96,6 +97,45 @@ namespace Popbill.Message
         public String SendXMS(String CorpNum, List<Message> messages, DateTime? reserveDT, String UserID)
         {
             return sendMessage(MessageType.XMS, CorpNum, null, null, null, messages, reserveDT, UserID);
+        }
+        public String SendMMS(String CorpNum, string sender, String receiveNum, String receiveName, string subject, string content, string mmsfilepath, DateTime? reserveDT, String UserID)
+        {
+            List<Message> messages = new List<Message>();
+            Message msg = new Message();
+            msg.receiveNum = receiveNum;
+            msg.receiveName = receiveName;
+            messages.Add(msg);
+
+            return SendMMS(CorpNum, sender, subject, content, messages, mmsfilepath, reserveDT, UserID);
+        }
+        public String SendMMS(String CorpNum, string sender, string subject, string content, List<Message> messages, string mmsfilepath, DateTime? reserveDT, String UserID)
+        {
+            if (messages == null || messages.Count == 0) throw new PopbillException(-99999999, "전송할 메시지가 입력되지 않았습니다.");
+
+            sendRequest request = new sendRequest();
+
+            request.snd = sender;
+            request.subject = subject;
+            request.content = content;
+            request.sndDT = reserveDT == null ? null : reserveDT.Value.ToString("yyyyMMddHHmmss");
+
+            request.msgs = messages;
+
+            String PostData = toJsonString(request);
+
+            List<UploadFile> UploadFiles = new List<UploadFile>();
+
+            UploadFile uf = new UploadFile();
+
+            uf.FieldName = "file";
+            uf.FileName = System.IO.Path.GetFileName(mmsfilepath);
+            uf.FileData = new FileStream(mmsfilepath, FileMode.Open, FileAccess.Read);
+
+            UploadFiles.Add(uf);
+
+            ReceiptResponse response = httppostFile<ReceiptResponse>("/MMS", CorpNum, UserID, PostData,UploadFiles, null);
+
+            return response.receiptNum;
         }
 
         public List<MessageResult> GetMessageResult(String CorpNum, String receiptNum)
