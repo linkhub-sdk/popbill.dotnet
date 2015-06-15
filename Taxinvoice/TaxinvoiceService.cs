@@ -103,13 +103,14 @@ namespace Popbill.Taxinvoice
             return httppost<Response>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey, CorpNum, UserID, null, "DELETE");
         }
 
-        public Response Send(String CorpNum, MgtKeyType KeyType, String MgtKey, String Memo, String UserID)
+        public Response Send(String CorpNum, MgtKeyType KeyType, String MgtKey, String Memo, String EmailSubject, String UserID)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
 
             MemoRequest request = new MemoRequest();
 
             request.memo = Memo;
+            request.emailSubject = EmailSubject;
 
             String PostData = toJsonString(request);
 
@@ -402,6 +403,9 @@ namespace Popbill.Taxinvoice
         {
             [DataMember]
             public String memo;
+            [DataMember]
+            public String emailSubject;
+
         }
 
         [DataContract]
