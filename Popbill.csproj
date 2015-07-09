@@ -53,6 +53,8 @@
     <Compile Include="Cashbill\CashbillLog.cs" />
     <Compile Include="Cashbill\CashbillInfo.cs" />
     <Compile Include="Cashbill\CashbillService.cs" />
+    <Compile Include="Closedown\ClosedownService.cs" />
+    <Compile Include="Closedown\CorpState.cs" />
     <Compile Include="Fax\FaxReceiver.cs" />
     <Compile Include="Fax\FaxResult.cs" />
     <Compile Include="Fax\FaxService.cs" />
