@@ -131,9 +131,12 @@ namespace Popbill
             bool expired = true;
             if (_token != null)
             {
+                DateTime now = DateTime.Parse(_LinkhubAuth.getTime());
+
                 DateTime expiration = DateTime.Parse( _token.expiration);
 
-                expired = expiration < DateTime.Now;
+                expired = expiration < now;
+                
             }
 
             if (expired)
