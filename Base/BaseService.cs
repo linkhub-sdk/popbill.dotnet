@@ -172,6 +172,10 @@ namespace Popbill
 
             request.Headers.Add("x-lh-version", APIVersion);
 
+            request.Headers.Add("Accept-Encoding", "gzip, deflate");
+
+            request.AutomaticDecompression = DecompressionMethods.GZip;
+
             if (String.IsNullOrEmpty(UserID) == false)
             {
                 request.Headers.Add("x-pb-userid", UserID);
@@ -181,19 +185,23 @@ namespace Popbill
 
             try
             {
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                Stream stReadData = response.GetResponseStream();
-
-                return fromJson<T>(stReadData);
-
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (Stream stReadData = response.GetResponseStream())
+                    {
+                        return fromJson<T>(stReadData);
+                    }
+                }
             }
             catch (Exception we)
             {
                 if (we is WebException && ((WebException)we).Response != null)
                 {
-                    Stream stReadData = ((WebException)we).Response.GetResponseStream();
-                    Response t = fromJson<Response>(stReadData);
-                    throw new PopbillException(t.code, t.message);
+                    using (Stream stReadData = ((WebException)we).Response.GetResponseStream())
+                    {
+                        Response t = fromJson<Response>(stReadData);
+                        throw new PopbillException(t.code, t.message);
+                    }
                 }
                 throw new PopbillException(-99999999, we.Message);
             }
@@ -214,6 +222,10 @@ namespace Popbill
             }
 
             request.Headers.Add("x-lh-version", APIVersion);
+
+            request.Headers.Add("Accept-Encoding", "gzip, deflate");
+
+            request.AutomaticDecompression = DecompressionMethods.GZip;
 
             if (String.IsNullOrEmpty(UserID) == false)
             {
@@ -237,19 +249,23 @@ namespace Popbill
 
             try
             {
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                Stream stReadData = response.GetResponseStream();
-
-                return fromJson<T>(stReadData);
-
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (Stream stReadData = response.GetResponseStream())
+                    {
+                        return fromJson<T>(stReadData);
+                    }
+                }
             }
             catch (Exception we)
             {
                 if (we is WebException && ((WebException)we).Response != null)
                 {
-                    Stream stReadData = ((WebException)we).Response.GetResponseStream();
-                    Response t = fromJson<Response>(stReadData);
-                    throw new PopbillException(t.code, t.message);
+                    using (Stream stReadData = ((WebException)we).Response.GetResponseStream())
+                    {
+                        Response t = fromJson<Response>(stReadData);
+                        throw new PopbillException(t.code, t.message);
+                    }
                 }
                 throw new PopbillException(-99999999, we.Message);
             }
@@ -272,6 +288,10 @@ namespace Popbill
             }
 
             request.Headers.Add("x-lh-version", APIVersion);
+
+            request.Headers.Add("Accept-Encoding", "gzip, deflate");
+
+            request.AutomaticDecompression = DecompressionMethods.GZip;
 
             if (String.IsNullOrEmpty(UserID) == false)
             {
@@ -323,19 +343,23 @@ namespace Popbill
             wstream.Close();
             try
             {
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                Stream stReadData = response.GetResponseStream();
-
-                return fromJson<T>(stReadData);
-
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (Stream stReadData = response.GetResponseStream())
+                    {
+                        return fromJson<T>(stReadData);
+                    }
+                }
             }
             catch (Exception we)
             {
                 if (we is WebException && ((WebException)we).Response != null)
                 {
-                    Stream stReadData = ((WebException)we).Response.GetResponseStream();
-                    Response t = fromJson<Response>(stReadData);
-                    throw new PopbillException(t.code, t.message);
+                    using (Stream stReadData = ((WebException)we).Response.GetResponseStream())
+                    {
+                        Response t = fromJson<Response>(stReadData);
+                        throw new PopbillException(t.code, t.message);
+                    }
                 }
                 throw new PopbillException(-99999999, we.Message);
             }
