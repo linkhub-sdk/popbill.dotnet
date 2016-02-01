@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\BaseService.cs" />
+    <Compile Include="Base\Contact.cs" />
+    <Compile Include="Base\CorpInfo.cs" />
     <Compile Include="Base\JoinForm.cs" />
     <Compile Include="Base\PopbillException.cs" />
     <Compile Include="Base\Response.cs" />

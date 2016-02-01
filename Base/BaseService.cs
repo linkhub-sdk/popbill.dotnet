@@ -100,6 +100,92 @@ namespace Popbill
             }
         }
 
+        public List<Contact> ListContact(String CorpNum, String UserID)
+        {
+            try
+            {
+                return httpget<List<Contact>>("/IDs", CorpNum, UserID);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        public Response RegistContact(String CorpNum, Contact contactInfo, String UserID)
+        {
+            if (contactInfo == null) throw new PopbillException(-99999999, "No ContactInfo form");
+
+            String PostData = toJsonString(contactInfo);
+
+            try
+            {
+                return httppost<Response>("/IDs/New", CorpNum, UserID, PostData, null);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        public Response UpdateContact(String CorpNum, Contact contactInfo, String UserID)
+        {
+            if (contactInfo == null) throw new PopbillException(-99999999, "No ContactInfo form");
+
+            String PostData = toJsonString(contactInfo);
+
+            try
+            {
+                return httppost<Response>("/IDs", CorpNum, UserID, PostData, null);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        public Response CheckID(String ID)
+        {
+            try
+            {
+                return httpget<Response>("/IDCheck?ID="+ID, "", "");
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        public CorpInfo GetCorpInfo(String CorpNum, String UserID)
+        {
+            try
+            {
+                return httpget<CorpInfo>("/CorpInfo", CorpNum, UserID);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        public Response UpdateCorpInfo(String CorpNum, CorpInfo corpInfo, String UserID)
+        { 
+            if (corpInfo == null) throw new PopbillException(-99999999, "No CorpInfo data");
+
+            String PostData = toJsonString(corpInfo);
+
+            try
+            {
+                return httppost<Response>("/CorpInfo", CorpNum, UserID, PostData, null);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        
+
 
         #region protected
 
