@@ -62,6 +62,7 @@
     <Compile Include="Fax\FaxResult.cs" />
     <Compile Include="Fax\FAXSearchResult.cs" />
     <Compile Include="Fax\FaxService.cs" />
+    <Compile Include="Message\AutoDeny.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageResult.cs" />
     <Compile Include="Message\MessageService.cs" />

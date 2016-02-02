@@ -196,6 +196,11 @@ namespace Popbill.Message
             return httpget<MSGSearchResult>(uri, CorpNum, null);
         }
 
+        public List<AutoDeny> GetAutoDenyList(String CorpNum)
+        {
+            return httpget<List<AutoDeny>>("/Message/Denied", CorpNum, null);
+        }
+
 
         [DataContract]
         private class sendRequest
