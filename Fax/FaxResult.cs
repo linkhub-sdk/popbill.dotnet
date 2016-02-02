@@ -37,6 +37,8 @@ namespace Popbill.Fax
         private String _resultDT = null;
         [DataMember(Name = "sendResult")]
         private int? _sendResult = null;
+        [DataMember(Name = "fileNames")]
+        private string[] _fileNames = null;
 
         public int? sendState { get { return _sendState; } }
         public int? convState { get { return _convState; } }
@@ -51,6 +53,7 @@ namespace Popbill.Fax
         public string reserveDT { get { return _reserveDT; } }
         public string sendDT { get { return _sendDT; } }
         public string resultDT { get { return _resultDT; } }
+        public string[] fileNames { get { return _fileNames; } }
       
         public int? sendResult {get { return _sendResult; } }
     }
