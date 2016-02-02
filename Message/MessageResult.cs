@@ -31,6 +31,8 @@ namespace Popbill.Message
         private string _resultDT = null;
         [DataMember(Name = "sendResult")]
         private string _sendResult = null;
+        [DataMember(Name = "tranNet")]
+        private string _tranNet = null;
 
         public int? state { get { return _state; } }
         public string subject { get { return _subject; } }
@@ -43,6 +45,7 @@ namespace Popbill.Message
         public string sendDT { get { return _sendDT; } }
         public string resultDT { get { return _resultDT; } }
         public string sendResult { get { return _sendResult; } }
+        public string tranNet { get { return _tranNet; } }
 
     }
 }

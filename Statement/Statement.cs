@@ -8,6 +8,12 @@ namespace Popbill.Statement
     public class Statement
     {
         [DataMember]
+        public String memo;
+        [DataMember]
+        public String sendNum;
+        [DataMember]
+        public String receiveNum;
+        [DataMember]
         public int? itemCode;
         [DataMember]
         public String mgtKey;

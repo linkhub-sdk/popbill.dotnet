@@ -390,6 +390,86 @@ namespace Popbill.Taxinvoice
             return httppost<Response>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey + "/Files/" + FileID, CorpNum, UserID, null, "DELETE");
         }
 
+        public Response RegistIssue(String CorpNum, Taxinvoice taxinvoice, bool ForceIssue, String Memo)
+        {
+            return RegistIssue(CorpNum, taxinvoice, ForceIssue, Memo, false, null, null, null);
+        }
+        public Response RegistIssue(String CorpNum, Taxinvoice taxinvoice, bool ForceIssue, String Memo, bool WriteSpecification, String DealinvoiceMgtKey, String EmailSubject)
+        {
+            return RegistIssue(CorpNum, taxinvoice, ForceIssue, Memo, WriteSpecification, DealinvoiceMgtKey, EmailSubject, null);
+        }
+
+        public Response RegistIssue(String CorpNum, Taxinvoice taxinvoice, bool ForceIssue, String Memo, bool WriteSpecification, String DealinvoiceMgtKey, String EmailSubject, String UserID)
+        {
+            taxinvoice.writeSpecification = WriteSpecification;
+            taxinvoice.forceIssue = ForceIssue;
+            taxinvoice.dealnvoiceMgtKey = DealinvoiceMgtKey;
+            taxinvoice.memo = Memo;
+            taxinvoice.emailSubject = EmailSubject;
+
+            String PostData = toJsonString(taxinvoice);
+            
+            return httppost<Response>("/Taxinvoice", CorpNum, UserID, PostData, "ISSUE");
+        }
+
+        public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, int Page, int PerPage)
+        {
+            if (String.IsNullOrEmpty(DType)) throw new PopbillException(-99999999, "검색일자 유형이 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
+            
+            String uri = "/Taxinvoice/" + KeyType;
+            uri += "?DType=" + DType;
+            uri += "&SDate=" + SDate;
+            uri += "&EDate=" + EDate;
+            uri += "&State=" + String.Join(",", State);
+            uri += "&Type=" + String.Join(",", Type);
+            uri += "&TaxType=" + String.Join(",", TaxType);
+
+            if (LateOnly != null)
+            {
+                if ((bool)LateOnly) {
+                    uri += "&LateOnly=1";    
+                } else
+                {
+                    uri += "&LateOnly=0";
+                }
+            }
+
+            uri += "&Page=" + Page.ToString();
+            uri += "&PerPage=" + PerPage.ToString();
+
+            return httpget<TISearchResult>(uri, CorpNum, null);
+        }
+
+        public Response AttachStatement(String CorpNum, MgtKeyType KeyType, String MgtKey, int DocItemCode, String DocMgtKey)
+        {
+            String uri = "/Taxinvoice/" + KeyType + "/" + MgtKey + "/AttachStmt";
+
+            DocRequest request = new DocRequest();
+            request.ItemCode = DocItemCode;
+            request.MgtKey = DocMgtKey;
+
+            String PostData = toJsonString(request);
+            System.Console.WriteLine(PostData);
+
+            return httppost<Response>(uri, CorpNum, null, PostData, null);
+        }
+
+        public Response DetachStatement(String CorpNum, MgtKeyType KeyType, String MgtKey, int DocItemCode, String DocMgtKey)
+        {
+            String uri = "/Taxinvoice/" + KeyType + "/" + MgtKey + "/DetachStmt";
+
+            DocRequest request = new DocRequest();
+            request.ItemCode = DocItemCode;
+            request.MgtKey = DocMgtKey;
+
+            String PostData = toJsonString(request);
+
+            return httppost<Response>(uri, CorpNum, null, PostData, null);
+        }
+        
+
 
         [DataContract]
         public class CertResponse
@@ -429,7 +509,13 @@ namespace Popbill.Taxinvoice
             [DataMember]
             public String contents = null;
         }
-
+        [DataContract]
+        private class DocRequest
+        {
+            [DataMember]
+            public int ItemCode;
+            [DataMember]
+            public String MgtKey;
+        }
     }
-
 }

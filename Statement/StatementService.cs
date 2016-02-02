@@ -286,6 +286,90 @@ namespace Popbill.Statement
             return httppost<Response>("/Statement/" + itemCode.ToString() + "/" + MgtKey + "/Files/" + FileID, CorpNum, UserID, null, "DELETE");
         }
 
+        public String FAXSend(String CorpNum, Statement statement, String SendNum, String ReceiveNum, String UserID)
+        {
+            if (statement == null) throw new PopbillException(-99999999, "명세서 정보가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(SendNum)) throw new PopbillException(-99999999, "발신번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(ReceiveNum)) throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
+            
+            statement.sendNum = SendNum;
+            statement.receiveNum = ReceiveNum;
+
+            String PostData = toJsonString(statement);
+            ReceiptResponse response = null;
+
+            response = httppost<ReceiptResponse>("/Statement", CorpNum, UserID, PostData, "FAX");
+            
+            return response.receiptNum;
+        }
+
+        public Response RegistIssue(String CorpNum, Statement statement, String Memo)
+        {
+            return RegistIssue(CorpNum, statement, Memo, null);
+        }
+
+        public Response RegistIssue(String CorpNum, Statement statement, String Memo, String UserID)
+        {
+            if (statement == null) throw new PopbillException(-99999999, "명세서 정보가 입력되지 않았습니다.");
+            
+            statement.memo = Memo;
+            
+            String PostData = toJsonString(statement);
+
+            return httppost<Response>("/Statement", CorpNum, UserID, PostData, "ISSUE");
+        }
+
+        public DocSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, int[] ItemCode, int Page, int PerPage)
+        {
+            if (String.IsNullOrEmpty(DType)) throw new PopbillException(-99999999, "검색일자 유형이 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
+
+            String uri = "/Statement/Search";
+            uri += "?DType=" + DType;
+            uri += "&SDate=" + SDate;
+            uri += "&EDate=" + EDate;
+            uri += "&State=" + String.Join(",", State);
+            
+            String[] ItemCodeArr = Array.ConvertAll(ItemCode, x => x.ToString());
+            uri += "&ItemCode=" + String.Join(",", ItemCodeArr);
+            
+            uri += "&Page=" + Page.ToString();
+            uri += "&PerPage=" + PerPage.ToString();
+
+            System.Console.WriteLine(uri);
+            return httpget<DocSearchResult>(uri, CorpNum, null);
+        }
+
+
+        public Response AttachStatement(String CorpNum, int itemCode, String mgtKey, int SubItemCode, String SubMgtKey)
+        {
+            String uri = "/Statement/" + itemCode.ToString() + "/" + mgtKey + "/AttachStmt";
+
+            DocRequest request = new DocRequest();
+            request.ItemCode = SubItemCode;
+            request.MgtKey = SubMgtKey;
+
+            String PostData = toJsonString(request);
+
+            return httppost<Response>(uri, CorpNum, null, PostData, null);
+
+        }
+
+        public Response DetachStatement(String CorpNum, int itemCode, String mgtKey, int SubItemCode, String SubMgtKey)
+        {
+            String uri = "/Statement/" + itemCode.ToString() + "/" + mgtKey + "/DetachStmt";
+
+            DocRequest request = new DocRequest();
+            request.ItemCode = SubItemCode;
+            request.MgtKey = SubMgtKey;
+
+            String PostData = toJsonString(request);
+
+            return httppost<Response>(uri, CorpNum, null, PostData, null);
+
+        }
+
         [DataContract]
         private class MemoRequest
         {
@@ -303,6 +387,21 @@ namespace Popbill.Statement
             public String sender = null;
             [DataMember]
             public String contents = null;
+        }
+        [DataContract]
+        public class ReceiptResponse
+        {
+            [DataMember]
+            public String receiptNum;
+        }
+
+        [DataContract]
+        private class DocRequest
+        {
+            [DataMember]
+            public int ItemCode;
+            [DataMember]
+            public String MgtKey;
         }
     }
 }

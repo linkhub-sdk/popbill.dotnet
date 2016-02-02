@@ -225,8 +225,43 @@ namespace Popbill.Cashbill
             return response.url;
         }
 
-       
+        public Response RegistIssue(String CorpNum, Cashbill cashbill, String Memo)
+        {
+            return RegistIssue(CorpNum, cashbill, Memo, null);
+        }
 
+        public Response RegistIssue(String CorpNum, Cashbill cashbill, String Memo, String UserID)
+        {
+            if (cashbill == null) throw new PopbillException(-99999999, "현금영수증 정보가 입력되지 않았습니다.");
+
+            cashbill.memo = Memo;
+
+            String PostData = toJsonString(cashbill);
+
+            return httppost<Response>("/Cashbill", CorpNum, UserID, PostData, "ISSUE");
+        }
+
+        public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TaxationType, int Page, int PerPage)
+        {
+            if (String.IsNullOrEmpty(DType)) throw new PopbillException(-99999999, "검색일자 유형이 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
+
+            String uri = "/Cashbill/Search";
+            uri += "?DType=" + DType;
+            uri += "&SDate=" + SDate;
+            uri += "&EDate=" + EDate;
+            uri += "&State=" + String.Join(",", State);
+            uri += "&TradeType=" + String.Join(",", TradeType);
+            uri += "&TradeUsage=" + String.Join(",", TradeUsage);
+            uri += "&TaxationType=" + String.Join(",", TaxationType);
+            
+            uri += "&Page=" + Page.ToString();
+            uri += "&PerPage=" + PerPage.ToString();
+
+            return httpget<CBSearchResult>(uri, CorpNum, null);
+        }
+       
         [DataContract]
         private class MemoRequest
         {

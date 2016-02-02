@@ -8,6 +8,8 @@ namespace Popbill.Cashbill
     public class Cashbill
     {
         [DataMember]
+        public string memo;
+        [DataMember]
         public string mgtKey;
         [DataMember]
         public string tradeDate;

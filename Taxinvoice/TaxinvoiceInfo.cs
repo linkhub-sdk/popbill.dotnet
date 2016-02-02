@@ -35,7 +35,7 @@ namespace Popbill.Taxinvoice
 
         [DataMember] public int stateCode;
         [DataMember] public String stateDT;
-
+        [DataMember] public bool? lateIssueYN;
         [DataMember] public bool? openYN;
         [DataMember] public String openDT;
         [DataMember] public String ntsresult;
