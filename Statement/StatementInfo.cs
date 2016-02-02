@@ -30,9 +30,13 @@ namespace Popbill.Statement
         [DataMember]
         public String senderCorpNum;
         [DataMember]
+        public bool? senderPrintYN;
+        [DataMember]
         public String receiverCorpName;
         [DataMember]
         public String receiverCorpNum;
+        [DataMember]
+        public bool? receiverPrintYN;
 
         [DataMember]
         public String supplyCostTotal;

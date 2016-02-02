@@ -17,12 +17,15 @@ namespace Popbill.Taxinvoice
         [DataMember] public String invoicerCorpName;
         [DataMember] public String invoicerCorpNum;
         [DataMember] public String invoicerMgtKey;
+        [DataMember] public bool? invoicerPrintYN;
         [DataMember] public String invoiceeCorpName;
         [DataMember] public String invoiceeCorpNum;
         [DataMember] public String invoiceeMgtKey;
+        [DataMember] public bool? invoiceePrintYN;
         [DataMember] public String trusteeCorpName;
         [DataMember] public String trusteeCorpNum;
         [DataMember] public String trusteeMgtKey;
+        [DataMember] public bool? trusteePrintYN;
 
         [DataMember] public String supplyCostTotal;
         [DataMember] public String taxTotal;
