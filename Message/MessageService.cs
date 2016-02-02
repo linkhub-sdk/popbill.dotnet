@@ -172,7 +172,7 @@ namespace Popbill.Message
             return response.receiptNum;
         }
 
-        public MSGSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, String[] Item, bool? ReserveYN, bool? SenderYN, int Page, int PerPage)
+        public MSGSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, String[] Item, bool? ReserveYN, bool? SenderYN, String Order, int Page, int PerPage)
         {
             if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
@@ -186,7 +186,8 @@ namespace Popbill.Message
 
             if ((bool)ReserveYN) uri += "&ReserveYN=1";
             if ((bool)SenderYN) uri += "&SenderYN=1";
-            
+
+            uri += "&Order=" + Order;
             uri += "&Page=" + Page.ToString();
             uri += "&PerPage=" + PerPage.ToString();
 

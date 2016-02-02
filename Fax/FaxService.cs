@@ -101,7 +101,7 @@ namespace Popbill.Fax
             return httpget<Response>("/FAX/" + receiptNum + "/Cancel", CorpNum, UserID);
         }
 
-        public FAXSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, bool? ReserveYN, bool? SenderOnly, int Page, int PerPage)
+        public FAXSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, bool? ReserveYN, bool? SenderOnly, String Order, int Page, int PerPage)
         {
             if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
@@ -113,7 +113,8 @@ namespace Popbill.Fax
 
             if ((bool)ReserveYN) uri += "&ReserveYN=1";
             if ((bool)SenderOnly) uri += "&SenderOnly=1";
-            
+
+            uri += "&Order=" + Order;
             uri += "&Page=" + Page.ToString();
             uri += "&PerPage=" + PerPage.ToString();
 
