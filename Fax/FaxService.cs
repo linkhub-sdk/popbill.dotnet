@@ -15,6 +15,19 @@ namespace Popbill.Fax
             this.AddScope("160");
         }
 
+        public ChargeInfo GetChargeInfo(String CorpNum)
+        {
+            return GetChargeInfo(CorpNum, null);
+        }
+
+        public ChargeInfo GetChargeInfo(String CorpNum, String UserID)
+        {
+            ChargeInfo response = httpget<ChargeInfo>("/FAX/ChargeInfo", CorpNum, UserID);
+
+            return response;
+        }
+
+
         public Single GetUnitCost(String CorpNum)
         {
             UnitCostResponse response = httpget<UnitCostResponse>("/FAX/UnitCost", CorpNum, null);

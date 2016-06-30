@@ -17,6 +17,18 @@ namespace Popbill.Taxinvoice
             this.AddScope("110");
         }
 
+        public ChargeInfo GetChargeInfo(String CorpNum)
+        {
+            return GetChargeInfo(CorpNum, null);
+        }
+
+        public ChargeInfo GetChargeInfo(String CorpNum, String UserID)
+        {
+            ChargeInfo response = httpget<ChargeInfo>("/Taxinvoice/ChargeInfo", CorpNum, UserID);
+
+            return response;
+        }
+
         public Single GetUnitCost(String CorpNum)
         {
             UnitCostResponse response = httpget<UnitCostResponse>("/Taxinvoice?cfg=UNITCOST", CorpNum, null);

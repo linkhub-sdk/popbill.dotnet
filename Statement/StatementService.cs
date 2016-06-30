@@ -22,6 +22,18 @@ namespace Popbill.Statement
             this.AddScope("126");
         }
 
+        public ChargeInfo GetChargeInfo(String CorpNum, int itemCode)
+        {
+            return GetChargeInfo(CorpNum, itemCode, null);
+        }
+
+        public ChargeInfo GetChargeInfo(String CorpNum, int itemCode, String UserID)
+        {
+            ChargeInfo response = httpget<ChargeInfo>("/Statement/ChargeInfo/"+itemCode.ToString(), CorpNum, UserID);
+
+            return response;
+        }
+
         public Single GetUnitCost(String CorpNum, int itemCode)
         {
 

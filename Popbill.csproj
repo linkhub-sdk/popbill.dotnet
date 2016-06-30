@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\BaseService.cs" />
+    <Compile Include="Base\ChargeInfo.cs" />
     <Compile Include="Base\Contact.cs" />
     <Compile Include="Base\CorpInfo.cs" />
     <Compile Include="Base\JoinForm.cs" />
@@ -91,6 +92,9 @@
       <Project>{F960F70D-9C37-46F8-A1D4-938A81BE9855}</Project>
       <Name>Linkhub</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HomeTax\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

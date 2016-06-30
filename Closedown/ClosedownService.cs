@@ -14,6 +14,18 @@ namespace Popbill.Closedown
             this.AddScope("170");
         }
 
+        public ChargeInfo GetChargeInfo(String CorpNum)
+        {
+            return GetChargeInfo(CorpNum, null);
+        }
+
+        public ChargeInfo GetChargeInfo(String CorpNum, String UserID) 
+        {
+            ChargeInfo response = httpget<ChargeInfo>("/CloseDown/ChargeInfo", CorpNum, UserID);
+
+            return response;
+        }
+
         public Single GetUnitCost(String CorpNum)
         {
             UnitCostResponse response = httpget<UnitCostResponse>("/CloseDown/UnitCost", CorpNum, null);

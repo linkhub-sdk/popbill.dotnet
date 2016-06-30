@@ -19,6 +19,17 @@ namespace Popbill.Message
             this.AddScope("152");
         }
 
+        public ChargeInfo GetChargeInfo(String CorpNum, MessageType msgType)
+        {
+            return GetChargeInfo(CorpNum, msgType, null);
+        }
+
+        public ChargeInfo GetChargeInfo(String CorpNum, MessageType msgType, String UserID)
+        {
+            ChargeInfo response = httpget<ChargeInfo>("/Message/ChargeInfo?Type="+msgType.ToString(), CorpNum, UserID);
+            return response;
+        }
+
         public Single GetUnitCost(String CorpNum,MessageType msgType)
         {
             UnitCostResponse response = httpget<UnitCostResponse>("/Message/UnitCost?Type=" + msgType.ToString(), CorpNum, null);
