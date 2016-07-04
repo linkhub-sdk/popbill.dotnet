@@ -28,14 +28,14 @@ namespace Popbill.HomeTax
             return response;
         }
 
-        public String RequestJob(String CorpNum, KeyType tiType, String SDate, String EDate)
+        public String RequestJob(String CorpNum, KeyType cbType, String SDate, String EDate)
         {
-            return RequestJob(CorpNum, tiType, SDate, EDate, null);
+            return RequestJob(CorpNum, cbType, SDate, EDate, null);
         }
 
-        public String RequestJob(String CorpNum, KeyType tiType, String SDate, String EDate, String UserID)
+        public String RequestJob(String CorpNum, KeyType cbType, String SDate, String EDate, String UserID)
         {
-            String uri = "/HomeTax/Cashbill/" + tiType.ToString();
+            String uri = "/HomeTax/Cashbill/" + cbType.ToString();
             uri += "?SDate=" + SDate;
             uri += "&EDate=" + EDate;
 
