@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 
 namespace Popbill.HomeTax
 {
-    public class HTTaxinvoiceSummary
+    public class HTCashbillSummary
     {
         [DataMember]
         public long? count;
@@ -15,5 +15,7 @@ namespace Popbill.HomeTax
         public long? taxTotal;
         [DataMember]
         public long? amountTotal;
+        [DataMember]
+        public long? serviceFeeTotal;
     }
 }

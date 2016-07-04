@@ -9,10 +9,8 @@ namespace Popbill.HomeTax
 {
     public enum KeyType { SELL, BUY, TRUSTEE };
 
-
     public class HTTaxinvoiceService :BaseService
     {
-        
 
         public HTTaxinvoiceService(String LinkID, String SecretKey)
             : base(LinkID, SecretKey)

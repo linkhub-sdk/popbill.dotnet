@@ -63,6 +63,11 @@
     <Compile Include="Fax\FaxResult.cs" />
     <Compile Include="Fax\FAXSearchResult.cs" />
     <Compile Include="Fax\FaxService.cs" />
+    <Compile Include="HomeTax\HTCashbill.cs" />
+    <Compile Include="HomeTax\HTCashbillJobState.cs" />
+    <Compile Include="HomeTax\HTCashbillSearch.cs" />
+    <Compile Include="HomeTax\HTCashbillService.cs" />
+    <Compile Include="HomeTax\HTCashbillSummary.cs" />
     <Compile Include="HomeTax\HTFlatRate.cs" />
     <Compile Include="HomeTax\HTTaxinvoice.cs" />
     <Compile Include="HomeTax\HTTaxinvoiceAbbr.cs" />
