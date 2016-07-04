@@ -63,6 +63,15 @@
     <Compile Include="Fax\FaxResult.cs" />
     <Compile Include="Fax\FAXSearchResult.cs" />
     <Compile Include="Fax\FaxService.cs" />
+    <Compile Include="HomeTax\HTFlatRate.cs" />
+    <Compile Include="HomeTax\HTTaxinvoice.cs" />
+    <Compile Include="HomeTax\HTTaxinvoiceAbbr.cs" />
+    <Compile Include="HomeTax\HTTaxinvoiceDetail.cs" />
+    <Compile Include="HomeTax\HTTaxinvoiceJobState.cs" />
+    <Compile Include="HomeTax\HTTaxinvoiceSearch.cs" />
+    <Compile Include="HomeTax\HTTaxinvoiceService.cs" />
+    <Compile Include="HomeTax\HTTaxinvoiceSummary.cs" />
+    <Compile Include="HomeTax\HTTaxinvoiceXML.cs" />
     <Compile Include="Message\AutoDeny.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageResult.cs" />
@@ -92,9 +101,6 @@
       <Project>{F960F70D-9C37-46F8-A1D4-938A81BE9855}</Project>
       <Name>Linkhub</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="HomeTax\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

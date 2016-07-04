@@ -15,6 +15,19 @@ namespace Popbill.Cashbill
             this.AddScope("140");
         }
 
+        public ChargeInfo GetChargeInfo(String CorpNum)
+        {
+            return GetChargeInfo(CorpNum, null);
+        }
+
+
+        public ChargeInfo GetChargeInfo(String CorpNum, String UserID)
+        {
+            ChargeInfo response = httpget<ChargeInfo>("/Cashbill/ChargeInfo/", CorpNum, UserID);
+
+            return response;
+        }
+
         public Single GetUnitCost(String CorpNum)
         {
             UnitCostResponse response = httpget<UnitCostResponse>("/Cashbill?cfg=UNITCOST", CorpNum, null);

@@ -423,8 +423,12 @@ namespace Popbill.Taxinvoice
             
             return httppost<Response>("/Taxinvoice", CorpNum, UserID, PostData, "ISSUE");
         }
-
+        
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String Order, int Page, int PerPage)
+        {
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, LateOnly, null, null, null, Order, Page, PerPage);
+        }
+        public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String Order, int Page, int PerPage)
         {
             if (String.IsNullOrEmpty(DType)) throw new PopbillException(-99999999, "검색일자 유형이 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
@@ -447,6 +451,13 @@ namespace Popbill.Taxinvoice
                     uri += "&LateOnly=0";
                 }
             }
+
+
+            if (TaxRegIDYN != "") uri += "&TaxRegIDYN=" + TaxRegIDYN;
+
+            uri += "&TaxRegIDType=" + TaxRegIDType;
+            uri += "&TaxRegID=" + TaxRegID;
+            
             uri += "&Order=" + Order;
             uri += "&Page=" + Page.ToString();
             uri += "&PerPage=" + PerPage.ToString();
