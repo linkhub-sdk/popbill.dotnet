@@ -426,9 +426,21 @@ namespace Popbill.Taxinvoice
         
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String Order, int Page, int PerPage)
         {
-            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, LateOnly, null, null, null, Order, Page, PerPage);
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, LateOnly, null, null, null, Order, Page, PerPage, null);
         }
+
+        public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String Order, int Page, int PerPage, String UserID)
+        {
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, LateOnly, null, null, null, Order, Page, PerPage, UserID);
+        }
+
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String Order, int Page, int PerPage)
+        {
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, Order, Page, PerPage, null);
+        }
+
+            
+        public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String Order, int Page, int PerPage, String UserID)
         {
             if (String.IsNullOrEmpty(DType)) throw new PopbillException(-99999999, "검색일자 유형이 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
@@ -462,7 +474,7 @@ namespace Popbill.Taxinvoice
             uri += "&Page=" + Page.ToString();
             uri += "&PerPage=" + PerPage.ToString();
 
-            return httpget<TISearchResult>(uri, CorpNum, null);
+            return httpget<TISearchResult>(uri, CorpNum, UserID);
         }
 
         public Response AttachStatement(String CorpNum, MgtKeyType KeyType, String MgtKey, int DocItemCode, String DocMgtKey)
