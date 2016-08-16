@@ -442,10 +442,15 @@ namespace Popbill.Taxinvoice
             
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String Order, int Page, int PerPage, String UserID)
         {
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, "", Order, Page, PerPage, null);
+        }
+
+        public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String QString, String Order, int Page, int PerPage, String UserID)
+        {
             if (String.IsNullOrEmpty(DType)) throw new PopbillException(-99999999, "검색일자 유형이 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
-            
+
             String uri = "/Taxinvoice/" + KeyType;
             uri += "?DType=" + DType;
             uri += "&SDate=" + SDate;
@@ -456,9 +461,11 @@ namespace Popbill.Taxinvoice
 
             if (LateOnly != null)
             {
-                if ((bool)LateOnly) {
-                    uri += "&LateOnly=1";    
-                } else
+                if ((bool)LateOnly)
+                {
+                    uri += "&LateOnly=1";
+                }
+                else
                 {
                     uri += "&LateOnly=0";
                 }
@@ -469,7 +476,7 @@ namespace Popbill.Taxinvoice
 
             uri += "&TaxRegIDType=" + TaxRegIDType;
             uri += "&TaxRegID=" + TaxRegID;
-            
+            uri += "&QString=" + QString;
             uri += "&Order=" + Order;
             uri += "&Page=" + Page.ToString();
             uri += "&PerPage=" + PerPage.ToString();

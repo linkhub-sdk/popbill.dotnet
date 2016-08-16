@@ -330,8 +330,12 @@ namespace Popbill.Statement
 
             return httppost<Response>("/Statement", CorpNum, UserID, PostData, "ISSUE");
         }
-
         public DocSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, int[] ItemCode, String Order, int Page, int PerPage)
+        {
+            return Search(CorpNum, DType, SDate, EDate, State, ItemCode, "", Order, Page, PerPage);
+        }
+
+        public DocSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, int[] ItemCode, String QString, String Order, int Page, int PerPage)
         {
             if (String.IsNullOrEmpty(DType)) throw new PopbillException(-99999999, "검색일자 유형이 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
@@ -345,6 +349,7 @@ namespace Popbill.Statement
             
             String[] ItemCodeArr = Array.ConvertAll(ItemCode, x => x.ToString());
             uri += "&ItemCode=" + String.Join(",", ItemCodeArr);
+            uri += "&QString=" + QString;
             uri += "&Order=" + Order;
             uri += "&Page=" + Page.ToString();
             uri += "&PerPage=" + PerPage.ToString();

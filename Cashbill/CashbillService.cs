@@ -253,8 +253,13 @@ namespace Popbill.Cashbill
 
             return httppost<Response>("/Cashbill", CorpNum, UserID, PostData, "ISSUE");
         }
-
+        
         public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TaxationType, String Order, int Page, int PerPage)
+        {
+            return Search(CorpNum, DType, SDate, EDate, State, TradeType, TradeUsage, TaxationType, "", Order, Page, PerPage);
+        }
+
+        public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TaxationType, String QString, String Order, int Page, int PerPage)
         {
             if (String.IsNullOrEmpty(DType)) throw new PopbillException(-99999999, "검색일자 유형이 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
@@ -268,6 +273,7 @@ namespace Popbill.Cashbill
             uri += "&TradeType=" + String.Join(",", TradeType);
             uri += "&TradeUsage=" + String.Join(",", TradeUsage);
             uri += "&TaxationType=" + String.Join(",", TaxationType);
+            uri += "&QString=" + QString;
             uri += "&Order=" + Order;
             uri += "&Page=" + Page.ToString();
             uri += "&PerPage=" + PerPage.ToString();
