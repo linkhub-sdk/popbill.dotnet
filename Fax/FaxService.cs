@@ -42,22 +42,22 @@ namespace Popbill.Fax
             return response.url;
         }
 
-        public string SendFAX(String CorpNum, String sendNum,string receiveNum,string receiveName, String filePath, DateTime? reserveDT, String UserID)
+        public string SendFAX(String CorpNum, String sendNum, String senderName, String receiveNum, String receiveName, String filePath, DateTime? reserveDT, String UserID)
         {
             List<String> filePaths = new List<string>();
             filePaths.Add(filePath);
-            return SendFAX(CorpNum, sendNum, receiveNum, receiveName, filePaths, reserveDT, UserID);
+            return SendFAX(CorpNum, sendNum, senderName, receiveNum, receiveName, filePaths, reserveDT, UserID);
         }
 
-        public string SendFAX(String CorpNum, String sendNum, List<FaxReceiver> receivers, String filePath, DateTime? reserveDT, String UserID)
+        public string SendFAX(String CorpNum, String sendNum, String senderName, List<FaxReceiver> receivers, String filePath, DateTime? reserveDT, String UserID)
         {
             List<String> filePaths = new List<string>();
             filePaths.Add(filePath);
 
-            return SendFAX(CorpNum, sendNum, receivers, filePaths, reserveDT, UserID);
+            return SendFAX(CorpNum, sendNum, senderName, receivers, filePaths, reserveDT, UserID);
         }
 
-        public string SendFAX(String CorpNum, String sendNum, string receiveNum, string receiveName, List<String> filePaths, DateTime? reserveDT, String UserID)
+        public string SendFAX(String CorpNum, String sendNum, String senderName, String receiveNum, String receiveName, List<String> filePaths, DateTime? reserveDT, String UserID)
         {
             List<FaxReceiver> receivers = new List<FaxReceiver>();
             FaxReceiver receiver = new FaxReceiver();
@@ -65,10 +65,10 @@ namespace Popbill.Fax
             receiver.receiveNum = receiveNum;
             receivers.Add(receiver);
 
-            return SendFAX(CorpNum, sendNum, receivers, filePaths, reserveDT, UserID);
+            return SendFAX(CorpNum, sendNum, senderName, receivers, filePaths, reserveDT, UserID);
         }
 
-        public string SendFAX(String CorpNum, String sendNum, List<FaxReceiver> receivers, List<String> filePaths, DateTime? reserveDT, String UserID)
+        public string SendFAX(String CorpNum, String sendNum, String senderName, List<FaxReceiver> receivers, List<String> filePaths, DateTime? reserveDT, String UserID)
         {
             if (filePaths == null || filePaths.Count == 0) throw new PopbillException(-99999999, "전송할 파일정보가 입력되지 않았습니다.");
             if (receivers == null || receivers.Count == 0) throw new PopbillException(-99999999, "수신처 정보가 입력되지 않았습니다.");
@@ -88,6 +88,7 @@ namespace Popbill.Fax
             sendRequest request = new sendRequest();
 
             request.snd = sendNum;
+            request.sndnm = senderName;
             request.fCnt = filePaths.Count;
             request.sndDT = reserveDT == null ? null : reserveDT.Value.ToString("yyyyMMddHHmmss");
             request.rcvs = receivers;
@@ -140,6 +141,8 @@ namespace Popbill.Fax
         {
             [DataMember]
             public String snd = null;
+            [DataMember]
+            public String sndnm = null;
             [DataMember(IsRequired=false)]
             public String sndDT = null;
             [DataMember]

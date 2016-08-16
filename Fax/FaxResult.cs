@@ -15,6 +15,8 @@ namespace Popbill.Fax
         private int? _convState = null;
         [DataMember(Name = "sendNum")]
         private string _sendNum = null;
+        [DataMember(Name = "senderName")]
+        private string _senderName = null;
         [DataMember(Name = "receiveNum")]
         private string _receiveNum = null;
         [DataMember(Name = "receiveName")]
@@ -45,6 +47,7 @@ namespace Popbill.Fax
         public int? sendState { get { return _sendState; } }
         public int? convState { get { return _convState; } }
         public string sendNum { get { return _sendNum; } }
+        public string senderName { get { return _senderName; } }
         public string receiveNum { get { return _receiveNum; } }
         public string receiveName { get { return _receiveName; } }
         public int? sendPageCnt { get { return _sendPageCnt; } }

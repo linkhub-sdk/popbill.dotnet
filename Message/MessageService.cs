@@ -44,7 +44,7 @@ namespace Popbill.Message
             return response.url;
         }
 
-        public String SendSMS(String CorpNum, string sendNum, String receiveNum, String receiveName, String content, DateTime? reserveDT, String UserID)
+        public String SendSMS(String CorpNum, String sendNum, String senderName, String receiveNum, String receiveName, String content, DateTime? reserveDT, String UserID)
         {
             List<Message> messages = new List<Message>();
             Message msg = new Message();
@@ -52,21 +52,21 @@ namespace Popbill.Message
             msg.receiveName = receiveName;
             messages.Add(msg);
 
-            return sendMessage(MessageType.SMS, CorpNum, sendNum, null, content, messages, reserveDT, UserID);
+            return sendMessage(MessageType.SMS, CorpNum, sendNum, senderName, null, content, messages, reserveDT, UserID);
         }
 
-        public String SendSMS(String CorpNum, string sendNum, String content, List<Message> messages, DateTime? reserveDT, String UserID)
+        public String SendSMS(String CorpNum, String sendNum, String senderName, String content, List<Message> messages, DateTime? reserveDT, String UserID)
         {
-            return sendMessage(MessageType.SMS, CorpNum, sendNum, null, content, messages, reserveDT, UserID);
+            return sendMessage(MessageType.SMS, CorpNum, sendNum, senderName, null, content, messages, reserveDT, UserID);
         }
 
 
         public String SendSMS(String CorpNum, List<Message> messages , DateTime? reserveDT, String UserID)
         {
-            return sendMessage(MessageType.SMS, CorpNum, null, null, null, messages, reserveDT, UserID);
+            return sendMessage(MessageType.SMS, CorpNum, null, null, null, null, messages, reserveDT, UserID);
         }
 
-        public String SendLMS(String CorpNum, string sendNum, String receiveNum, String receiveName, String subject, String content, DateTime? reserveDT, String UserID)
+        public String SendLMS(String CorpNum, String sendNum, String senderName, String receiveNum, String receiveName, String subject, String content, DateTime? reserveDT, String UserID)
         {
             List<Message> messages = new List<Message>();
             Message msg = new Message();
@@ -74,21 +74,21 @@ namespace Popbill.Message
             msg.receiveName = receiveName;
             messages.Add(msg);
 
-            return sendMessage(MessageType.LMS, CorpNum, sendNum, subject, content, messages, reserveDT, UserID);
+            return sendMessage(MessageType.LMS, CorpNum, sendNum, senderName, subject, content, messages, reserveDT, UserID);
         }
 
-        public String SendLMS(String CorpNum, string sendNum, String subject, String content, List<Message> messages, DateTime? reserveDT, String UserID)
+        public String SendLMS(String CorpNum, String sendNum, String senderName, String subject, String content, List<Message> messages, DateTime? reserveDT, String UserID)
         {
-            return sendMessage(MessageType.LMS, CorpNum, sendNum, subject, content, messages, reserveDT, UserID);
+            return sendMessage(MessageType.LMS, CorpNum, sendNum, senderName, subject, content, messages, reserveDT, UserID);
         }
 
 
         public String SendLMS(String CorpNum, List<Message> messages, DateTime? reserveDT, String UserID)
         {
-            return sendMessage(MessageType.LMS, CorpNum, null, null, null, messages, reserveDT, UserID);
+            return sendMessage(MessageType.LMS, CorpNum, null, null, null, null, messages, reserveDT, UserID);
         }
 
-        public String SendXMS(String CorpNum, string sendNum, String receiveNum, String receiveName, String subject, String content, DateTime? reserveDT, String UserID)
+        public String SendXMS(String CorpNum, String sendNum, String senderName, String receiveNum, String receiveName, String subject, String content, DateTime? reserveDT, String UserID)
         {
             List<Message> messages = new List<Message>();
             Message msg = new Message();
@@ -96,20 +96,20 @@ namespace Popbill.Message
             msg.receiveName = receiveName;
             messages.Add(msg);
 
-            return sendMessage(MessageType.XMS, CorpNum, sendNum, subject, content, messages, reserveDT, UserID);
+            return sendMessage(MessageType.XMS, CorpNum, sendNum, senderName, subject, content, messages, reserveDT, UserID);
         }
 
-        public String SendXMS(String CorpNum, string sendNum, String subject, String content, List<Message> messages, DateTime? reserveDT, String UserID)
+        public String SendXMS(String CorpNum, String sendNum, String senderName, String subject, String content, List<Message> messages, DateTime? reserveDT, String UserID)
         {
-            return sendMessage(MessageType.XMS, CorpNum, sendNum, subject, content, messages, reserveDT, UserID);
+            return sendMessage(MessageType.XMS, CorpNum, sendNum, senderName, subject, content, messages, reserveDT, UserID);
         }
 
 
         public String SendXMS(String CorpNum, List<Message> messages, DateTime? reserveDT, String UserID)
         {
-            return sendMessage(MessageType.XMS, CorpNum, null, null, null, messages, reserveDT, UserID);
+            return sendMessage(MessageType.XMS, CorpNum, null, null, null, null, messages, reserveDT, UserID);
         }
-        public String SendMMS(String CorpNum, string sender, String receiveNum, String receiveName, string subject, string content, string mmsfilepath, DateTime? reserveDT, String UserID)
+        public String SendMMS(String CorpNum, String sender, String senderName, String receiveNum, String receiveName, String subject, String content, String mmsfilepath, DateTime? reserveDT, String UserID)
         {
             List<Message> messages = new List<Message>();
             Message msg = new Message();
@@ -117,15 +117,16 @@ namespace Popbill.Message
             msg.receiveName = receiveName;
             messages.Add(msg);
 
-            return SendMMS(CorpNum, sender, subject, content, messages, mmsfilepath, reserveDT, UserID);
+            return SendMMS(CorpNum, sender, senderName, subject, content, messages, mmsfilepath, reserveDT, UserID);
         }
-        public String SendMMS(String CorpNum, string sender, string subject, string content, List<Message> messages, string mmsfilepath, DateTime? reserveDT, String UserID)
+        public String SendMMS(String CorpNum, String sender, String senderName, String subject, String content, List<Message> messages, String mmsfilepath, DateTime? reserveDT, String UserID)
         {
             if (messages == null || messages.Count == 0) throw new PopbillException(-99999999, "전송할 메시지가 입력되지 않았습니다.");
 
             sendRequest request = new sendRequest();
 
             request.snd = sender;
+            request.sndnm = senderName;
             request.subject = subject;
             request.content = content;
             request.sndDT = reserveDT == null ? null : reserveDT.Value.ToString("yyyyMMddHHmmss");
@@ -163,13 +164,14 @@ namespace Popbill.Message
             return httpget<Response>("/Message/" + receiptNum + "/Cancel", CorpNum, UserID);
         }
 
-        private String sendMessage(MessageType msgType, String CorpNum, string sender, string subject, string content, List<Message> messages, DateTime? reserveDT, string UserID)
+        private String sendMessage(MessageType msgType, String CorpNum, String sender, String senderName, String subject, String content, List<Message> messages, DateTime? reserveDT, String UserID)
         {
             if (messages == null || messages.Count == 0) throw new PopbillException(-99999999, "전송할 메시지가 입력되지 않았습니다.");
 
             sendRequest request = new sendRequest();
 
             request.snd = sender;
+            request.sndnm = senderName;
             request.subject = subject;
             request.content = content;
             request.sndDT = reserveDT == null ? null : reserveDT.Value.ToString("yyyyMMddHHmmss");
@@ -218,6 +220,8 @@ namespace Popbill.Message
         {
             [DataMember]
             public String snd = null;
+            [DataMember]
+            public String sndnm = null;
             [DataMember]
             public String subject = null;
             [DataMember]

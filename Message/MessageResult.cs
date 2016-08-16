@@ -19,6 +19,8 @@ namespace Popbill.Message
         private string _content = null;
         [DataMember(Name = "sendNum")]
         private string _sendNum = null;
+        [DataMember(Name = "senderName")]
+        private string _senderName = null;
         [DataMember(Name = "receiveNum")]
         private string _receiveNum = null;
         [DataMember(Name = "receiveName")]
@@ -41,6 +43,7 @@ namespace Popbill.Message
         public MessageType type { get { return (MessageType)Enum.Parse(typeof(MessageType),_type); } }
         public string content { get { return _content; } }
         public string sendNum { get { return _sendNum; } }
+        public string senderName { get { return _senderName; } }
         public string receiveNum { get { return _receiveNum; } }
         public string receiveName { get { return _receiveName; } }
         public string reserveDT { get { return _reserveDT; } }

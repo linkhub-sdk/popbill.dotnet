@@ -11,6 +11,8 @@ namespace Popbill.Message
     {
         [DataMember(Name="snd")]
         public string sendNum;
+        [DataMember(Name = "sndnm")]
+        public string senderName;
         [DataMember(Name="rcv")]
         public string receiveNum;
         [DataMember(Name="rcvnm")]
