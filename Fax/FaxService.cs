@@ -42,6 +42,13 @@ namespace Popbill.Fax
             return response.url;
         }
 
+        public string SendFAX(String CorpNum, String sendNum, String receiveNum, String receiveName, String filePath, DateTime? reserveDT, String UserID)
+        {
+            List<String> filePaths = new List<string>();
+            filePaths.Add(filePath);
+            return SendFAX(CorpNum, sendNum, null, receiveNum, receiveName, filePaths, reserveDT, UserID);
+        }
+
         public string SendFAX(String CorpNum, String sendNum, String senderName, String receiveNum, String receiveName, String filePath, DateTime? reserveDT, String UserID)
         {
             List<String> filePaths = new List<string>();
@@ -49,12 +56,12 @@ namespace Popbill.Fax
             return SendFAX(CorpNum, sendNum, senderName, receiveNum, receiveName, filePaths, reserveDT, UserID);
         }
 
-        public string SendFAX(String CorpNum, String sendNum, String senderName, List<FaxReceiver> receivers, String filePath, DateTime? reserveDT, String UserID)
+        public string SendFAX(String CorpNum, String sendNum, List<FaxReceiver> receivers, String filePath, DateTime? reserveDT, String UserID)
         {
             List<String> filePaths = new List<string>();
             filePaths.Add(filePath);
 
-            return SendFAX(CorpNum, sendNum, senderName, receivers, filePaths, reserveDT, UserID);
+            return SendFAX(CorpNum, sendNum, null, receivers, filePaths, reserveDT, UserID);
         }
 
         public string SendFAX(String CorpNum, String sendNum, String senderName, String receiveNum, String receiveName, List<String> filePaths, DateTime? reserveDT, String UserID)
@@ -66,6 +73,22 @@ namespace Popbill.Fax
             receivers.Add(receiver);
 
             return SendFAX(CorpNum, sendNum, senderName, receivers, filePaths, reserveDT, UserID);
+        }
+
+        public string SendFAX(String CorpNum, String sendNum, String receiveNum, String receiveName, List<String> filePaths, DateTime? reserveDT, String UserID)
+        {
+            List<FaxReceiver> receivers = new List<FaxReceiver>();
+            FaxReceiver receiver = new FaxReceiver();
+            receiver.receiveName = receiveName;
+            receiver.receiveNum = receiveNum;
+            receivers.Add(receiver);
+
+            return SendFAX(CorpNum, sendNum, null, receivers, filePaths, reserveDT, UserID);
+        }
+
+        public string SendFAX(String CorpNum, String sendNum, List<FaxReceiver> receivers, List<String> filePaths, DateTime? reserveDT, String UserID)
+        {
+            return SendFAX(CorpNum, sendNum, null, receivers, filePaths, reserveDT, UserID);
         }
 
         public string SendFAX(String CorpNum, String sendNum, String senderName, List<FaxReceiver> receivers, List<String> filePaths, DateTime? reserveDT, String UserID)
