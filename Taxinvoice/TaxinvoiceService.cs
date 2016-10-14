@@ -108,6 +108,13 @@ namespace Popbill.Taxinvoice
             return httppost<Response>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey , CorpNum, UserID, PostData, "PATCH");
         }
 
+        public Response Delete(String CorpNum, MgtKeyType KeyType, String MgtKey)
+        {
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+
+            return httppost<Response>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey, CorpNum, "", null, "DELETE");
+        }
+
         public Response Delete(String CorpNum, MgtKeyType KeyType, String MgtKey, String UserID)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
