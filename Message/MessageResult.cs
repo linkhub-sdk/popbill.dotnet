@@ -11,6 +11,8 @@ namespace Popbill.Message
     {
         [DataMember(Name="state")]
         private int? _state = null;
+        [DataMember(Name = "result")]
+        private int? _result = null;
         [DataMember(Name = "subject")]
         private string _subject = null;
         [DataMember(Name = "type")]
@@ -39,6 +41,7 @@ namespace Popbill.Message
         private string _receiptDT = null;
 
         public int? state { get { return _state; } }
+        public int? result { get { return _result; } }
         public string subject { get { return _subject; } }
         public MessageType type { get { return (MessageType)Enum.Parse(typeof(MessageType),_type); } }
         public string content { get { return _content; } }
