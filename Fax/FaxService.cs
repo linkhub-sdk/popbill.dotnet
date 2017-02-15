@@ -124,6 +124,42 @@ namespace Popbill.Fax
             return response.receiptNum;
         }
 
+        public string ResendFAX(String CorpNum, String receiptNum, String sendNum, String senderName, String receiveNum, String receiveName, DateTime? reserveDT, String UserID)
+        {
+            List<FaxReceiver> receivers = null;
+
+            if ((receiveNum.Length != 0) && (receiveName.Length != 0))
+            {
+                receivers = new List<FaxReceiver>();
+                FaxReceiver receiver = new FaxReceiver();
+                receiver.receiveName = receiveName;
+                receiver.receiveNum = receiveNum;
+                receivers.Add(receiver);
+            }
+            
+            return ResendFAX(CorpNum, receiptNum, sendNum, senderName, receivers, reserveDT, UserID);
+        }
+
+        public string ResendFAX(String CorpNum, String receiptNum, String sendNum, String senderName, List<FaxReceiver> receivers, DateTime? reserveDT, String UserID)
+        {
+            if (receiptNum == "") throw new PopbillException(-99999999, "팩스접수번호(receiptNum)가 입력되지 않았습니다.");
+            
+            sendRequest request = new sendRequest();
+
+            if ( sendNum != "" ) request.snd = sendNum;
+            if ( senderName != "" ) request.sndnm = senderName;
+            if ( reserveDT != null ) reserveDT.Value.ToString("yyyyMMddHHmmss");
+            if ( receivers != null ) request.rcvs = receivers;
+            
+            String PostData = toJsonString(request);
+
+            ReceiptResponse response;
+            response = httppost<ReceiptResponse>("/FAX/" + receiptNum, CorpNum, UserID, PostData, "");
+
+            return response.receiptNum;
+        }
+
+
         public List<FaxResult> GetFaxResult(String CorpNum, String receiptNum)
         {
             if (String.IsNullOrEmpty(receiptNum)) throw new PopbillException(-99999999, "접수번호가 입력되지 않았습니다.");
