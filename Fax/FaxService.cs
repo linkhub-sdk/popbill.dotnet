@@ -194,6 +194,16 @@ namespace Popbill.Fax
             return httpget<FAXSearchResult>(uri, CorpNum, null);
         }
 
+        public List<SenderNumber> GetSenderNumberList(String CorpNum)
+        {
+            return GetSenderNumberList(CorpNum, null);
+        }
+
+        public List<SenderNumber> GetSenderNumberList(String CorpNum, String UserID)
+        {
+            return httpget<List<SenderNumber>>("/FAX/SenderNumber", CorpNum, UserID);
+        }
+
 
         [DataContract]
         private class sendRequest

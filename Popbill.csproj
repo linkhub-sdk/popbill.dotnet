@@ -63,6 +63,7 @@
     <Compile Include="Fax\FaxResult.cs" />
     <Compile Include="Fax\FAXSearchResult.cs" />
     <Compile Include="Fax\FaxService.cs" />
+    <Compile Include="Fax\SenderNumber.cs" />
     <Compile Include="HomeTax\HTCashbill.cs" />
     <Compile Include="HomeTax\HTCashbillJobState.cs" />
     <Compile Include="HomeTax\HTCashbillSearch.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Message\MessageResult.cs" />
     <Compile Include="Message\MessageService.cs" />
     <Compile Include="Message\MSGSearchResult.cs" />
+    <Compile Include="Message\SenderNumber.cs" />
     <Compile Include="Statement\AttachedFile.cs" />
     <Compile Include="Statement\DocSearchResult.cs" />
     <Compile Include="Statement\propertyBag.cs" />

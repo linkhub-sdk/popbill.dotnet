@@ -265,6 +265,16 @@ namespace Popbill.Message
             return httpget<List<AutoDeny>>("/Message/Denied", CorpNum, null);
         }
 
+        public List<SenderNumber> GetSenderNumberList(String CorpNum)
+        {
+            return GetSenderNumberList(CorpNum, null);
+        }
+
+        public List<SenderNumber> GetSenderNumberList(String CorpNum, String UserID)
+        {
+            return httpget<List<SenderNumber>>("/Message/SenderNumber", CorpNum, UserID);
+        }
+
 
         [DataContract]
         private class sendRequest
