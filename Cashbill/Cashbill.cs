@@ -65,5 +65,8 @@ namespace Popbill.Cashbill
 
         [DataMember]
         public string orgConfirmNum;
+
+        [DataMember]
+        public string orgTradeDate;
     }
 }
