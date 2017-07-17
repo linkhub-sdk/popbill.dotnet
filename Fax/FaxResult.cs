@@ -9,6 +9,13 @@ namespace Popbill.Fax
     [DataContract]
     public class FaxResult
     {
+        [DataMember(Name = "state")]
+        private int? _state = null;
+        [DataMember(Name = "result")]
+        private int? _result = null;
+        [DataMember(Name = "title")]
+        private String _title = null;
+
         [DataMember(Name = "sendState")]
         private int? _sendState = null;
         [DataMember(Name = "convState")]
@@ -43,6 +50,10 @@ namespace Popbill.Fax
         private string[] _fileNames = null;
         [DataMember(Name = "receiptDT")]
         private String _receiptDT = null;
+
+        public int? result { get { return _result; } }
+        public int? state { get { return _state; } }
+        public string title { get { return _title; } }
 
         public int? sendState { get { return _sendState; } }
         public int? convState { get { return _convState; } }
