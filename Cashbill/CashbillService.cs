@@ -253,6 +253,69 @@ namespace Popbill.Cashbill
 
             return httppost<Response>("/Cashbill", CorpNum, UserID, PostData, "ISSUE");
         }
+
+
+        /*
+         * 취소현금영수증 임시저장 기능 추가 (2017/08/16)
+         */
+        public Response RevokeRegister(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate)
+        {
+            return RevokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, false, null);
+        }
+
+        public Response RevokeRegister(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN)
+        {
+            return RevokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, null);
+        }
+
+        public Response RevokeRegister(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN, String UserID)
+        {
+
+            RevokeRequest request = new RevokeRequest();
+            request.mgtKey = mgtKey;
+            request.orgConfirmNum = orgConfirmNum;
+            request.orgTradeDate = orgTradeDate;
+            request.smssenYN = smssendYN;
+            
+            String PostData = toJsonString(request);
+
+            return httppost<Response>("/Cashbill", CorpNum, UserID, PostData, "REVOKE");
+        }
+
+        /*
+         * 취소현금영수증 즉시발행 기능 추가 (2017/08/16)
+         */
+        public Response RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate)
+        {
+            return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, false, null, null);
+        }
+
+        public Response RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN)
+        {
+            return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, null, null);
+        }
+        
+        public Response RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN, String memo)
+        {
+            return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo, null);
+        }
+
+        public Response RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN, String memo, String UserID)
+        {
+
+            RevokeRequest request = new RevokeRequest();
+            request.mgtKey = mgtKey;
+            request.orgConfirmNum = orgConfirmNum;
+            request.orgTradeDate = orgTradeDate;
+            request.smssenYN = smssendYN;
+            request.memo = memo;
+
+            String PostData = toJsonString(request);
+
+            return httppost<Response>("/Cashbill", CorpNum, UserID, PostData, "REVOKEISSUE");
+        }
+
+
         
         public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TaxationType, String Order, int Page, int PerPage)
         {
@@ -297,6 +360,21 @@ namespace Popbill.Cashbill
             public String sender = null;
             [DataMember]
             public String contents = null;
+        }
+
+        [DataContract]
+        private class RevokeRequest
+        {
+            [DataMember]
+            public String mgtKey;
+            [DataMember]
+            public String orgTradeDate;
+            [DataMember]
+            public String orgConfirmNum;
+            [DataMember]
+            public bool? smssenYN = false;
+            [DataMember]
+            public String memo;
         }
 
     }

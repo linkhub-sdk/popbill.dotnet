@@ -14,7 +14,7 @@ namespace Popbill
         private const string ServiceID_REAL = "POPBILL";
         private const string ServiceID_TEST = "POPBILL_TEST";
         private const String ServiceURL_REAL = "https://popbill.linkhub.co.kr";
-        private const String ServiceURL_TEST = "https://popbill_test.linkhub.co.kr";
+        private const String ServiceURL_TEST = "https://popbill-test.linkhub.co.kr";
         private const String APIVersion = "1.0";
         private const String CRLF = "\r\n";
           
