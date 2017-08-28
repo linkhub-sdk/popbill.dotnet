@@ -48,5 +48,12 @@ namespace Popbill.HomeTax
         [DataMember] public string trusteeCorpName;
         [DataMember] public string trusteeCEOName;
         [DataMember] public string trusteeEmail;
+
+        /*
+         * 매입 / 매출 구분필드 추가
+         * - 2017/08/28
+         */
+        [DataMember]
+        public string invoiceType;
     }
 }

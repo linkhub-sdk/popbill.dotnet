@@ -77,6 +77,23 @@ namespace Popbill
                 return _IsTest ? ServiceURL_TEST : ServiceURL_REAL;
             }
         }
+
+        /*
+         * 파트너 관리자 팝업 URL 
+         * - 2017/08/28 추가
+         */
+        public String GetPartnerURL(String CorpNum, String TOGO)
+        {
+            try
+            {
+                return _LinkhubAuth.getPartnerURL(getSession_Token(CorpNum), ServiceID, TOGO);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
         public Double GetBalance(String CorpNum)
         {
             try

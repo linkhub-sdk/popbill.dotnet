@@ -40,6 +40,13 @@ namespace Popbill.HomeTax
         public string cardOwnerName;
         [DataMember]
         public string deductionType;
+
+        /*
+         * 매입/매출 구분 추가
+         * -2017/08/28
+         */
+        [DataMember]
+        public string invoiceType;
     }
 
 }
