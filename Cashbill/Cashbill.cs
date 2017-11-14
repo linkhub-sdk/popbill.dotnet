@@ -68,5 +68,8 @@ namespace Popbill.Cashbill
 
         [DataMember]
         public string orgTradeDate;
+
+        [DataMember]
+        public int cancelType;
     }
 }
