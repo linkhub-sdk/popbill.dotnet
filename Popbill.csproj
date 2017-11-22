@@ -92,7 +92,6 @@
     <Compile Include="Statement\StatementInfo.cs" />
     <Compile Include="Statement\StatementLog.cs" />
     <Compile Include="Statement\StatementService.cs" />
-    <Compile Include="Statement\STMTSearchResult.cs" />
     <Compile Include="Taxinvoice\AttachedFile.cs" />
     <Compile Include="Taxinvoice\EmailPublicKey.cs" />
     <Compile Include="Taxinvoice\TaxinvoiceAddContact.cs" />
