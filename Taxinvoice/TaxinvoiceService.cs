@@ -422,7 +422,7 @@ namespace Popbill.Taxinvoice
         {
             taxinvoice.writeSpecification = WriteSpecification;
             taxinvoice.forceIssue = ForceIssue;
-            taxinvoice.dealnvoiceMgtKey = DealinvoiceMgtKey;
+            taxinvoice.dealInvoiceMgtKey = DealinvoiceMgtKey;
             taxinvoice.memo = Memo;
             taxinvoice.emailSubject = EmailSubject;
 

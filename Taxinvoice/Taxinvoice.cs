@@ -12,7 +12,7 @@ namespace Popbill.Taxinvoice
 
         [DataMember] public String memo;
         [DataMember] public String emailSubject;
-        [DataMember] public String dealnvoiceMgtKey;
+        [DataMember] public String dealInvoiceMgtKey;
         [DataMember] public bool? forceIssue;
         [DataMember] public bool? writeSpecification;
 
