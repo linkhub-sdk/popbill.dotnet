@@ -35,6 +35,8 @@ namespace Popbill.Kakao
         public string altCnt;
         [DataMember]
         public string cancelCnt;
+        [DataMember]
+        public string successCnt;
 
         [DataMember]
         public List<KakaoSentDetail> msgs;
