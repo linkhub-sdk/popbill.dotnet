@@ -39,7 +39,7 @@ namespace Popbill.Kakao
 
         public String GetURL(String CorpNum, String UserID, String TOGO)
         {
-            String uri = "/KakaTalk/?TG=";
+            String uri = "/KakaoTalk/?TG=";
 
             if (TOGO == "SENDER") uri = "/Message/?TG=";
 
@@ -87,7 +87,7 @@ namespace Popbill.Kakao
 
         public KakaoSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, String[] Item, String ReserveYN, bool? SenderYN, String Order, int Page, int PerPage)
         {
-            return Search(CorpNum, SDate, EDate, State, Item, ReserveYN, SenderYN, Order, Page, PerPage);
+            return Search(CorpNum, SDate, EDate, State, Item, ReserveYN, SenderYN, Order, Page, PerPage, null);
         }
 
         public KakaoSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, String[] Item, String ReserveYN, bool? SenderYN, String Order, int Page, int PerPage, String UserID)
@@ -186,7 +186,7 @@ namespace Popbill.Kakao
 
 
         // 친구톡 단건전송
-        public String SendFTS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, String receiverNum, String receiverName, DateTime? sndDT,
+        public String SendFTS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, String receiverNum, String receiverName, bool adsYN, DateTime? sndDT,
             List<KakaoButton> buttons)
         {
             List<KakaoReceiver> messages = new List<KakaoReceiver>();
@@ -198,10 +198,10 @@ namespace Popbill.Kakao
 
             messages.Add(receiver);
 
-            return SendFTS(CorpNum, plusFriendID, snd, null, null, altSendType, sndDT, messages, buttons, null);
+            return SendFTS(CorpNum, plusFriendID, snd, null, null, altSendType, adsYN, sndDT, messages, buttons, null);
         }
 
-        public String SendFTS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, String receiverNum, String receiverName, DateTime? sndDT,
+        public String SendFTS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, String receiverNum, String receiverName, bool adsYN, DateTime? sndDT,
             List<KakaoButton> buttons, String UserID)
         {
             List<KakaoReceiver> messages = new List<KakaoReceiver>();
@@ -213,28 +213,28 @@ namespace Popbill.Kakao
 
             messages.Add(receiver);
 
-            return SendFTS(CorpNum, plusFriendID, snd, null, null, altSendType, sndDT, messages, buttons, UserID);
+            return SendFTS(CorpNum, plusFriendID, snd, null, null, altSendType, adsYN, sndDT, messages, buttons, UserID);
         }
 
         
         // 동일내용 대량전송
-        public String SendFTS(String CorpNum, String plusFriendID, String snd, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons)
+        public String SendFTS(String CorpNum, String plusFriendID, String snd, String altSendType, bool adsYN, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons)
         {
-            return SendFTS(CorpNum, plusFriendID, snd, null, null, altSendType, sndDT, receivers, buttons, null);
+            return SendFTS(CorpNum, plusFriendID, snd, null, null, altSendType, adsYN, sndDT, receivers, buttons, null);
         }
 
-        public String SendFTS(String CorpNum, String plusFriendID, String snd, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons, String UserID)
+        public String SendFTS(String CorpNum, String plusFriendID, String snd, String altSendType, bool adsYN, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons, String UserID)
         {
-            return SendFTS(CorpNum, plusFriendID, snd, null, null, altSendType, sndDT, receivers, buttons, UserID);
+            return SendFTS(CorpNum, plusFriendID, snd, null, null, altSendType, adsYN, sndDT, receivers, buttons, UserID);
         }
 
         // 개별내용 동보전송
-        public String SendFTS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons)
+        public String SendFTS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, bool adsYN, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons)
         {
-            return SendFTS(CorpNum, plusFriendID, snd, content, altContent, altSendType, sndDT, receivers, buttons, null);
+            return SendFTS(CorpNum, plusFriendID, snd, content, altContent, altSendType, adsYN, sndDT, receivers, buttons, null);
         }
 
-        public String SendFTS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons, String UserID)
+        public String SendFTS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, bool adsYN, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons, String UserID)
         {
             if (String.IsNullOrEmpty(plusFriendID)) throw new PopbillException(-99999999, "플러스친구 아이디가 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(snd)) throw new PopbillException(-99999999, "발신번호가 입력되지 않았습니다.");
@@ -246,6 +246,7 @@ namespace Popbill.Kakao
             request.content = content;
             request.altContent = altContent;
             request.altSendType = altSendType;
+            request.adsYN = adsYN;
             request.sndDT = sndDT == null ? null : sndDT.Value.ToString("yyyyMMddHHmmss");
             request.msgs = receivers;
             request.btns = buttons;
@@ -260,7 +261,7 @@ namespace Popbill.Kakao
 
 
         // 친구톡 이미지 단건전송
-        public String SendFMS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, String receiverNum, String receiverName, DateTime? sndDT,
+        public String SendFMS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, String receiverNum, String receiverName, bool adsYN, DateTime? sndDT,
             List<KakaoButton> buttons, String fmsfilepath, String imageURL)
         {
             List<KakaoReceiver> messages = new List<KakaoReceiver>();
@@ -272,10 +273,10 @@ namespace Popbill.Kakao
 
             messages.Add(receiver);
 
-            return SendFMS(CorpNum, plusFriendID, snd, null, null, altSendType, sndDT, messages, buttons, fmsfilepath, imageURL, null);
+            return SendFMS(CorpNum, plusFriendID, snd, null, null, altSendType, adsYN, sndDT, messages, buttons, fmsfilepath, imageURL, null);
         }
 
-        public String SendFMS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, String receiverNum, String receiverName, DateTime? sndDT,
+        public String SendFMS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, String receiverNum, String receiverName, bool adsYN, DateTime? sndDT,
             List<KakaoButton> buttons, String fmsfilepath, String imageURL, String UserID)
         {
             List<KakaoReceiver> messages = new List<KakaoReceiver>();
@@ -287,28 +288,28 @@ namespace Popbill.Kakao
 
             messages.Add(receiver);
 
-            return SendFMS(CorpNum, plusFriendID, snd, null, null, altSendType, sndDT, messages, buttons, fmsfilepath, imageURL, UserID);
+            return SendFMS(CorpNum, plusFriendID, snd, null, null, altSendType, adsYN, sndDT, messages, buttons, fmsfilepath, imageURL, UserID);
         }
 
 
         // 동일내용 대량전송
-        public String SendFMS(String CorpNum, String plusFriendID, String snd, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons, String fmsfilepath, String imageURL)
+        public String SendFMS(String CorpNum, String plusFriendID, String snd, String altSendType, bool adsYN, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons, String fmsfilepath, String imageURL)
         {
-            return SendFMS(CorpNum, plusFriendID, snd, null, null, altSendType, sndDT, receivers, buttons, fmsfilepath, imageURL, null);
+            return SendFMS(CorpNum, plusFriendID, snd, null, null, altSendType, adsYN, sndDT, receivers, buttons, fmsfilepath, imageURL, null);
         }
 
-        public String SendFMS(String CorpNum, String plusFriendID, String snd, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons, String fmsfilepath, String imageURL, String UserID)
+        public String SendFMS(String CorpNum, String plusFriendID, String snd, String altSendType, bool adsYN, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons, String fmsfilepath, String imageURL, String UserID)
         {
-            return SendFMS(CorpNum, plusFriendID, snd, null, null, altSendType, sndDT, receivers, buttons, fmsfilepath, imageURL, UserID);
+            return SendFMS(CorpNum, plusFriendID, snd, null, null, altSendType, adsYN, sndDT, receivers, buttons, fmsfilepath, imageURL, UserID);
         }
 
         // 개별내용 동보전송
-        public String SendFMS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons, String fmsfilepath, String imageURL)
+        public String SendFMS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, bool adsYN, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons, String fmsfilepath, String imageURL)
         {
-            return SendFMS(CorpNum, plusFriendID, snd, content, altContent, altSendType, sndDT, receivers, buttons, fmsfilepath, imageURL, null);
+            return SendFMS(CorpNum, plusFriendID, snd, content, altContent, altSendType, adsYN, sndDT, receivers, buttons, fmsfilepath, imageURL, null);
         }
 
-        public String SendFMS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons, String fmsfilepath, String imageURL, String UserID)
+        public String SendFMS(String CorpNum, String plusFriendID, String snd, String content, String altContent, String altSendType, bool adsYN, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons, String fmsfilepath, String imageURL, String UserID)
         {
             if (String.IsNullOrEmpty(plusFriendID)) throw new PopbillException(-99999999, "플러스친구 아이디가 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(snd)) throw new PopbillException(-99999999, "발신번호가 입력되지 않았습니다.");
@@ -320,6 +321,7 @@ namespace Popbill.Kakao
             request.content = content;
             request.altContent = altContent;
             request.altSendType = altSendType;
+            request.adsYN = adsYN;
             request.sndDT = sndDT == null ? null : sndDT.Value.ToString("yyyyMMddHHmmss");
             request.msgs = receivers;
             request.btns = buttons;
@@ -329,13 +331,22 @@ namespace Popbill.Kakao
 
             List<UploadFile> UploadFiles = new List<UploadFile>();
 
-            UploadFile uf = new UploadFile();
+            try
+            {
+                UploadFile uf = new UploadFile();
 
-            uf.FieldName = "file";
-            uf.FileName = System.IO.Path.GetFileName(fmsfilepath);
-            uf.FileData = new FileStream(fmsfilepath, FileMode.Open, FileAccess.Read);
+                uf.FieldName = "file";
+                uf.FileName = System.IO.Path.GetFileName(fmsfilepath);
+                uf.FileData = new FileStream(fmsfilepath, FileMode.Open, FileAccess.Read);
 
-            UploadFiles.Add(uf);
+                UploadFiles.Add(uf);
+            }
+            catch (Exception fe)
+            {
+                throw new PopbillException(-99999999, fe.Message);
+            }
+            
+            
 
             ReceiptResponse response = httppostFile<ReceiptResponse>("/FMS", CorpNum, UserID, PostDate, UploadFiles, null);
 
@@ -359,7 +370,7 @@ namespace Popbill.Kakao
             [DataMember]
             public String sndDT = null;
             [DataMember]
-            public bool? adsYN = null;
+            public bool? adsYN = false;
             [DataMember]
             public String imageURL = null;
             [DataMember]

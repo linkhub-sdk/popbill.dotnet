@@ -23,5 +23,6 @@ namespace Popbill.Kakao
         public String message;
         [DataMember]
         public List<KakaoSentDetail> list;
+
     }
 }
