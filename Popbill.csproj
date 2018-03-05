@@ -78,6 +78,15 @@
     <Compile Include="HomeTax\HTTaxinvoiceService.cs" />
     <Compile Include="HomeTax\HTTaxinvoiceSummary.cs" />
     <Compile Include="HomeTax\HTTaxinvoiceXML.cs" />
+    <Compile Include="Kakao\KakaoService.cs" />
+    <Compile Include="Kakao\KakaoSearchResult.cs" />
+    <Compile Include="Kakao\SenderNumber.cs" />
+    <Compile Include="Kakao\ATSTemplate.cs" />
+    <Compile Include="Kakao\KakaoButton.cs" />
+    <Compile Include="Kakao\PlusFriend.cs" />
+    <Compile Include="Kakao\KakaoSentDetail.cs" />
+    <Compile Include="Kakao\KakaoSentResult.cs" />
+    <Compile Include="Kakao\KakaoReceiver.cs" />
     <Compile Include="Message\AutoDeny.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageResult.cs" />

@@ -255,8 +255,6 @@ namespace Popbill.Message
             uri += "&Page=" + Page.ToString();
             uri += "&PerPage=" + PerPage.ToString();
 
-            System.Console.WriteLine(uri);
-
             return httpget<MSGSearchResult>(uri, CorpNum, null);
         }
 

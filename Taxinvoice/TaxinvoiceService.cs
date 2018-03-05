@@ -515,8 +515,7 @@ namespace Popbill.Taxinvoice
             request.MgtKey = DocMgtKey;
 
             String PostData = toJsonString(request);
-            System.Console.WriteLine(PostData);
-
+            
             return httppost<Response>(uri, CorpNum, null, PostData, null);
         }
 

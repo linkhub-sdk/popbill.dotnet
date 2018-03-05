@@ -354,7 +354,6 @@ namespace Popbill.Statement
             uri += "&Page=" + Page.ToString();
             uri += "&PerPage=" + PerPage.ToString();
 
-            System.Console.WriteLine(uri);
             return httpget<DocSearchResult>(uri, CorpNum, null);
         }
 
