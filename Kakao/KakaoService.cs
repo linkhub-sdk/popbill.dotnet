@@ -9,7 +9,7 @@ namespace Popbill.Kakao
 {
     public enum KakaoType { ATS, FTS, FMS };
 
-    class KakaoService : BaseService
+    public class KakaoService : BaseService
     { 
         public KakaoService(String LinkID, String SecretKey)
             : base(LinkID, SecretKey)
@@ -251,7 +251,7 @@ namespace Popbill.Kakao
             request.btns = buttons;
 
             String PostDate = toJsonString(request);
-            ReceiptResponse response = httpspost<ReceiptResponse>("/FTS", CorpNum, UserID, PostDate, null);
+            ReceiptResponse response = httppost<ReceiptResponse>("/FTS", CorpNum, UserID, PostDate, null);
 
             return response.receiptNum;
         }
@@ -333,11 +333,11 @@ namespace Popbill.Kakao
 
             uf.FieldName = "file";
             uf.FileName = System.IO.Path.GetFileName(fmsfilepath);
-            uf.FileData = new FileStream(mmsfilepath, FileMode.Open, FileAccess.Read);
+            uf.FileData = new FileStream(fmsfilepath, FileMode.Open, FileAccess.Read);
 
             UploadFiles.Add(uf);
 
-            ReceiptResponse response = httppostFile<ReceiptResponse>("/FMS", CorpNum, UserID, PostData, UploadFiles, null);
+            ReceiptResponse response = httppostFile<ReceiptResponse>("/FMS", CorpNum, UserID, PostDate, UploadFiles, null);
 
             return response.receiptNum;
         }
@@ -359,7 +359,7 @@ namespace Popbill.Kakao
             [DataMember]
             public String sndDT = null;
             [DataMember]
-            public Boolean adsYN = null;
+            public bool? adsYN = null;
             [DataMember]
             public String imageURL = null;
             [DataMember]
