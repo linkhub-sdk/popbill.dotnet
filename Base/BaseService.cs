@@ -313,10 +313,24 @@ namespace Popbill
 
         protected T httppost<T>(String url, String CorpNum, String UserID, String PostData, String httpMethod)
         {
+            return httppost<T>(url, CorpNum, UserID, PostData, httpMethod, null);
+        }
+
+        protected T httppost<T>(String url, String CorpNum, String UserID, String PostData, String httpMethod, String contentsType)
+        {
          
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
 
-            request.ContentType = "application/json;";
+            if (contentsType == null)
+            {
+                request.ContentType = "application/json;";
+            }
+            else
+            {
+                request.ContentType = contentsType;
+            }
+
+
 
             if (String.IsNullOrEmpty(CorpNum) == false)
             {

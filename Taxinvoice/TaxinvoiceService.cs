@@ -531,9 +531,21 @@ namespace Popbill.Taxinvoice
 
             return httppost<Response>(uri, CorpNum, null, PostData, null);
         }
+
+        public Response AssignMgtKey(String CorpNum, MgtKeyType KeyType, String ItemKey, String MgtKey)
+        {
+            return AssignMgtKey(CorpNum, KeyType, ItemKey, MgtKey, null);
+        }
+        public Response AssignMgtKey(String CorpNum, MgtKeyType KeyType, String ItemKey, String MgtKey, String UserID)
+        {
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "할당할 문서관리번호가 입력되지 않았습니다.");
+
+
+            String PostData = "MgtKey="+MgtKey;
+
+            return httppost<Response>("/Taxinvoice/" + ItemKey + "/" + KeyType, CorpNum, UserID, PostData, null, "application/x-www-form-urlencoded; charset=utf-8");
+        }
         
-
-
         [DataContract]
         public class CertResponse
         {
@@ -580,5 +592,7 @@ namespace Popbill.Taxinvoice
             [DataMember]
             public String MgtKey;
         }
+
+        
     }
 }
