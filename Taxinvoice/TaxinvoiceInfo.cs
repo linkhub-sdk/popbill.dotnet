@@ -9,7 +9,7 @@ namespace Popbill.Taxinvoice
     [DataContract]
     public class TaxinvoiceInfo
     {
-        [DataMember] public int closeDownState;
+        [DataMember] public int? closeDownState;
         [DataMember] public String closeDownStateDate;
 
         [DataMember] public String itemKey;
