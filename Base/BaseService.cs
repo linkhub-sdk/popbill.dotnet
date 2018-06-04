@@ -450,6 +450,7 @@ namespace Popbill
                 {
                     wstream.Write(buffer, 0, read);
                 }
+                f.FileData.Close();
             }
 
             String boundaryFooter = CRLF + "--" + boundary + "--" + CRLF;
