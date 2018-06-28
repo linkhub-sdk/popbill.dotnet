@@ -558,6 +558,11 @@ namespace Popbill.Fax
 
         public FAXSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, bool? ReserveYN, bool? SenderOnly, String Order, int Page, int PerPage)
         {
+            return Search(CorpNum, SDate, EDate, State, ReserveYN, SenderOnly, Order, Page, PerPage, null);
+
+        }
+        public FAXSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, bool? ReserveYN, bool? SenderOnly, String Order, int Page, int PerPage, String QString)
+        {
             if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
 
@@ -568,6 +573,8 @@ namespace Popbill.Fax
 
             if ((bool)ReserveYN) uri += "&ReserveYN=1";
             if ((bool)SenderOnly) uri += "&SenderOnly=1";
+
+            if (QString != null) uri += "&QString=" + QString;
 
             uri += "&Order=" + Order;
             uri += "&Page=" + Page.ToString();
