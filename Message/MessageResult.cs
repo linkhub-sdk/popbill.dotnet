@@ -40,6 +40,11 @@ namespace Popbill.Message
         [DataMember(Name = "receiptDT")]
         private string _receiptDT = null;
 
+        [DataMember(Name = "receiptNum")]
+        private string _receiptNum = null;
+        [DataMember(Name = "requestNum")]
+        private string _requestNum = null;
+
         public int? state { get { return _state; } }
         public int? result { get { return _result; } }
         public string subject { get { return _subject; } }
@@ -55,6 +60,8 @@ namespace Popbill.Message
         public string sendResult { get { return _sendResult; } }
         public string tranNet { get { return _tranNet; } }
         public string receiptDT { get { return _receiptDT; } }
+        public string receiptNum { get { return _receiptNum; } }
+        public string requestNum { get { return _requestNum; } }
 
     }
 }
