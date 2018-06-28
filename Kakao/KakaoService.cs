@@ -100,10 +100,15 @@ namespace Popbill.Kakao
 
         public KakaoSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, String[] Item, String ReserveYN, bool? SenderYN, String Order, int Page, int PerPage)
         {
-            return Search(CorpNum, SDate, EDate, State, Item, ReserveYN, SenderYN, Order, Page, PerPage, null);
+            return Search(CorpNum, SDate, EDate, State, Item, ReserveYN, SenderYN, Order, Page, PerPage, null, null);
         }
 
         public KakaoSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, String[] Item, String ReserveYN, bool? SenderYN, String Order, int Page, int PerPage, String UserID)
+        {
+            return Search(CorpNum, SDate, EDate, State, Item, ReserveYN, SenderYN, Order, Page, PerPage, UserID, null);
+        }
+
+        public KakaoSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, String[] Item, String ReserveYN, bool? SenderYN, String Order, int Page, int PerPage, String UserID, String QString)
         {
             if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
@@ -117,6 +122,7 @@ namespace Popbill.Kakao
 
             uri += "&ReserveYN=" + ReserveYN;
             if ((bool)SenderYN) uri += "&SenderYN=1";
+            if (QString != null) uri += "&QString=" + QString;
 
             uri += "&Order=" + Order;
             uri += "&Page=" + Page.ToString();

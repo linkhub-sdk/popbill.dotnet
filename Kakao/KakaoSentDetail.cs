@@ -39,6 +39,11 @@ namespace Popbill.Kakao
         [DataMember(Name = "altSendDT")]
         public string _altSendDT;
 
+        [DataMember(Name = "receiptNum")]
+        public string _receiptNum;
+        [DataMember(Name = "requestNum")]
+        public string _requestNum;
+
         public int? state { get { return _state; } }
         public string sendDT { get { return _sendDT; } }
         public string receiveNum { get { return _receiveNum; } }
@@ -53,5 +58,8 @@ namespace Popbill.Kakao
         public string contentType { get { return _contentType; } }
         public string altResult { get { return _altResult; } }
         public string altSendDT { get { return _altSendDT; } }
+
+        public string receiptNum { get { return _receiptNum; } }
+        public string requestNum { get { return _requestNum; } }
     }
 }
