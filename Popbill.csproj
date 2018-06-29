@@ -93,6 +93,7 @@
     <Compile Include="Message\MessageService.cs" />
     <Compile Include="Message\MSGSearchResult.cs" />
     <Compile Include="Message\SenderNumber.cs" />
+    <Compile Include="Message\MessageState.cs" />
     <Compile Include="Statement\AttachedFile.cs" />
     <Compile Include="Statement\DocSearchResult.cs" />
     <Compile Include="Statement\propertyBag.cs" />

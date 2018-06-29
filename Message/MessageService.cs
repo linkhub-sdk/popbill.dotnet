@@ -718,6 +718,13 @@ namespace Popbill.Message
             return httpget<List<SenderNumber>>("/Message/SenderNumber", CorpNum, UserID);
         }
 
+        public List<MessageState> GetStates(String CorpNum, List<String> ReciptNumList, String UserID)
+        {
+            if (ReciptNumList == null || ReciptNumList.Count == 0) throw new PopbillException(-99999999, "문자전송 접수번호가 입력되지 않았습니다.");
+            String PostData = toJsonString(ReciptNumList);
+            return httppost<List<MessageState>>("/Message/States", CorpNum, UserID, PostData, null);
+        }
+
 
         [DataContract]
         private class sendRequest
