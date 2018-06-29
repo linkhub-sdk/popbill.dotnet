@@ -27,5 +27,7 @@ namespace Popbill
         public bool? mgrYN;
         [DataMember]
         public String regDT;
+        [DataMember]
+        public String state;
     }
 }
