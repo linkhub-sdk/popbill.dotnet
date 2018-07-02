@@ -556,7 +556,7 @@ namespace Popbill.Taxinvoice
             if (String.IsNullOrEmpty(EmailType)) throw new PopbillException(-99999999, "메일전송 타입이 입력되지 않았습니다.");
             if ((bool)SendYN) throw new PopbillException(-99999999, "메일전송 여부 항목이 입력되지 않았습니다.");
 
-            String uri = "/Taxinvoice/Emailconfig?EmailType="+EmailType+"&SendYN="+SendYN;
+            String uri = "/Taxinvoice/EmailSendConfig?EmailType="+EmailType+"&SendYN="+SendYN;
 
             return httppost<Response>(uri, CorpNum, UserID, null, null);
         }
