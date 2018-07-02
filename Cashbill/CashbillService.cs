@@ -376,15 +376,14 @@ namespace Popbill.Cashbill
             return httpget<CBSearchResult>(uri, CorpNum, null);
         }
 
-        public List<CBEmailConfig> ListEmailConfig(String CorpNum, String UserID)
+        public List<EmailConfig> ListEmailConfig(String CorpNum, String UserID)
         {
-            return httpget<List<CBEmailConfig>>("/Cashbill/EmailSendConfig", CorpNum, UserID);
+            return httpget<List<EmailConfig>>("/Cashbill/EmailSendConfig", CorpNum, UserID);
         }
 
         public Response UpdateEmailConfig(String CorpNum, String EmailType, bool SendYN, String UserID)
         {
             if (String.IsNullOrEmpty(EmailType)) throw new PopbillException(-99999999, "메일전송 타입이 입력되지 않았습니다.");
-            if ((bool)SendYN) throw new PopbillException(-99999999, "메일전송 여부 항목이 입력되지 않았습니다.");
 
             String uri = "/Cashbill/EmailSendConfig?EmailType=" + EmailType + "&SendYN=" + SendYN;
 

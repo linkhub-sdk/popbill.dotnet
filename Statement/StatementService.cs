@@ -386,15 +386,14 @@ namespace Popbill.Statement
 
         }
 
-        public List<StatementEmailConfig> ListEmailConfig(String CorpNum, String UserID)
+        public List<EmailConfig> ListEmailConfig(String CorpNum, String UserID)
         {
-            return httpget<List<StatementEmailConfig>>("/Statement/EmailSendConfig", CorpNum, UserID);
+            return httpget<List<EmailConfig>>("/Statement/EmailSendConfig", CorpNum, UserID);
         }
 
         public Response UpdateEmailConfig(String CorpNum, String EmailType, bool SendYN, String UserID)
         {
             if (String.IsNullOrEmpty(EmailType)) throw new PopbillException(-99999999, "메일전송 타입이 입력되지 않았습니다.");
-            if ((bool)SendYN) throw new PopbillException(-99999999, "메일전송 여부 항목이 입력되지 않았습니다.");
 
             String uri = "/Statement/EmailSendConfig?EmailType=" + EmailType + "&SendYN=" + SendYN;
 

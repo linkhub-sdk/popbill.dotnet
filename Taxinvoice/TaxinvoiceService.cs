@@ -546,15 +546,14 @@ namespace Popbill.Taxinvoice
             return httppost<Response>("/Taxinvoice/" + ItemKey + "/" + KeyType, CorpNum, UserID, PostData, null, "application/x-www-form-urlencoded; charset=utf-8");
         }
 
-        public List<TIEmailConfig> ListEmailConfig(String CorpNum, String UserID)
+        public List<EmailConfig> ListEmailConfig(String CorpNum, String UserID)
         {
-            return httpget<List<TIEmailConfig>>("/Taxinvoice/EmailSendConfig", CorpNum, UserID);
+            return httpget<List<EmailConfig>>("/Taxinvoice/EmailSendConfig", CorpNum, UserID);
         }
 
         public Response UpdateEmailConfig(String CorpNum, String EmailType, bool SendYN, String UserID)
         {
             if (String.IsNullOrEmpty(EmailType)) throw new PopbillException(-99999999, "메일전송 타입이 입력되지 않았습니다.");
-            if ((bool)SendYN) throw new PopbillException(-99999999, "메일전송 여부 항목이 입력되지 않았습니다.");
 
             String uri = "/Taxinvoice/EmailSendConfig?EmailType="+EmailType+"&SendYN="+SendYN;
 

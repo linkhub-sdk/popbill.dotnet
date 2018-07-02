@@ -57,7 +57,7 @@
     <Compile Include="Cashbill\CashbillInfo.cs" />
     <Compile Include="Cashbill\CashbillService.cs" />
     <Compile Include="Cashbill\CBSearchResult.cs" />
-    <Compile Include="Cashbill\CBEmailConfig.cs" />
+    <Compile Include="Base\EmailConfig.cs" />
     <Compile Include="Closedown\ClosedownService.cs" />
     <Compile Include="Closedown\CorpState.cs" />
     <Compile Include="Fax\FaxReceiver.cs" />
@@ -96,7 +96,6 @@
     <Compile Include="Message\SenderNumber.cs" />
     <Compile Include="Message\MessageState.cs" />
     <Compile Include="Statement\AttachedFile.cs" />
-    <Compile Include="Statement\StatementEmailConfig.cs" />
     <Compile Include="Statement\DocSearchResult.cs" />
     <Compile Include="Statement\propertyBag.cs" />
     <Compile Include="Statement\Statement.cs" />
@@ -105,7 +104,6 @@
     <Compile Include="Statement\StatementLog.cs" />
     <Compile Include="Statement\StatementService.cs" />
     <Compile Include="Taxinvoice\AttachedFile.cs" />
-    <Compile Include="Taxinvoice\TIEmailConfig.cs" />
     <Compile Include="Taxinvoice\EmailPublicKey.cs" />
     <Compile Include="Taxinvoice\TaxinvoiceAddContact.cs" />
     <Compile Include="Taxinvoice\TaxinvoiceDetail.cs" />
