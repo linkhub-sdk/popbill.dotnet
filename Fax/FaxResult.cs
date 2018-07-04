@@ -80,6 +80,6 @@ namespace Popbill.Fax
         public int? sendResult {get { return _sendResult; } }
 
         public string requestNum { get { return _requestNum; } }
-        public string receiptNUm { get { return _receiptNum; } }
+        public string receiptNum { get { return _receiptNum; } }
     }
 }
