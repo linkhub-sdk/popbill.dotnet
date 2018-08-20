@@ -346,12 +346,20 @@ namespace Popbill.Cashbill
 
             return httppost<Response>("/Cashbill", CorpNum, UserID, PostData, "REVOKEISSUE");
         }
-
-
         
+        public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TaxationType, String Order, int Page, int PerPage)
+        {
+            return Search(CorpNum, DType, SDate, EDate, State, TradeType, TradeUsage, null, TaxationType, "", Order, Page, PerPage);
+        }
+
         public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TradeOpt, String[] TaxationType, String Order, int Page, int PerPage)
         {
             return Search(CorpNum, DType, SDate, EDate, State, TradeType, TradeUsage, TradeOpt, TaxationType, "", Order, Page, PerPage);
+        }
+
+        public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TaxationType, String QString, String Order, int Page, int PerPage)
+        {
+            return Search(CorpNum, DType, SDate, EDate, State, TradeType, TradeUsage, null, TaxationType, QString, Order, Page, PerPage);
         }
 
         public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TradeOpt, String[] TaxationType, String QString, String Order, int Page, int PerPage)
@@ -367,9 +375,9 @@ namespace Popbill.Cashbill
             uri += "&State=" + String.Join(",", State);
             uri += "&TradeType=" + String.Join(",", TradeType);
             uri += "&TradeUsage=" + String.Join(",", TradeUsage);
-            uri += "&TradeOpt=" + String.Join(",", TradeOpt);
+            if (TradeOpt != null) uri += "&TradeOpt=" + String.Join(",", TradeOpt);
             uri += "&TaxationType=" + String.Join(",", TaxationType);
-            uri += "&QString=" + QString;
+            if (QString != "") uri += "&QString=" + QString;
             uri += "&Order=" + Order;
             uri += "&Page=" + Page.ToString();
             uri += "&PerPage=" + PerPage.ToString();

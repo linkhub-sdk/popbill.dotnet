@@ -562,9 +562,14 @@ namespace Popbill.Taxinvoice
 
         public Response CheckCertValidation(String corpNum)
         {
-            if (String.IsNullOrEmpty(corpNum)) throw new PopbillException(-99999999, "연동회원 사업자번호(corpNum)이 입력되지 않았습니다.");
+            return CheckCertValidation(corpNum, null);
+        }
 
-            return httpget<Response>("/Taxinvoice/CertCheck", corpNum, null);
+        public Response CheckCertValidation(String corpNum, String userID)
+        {
+            if (String.IsNullOrEmpty(corpNum)) throw new PopbillException(-99999999, "연동회원 사업자번호가 입력되지 않았습니다.");
+
+            return httpget<Response>("/Taxinvoice/CertCheck", corpNum, userID);
         }
 
         [DataContract]
