@@ -182,6 +182,59 @@ namespace Popbill.HomeTax
             return DateTime.ParseExact(response.certificateExpiration, "yyyyMMddHHmmss", null);
         }
 
+        public String GetPopUpURL(String corpNum, String ntsconfirmNum)
+        {
+            if (ntsconfirmNum.Length != 24) throw new PopbillException(-99999999, "국세청승인번호가 올바르지 않습니다.");
+
+            URLResponse response = httpget<URLResponse>("/HomeTax/Taxinvoice/" + ntsconfirmNum + "/PopUp", corpNum, null);
+
+            return response.url;
+        }
+
+        public Response CheckCertValidation(String corpNum)
+        {
+            if (String.IsNullOrEmpty(corpNum)) throw new PopbillException(-99999999, "연동회원 사업자번호(corpNum)이 입력되지 않았습니다.");
+
+            return httpget<Response>("/HomeTax/Taxinvoice/CertCheck", corpNum, null);
+        }
+
+        public Response RegistDeptUser(String corpNum, String deptUserID, String deptUserPWD)
+        {
+            if (String.IsNullOrEmpty(corpNum)) throw new PopbillException(-99999999, "연동회원 사업자번호(corpNum)이 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(deptUserID)) throw new PopbillException(-99999999, "홈택스 부서사용자 계정 아이디(deptUserID)가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(deptUserPWD)) throw new PopbillException(-99999999, "홈택스 부서사용자 계정 비밀번호(deptUserPWD)가 입력되지 않았습니다.");
+
+            DeptRequest request = new DeptRequest();
+
+            request.id = deptUserID;
+            request.pwd = deptUserPWD;
+
+            String PostData = toJsonString(request);
+
+
+            return httppost<Response>("/HomeTax/Taxinvoice/DeptUser", corpNum, null, PostData, null);
+        }
+
+        public Response CheckDeptUser(String corpNum)
+        {
+            if (String.IsNullOrEmpty(corpNum)) throw new PopbillException(-99999999, "연동회원 사업자번호(corpNum)이 입력되지 않았습니다.");
+
+            return httpget<Response>("/HomeTax/Taxinvoice/DeptUser", corpNum, null);
+        }
+
+        public Response CheckLoginDeptUser(String corpNum)
+        {
+            if (String.IsNullOrEmpty(corpNum)) throw new PopbillException(-99999999, "연동회원 사업자번호(corpNum)이 입력되지 않았습니다.");
+
+            return httpget<Response>("/HomeTax/Taxinvoice/DeptUser/Check", corpNum, null);
+        }
+
+        public Response DeleteDeptUser(String corpNum)
+        {
+            if (String.IsNullOrEmpty(corpNum)) throw new PopbillException(-99999999, "연동회원 사업자번호(corpNum)이 입력되지 않았습니다.");
+
+            return httppost<Response>("/HomeTax/Taxinvoice/DeptUser", corpNum, null, null, "DELETE");
+        }
 
 
         [DataContract]
@@ -196,6 +249,15 @@ namespace Popbill.HomeTax
         {
             [DataMember]
             public String certificateExpiration;
+        }
+
+        [DataContract]
+        public class DeptRequest
+        {
+            [DataMember]
+            public String id;
+            [DataMember]
+            public String pwd;
         }
     }
 

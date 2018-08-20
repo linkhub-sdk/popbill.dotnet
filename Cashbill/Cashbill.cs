@@ -16,6 +16,8 @@ namespace Popbill.Cashbill
         [DataMember]
         public string tradeUsage;
         [DataMember]
+        public string tradeOpt;
+        [DataMember]
         public string tradeType;
 
         [DataMember]
