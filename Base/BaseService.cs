@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Net;
 using Linkhub;
+using System.Web.Script.Serialization;
 
 namespace Popbill
 {
@@ -218,8 +219,14 @@ namespace Popbill
         }
         protected T fromJson<T>(Stream jsonStream)
         {
-            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(T));
-            return (T)ser.ReadObject(jsonStream);
+            using (StreamReader reader = new StreamReader(jsonStream, Encoding.UTF8, true))
+            {
+                String t = reader.ReadToEnd();
+
+                JavaScriptSerializer jss = new JavaScriptSerializer();
+
+                return jss.Deserialize<T>(t);
+            }  
         }
 
         private String getSession_Token(String CorpNum)
