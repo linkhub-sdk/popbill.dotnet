@@ -9,59 +9,39 @@ namespace Popbill.Message
     [DataContract]
     public class MessageResult
     {
-        [DataMember(Name="state")]
-        private int? _state = null;
-        [DataMember(Name = "result")]
-        private int? _result = null;
-        [DataMember(Name = "subject")]
-        private string _subject = null;
-        [DataMember(Name = "type")]
-        private string _type = null;
-        [DataMember(Name = "content")]
-        private string _content = null;
-        [DataMember(Name = "sendNum")]
-        private string _sendNum = null;
-        [DataMember(Name = "senderName")]
-        private string _senderName = null;
-        [DataMember(Name = "receiveNum")]
-        private string _receiveNum = null;
-        [DataMember(Name = "receiveName")]
-        private string _receiveName = null;
-        [DataMember(Name = "reserveDT")]
-        private string _reserveDT = null;
-        [DataMember(Name = "sendDT")]
-        private string _sendDT = null;
-        [DataMember(Name = "resultDT")]
-        private string _resultDT = null;
-        [DataMember(Name = "sendResult")]
-        private string _sendResult = null;
-        [DataMember(Name = "tranNet")]
-        private string _tranNet = null;
-        [DataMember(Name = "receiptDT")]
-        private string _receiptDT = null;
-
-        [DataMember(Name = "receiptNum")]
-        private string _receiptNum = null;
-        [DataMember(Name = "requestNum")]
-        private string _requestNum = null;
-
-        public int? state { get { return _state; } }
-        public int? result { get { return _result; } }
-        public string subject { get { return _subject; } }
-        public MessageType type { get { return (MessageType)Enum.Parse(typeof(MessageType),_type); } }
-        public string content { get { return _content; } }
-        public string sendNum { get { return _sendNum; } }
-        public string senderName { get { return _senderName; } }
-        public string receiveNum { get { return _receiveNum; } }
-        public string receiveName { get { return _receiveName; } }
-        public string reserveDT { get { return _reserveDT; } }
-        public string sendDT { get { return _sendDT; } }
-        public string resultDT { get { return _resultDT; } }
-        public string sendResult { get { return _sendResult; } }
-        public string tranNet { get { return _tranNet; } }
-        public string receiptDT { get { return _receiptDT; } }
-        public string receiptNum { get { return _receiptNum; } }
-        public string requestNum { get { return _requestNum; } }
-
+        [DataMember]
+        public int? state;
+        [DataMember]
+        public int? result;
+        [DataMember]
+        public string subject;
+        [DataMember]
+        public string type;
+        [DataMember]
+        public string content;
+        [DataMember]
+        public string sendNum;
+        [DataMember]
+        public string senderName;
+        [DataMember]
+        public string receiveNum;
+        [DataMember]
+        public string receiveName;
+        [DataMember]
+        public string reserveDT;
+        [DataMember]
+        public string sendDT;
+        [DataMember]
+        public string resultDT;
+        [DataMember]
+        public string sendResult;
+        [DataMember]
+        public string tranNet;
+        [DataMember]
+        public string receiptDT;
+        [DataMember]
+        public string receiptNum;
+        [DataMember]
+        public string requestNum;
     }
 }
