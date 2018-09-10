@@ -386,9 +386,19 @@ namespace Popbill.Statement
 
         }
 
+        public List<EmailConfig> ListEmailConfig(String CorpNum)
+        {
+            return ListEmailConfig(CorpNum, null);
+        }
+
         public List<EmailConfig> ListEmailConfig(String CorpNum, String UserID)
         {
             return httpget<List<EmailConfig>>("/Statement/EmailSendConfig", CorpNum, UserID);
+        }
+
+        public Response UpdateEmailConfig(String CorpNum, String EmailType, bool SendYN)
+        {
+            return UpdateEmailConfig(CorpNum, EmailType, SendYN, null);
         }
 
         public Response UpdateEmailConfig(String CorpNum, String EmailType, bool SendYN, String UserID)
