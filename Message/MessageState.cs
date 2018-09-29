@@ -23,5 +23,7 @@ namespace Popbill.Message
         public string rDT;
         [DataMember]
         public string net;
+        [DataMember]
+        public string srt;
     }
 }
