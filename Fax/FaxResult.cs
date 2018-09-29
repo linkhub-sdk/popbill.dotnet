@@ -53,5 +53,9 @@ namespace Popbill.Fax
         public String requestNum;
         [DataMember]
         public String receiptNum;
+        [DataMember]
+        public String chargePageCnt;
+        [DataMember]
+        public String tiffFileSize;
     }
 }
