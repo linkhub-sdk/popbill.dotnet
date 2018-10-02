@@ -23,6 +23,10 @@ namespace Popbill.Message
         public string rDT;
         [DataMember]
         public string net;
+
+        /* 구 전송결과 코드
+         * 2018-10-02 
+         */
         [DataMember]
         public string srt;
     }

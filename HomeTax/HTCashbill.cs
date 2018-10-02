@@ -11,7 +11,7 @@ namespace Popbill.HomeTax
         public string ntsconfirmNum;
         /*
          * 거래일자 추가
-         * -2018/09/29
+         * -2018/10/02
          */
         [DataMember]
         public string tradeDate;
