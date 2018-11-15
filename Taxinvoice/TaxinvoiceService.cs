@@ -212,6 +212,25 @@ namespace Popbill.Taxinvoice
             return httppost<Response>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey, CorpNum, UserID, PostData, "CANCELISSUE");
         }
 
+        public Response RegistRequest(String CorpNum, Taxinvoice taxinvoice)
+        {
+            return RegistRequest(CorpNum, taxinvoice, "", "");
+        }
+
+        public Response RegistRequest(String CorpNum, Taxinvoice taxinvoice, String Memo)
+        {
+            return RegistRequest(CorpNum, taxinvoice, Memo, "");
+        }
+
+        public Response RegistRequest(String CorpNum, Taxinvoice taxinvoice, String Memo, String UserID)
+        {
+            taxinvoice.memo = Memo;
+            
+            String PostData = toJsonString(taxinvoice);
+
+            return httppost<Response>("/Taxinvoice", CorpNum, UserID, PostData, "REQUEST");
+        }
+
         public Response Request(String CorpNum, MgtKeyType KeyType, String MgtKey, String Memo, String UserID)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
