@@ -609,7 +609,7 @@ namespace Popbill.Fax
 
         public String GetPreviewURL(String CorpNum, String receiptNum, String UserID)
         {
-            URLResponse response = httpget<URLResponse>("/FAX/Preview/" + ReceiptNum, CorpNum, UserID);
+            URLResponse response = httpget<URLResponse>("/FAX/Preview/" + receiptNum, CorpNum, UserID);
 
             return response.url;
         }
