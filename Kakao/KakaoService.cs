@@ -48,6 +48,34 @@ namespace Popbill.Kakao
             return response.url;
         }
 
+        public String GetPlusFriendMgtURL(String CorpNum, String UserID)
+        {
+            URLResponse response = httpget<URLResponse>("/KakaoTalk/?TG=PLUSFRIEND", CorpNum, UserID);
+
+            return response.url;
+        }
+
+        public String GetSenderNumberMgtURL(String CorpNum, String UserID)
+        {
+            URLResponse response = httpget<URLResponse>("/Message/?TG=SENDER", CorpNum, UserID);
+
+            return response.url;
+        }
+
+        public String GetATSTemplateMgtURL(String CorpNum, String UserID)
+        {
+            URLResponse response = httpget<URLResponse>("/KakaoTalk/?TG=TEMPLATE", CorpNum, UserID);
+
+            return response.url;
+        }
+
+        public String GetSentListURL(String CorpNum, String UserID)
+        {
+            URLResponse response = httpget<URLResponse>("/KakaoTalk/?TG=BOX", CorpNum, UserID);
+
+            return response.url;
+        }
+
         public List<SenderNumber> GetSenderNumberList(String CorpNum, String UserID)
         {
             return httpget<List<SenderNumber>>("/Message/SenderNumber", CorpNum, UserID);

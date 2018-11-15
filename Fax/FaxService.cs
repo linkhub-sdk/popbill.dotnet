@@ -607,6 +607,12 @@ namespace Popbill.Fax
             return httpget<List<SenderNumber>>("/FAX/SenderNumber", CorpNum, UserID);
         }
 
+        public String GetPreviewURL(String CorpNum, String receiptNum, String UserID)
+        {
+            URLResponse response = httpget<URLResponse>("/FAX/Preview/" + ReceiptNum, CorpNum, UserID);
+
+            return response.url;
+        }
 
         [DataContract]
         private class sendRequest
