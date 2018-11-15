@@ -582,6 +582,20 @@ namespace Popbill.Taxinvoice
             return httpget<Response>("/Taxinvoice/CertCheck", corpNum, userID);
         }
 
+        public String GetSealURL(String CorpNum, String UserID)
+        {
+            URLResponse response = httpget<URLResponse>("/?TG=SEAL", CorpNum, UserID);
+
+            return response.url;
+        }
+
+        public String GetTaxCertURL(String CorpNum, String UserID)
+        {
+            URLResponse response = httpget<URLResponse>("/?TG=CERT", CorpNum, UserID);
+
+            return response.url;
+        }
+
         [DataContract]
         public class CertResponse
         {

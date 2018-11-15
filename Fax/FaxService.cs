@@ -42,6 +42,20 @@ namespace Popbill.Fax
             return response.url;
         }
 
+        public String GetSentListURL(String CorpNum, String UserID)
+        {
+            URLResponse response = httpget<URLResponse>("/FAX/?TG=BOX", CorpNum, UserID);
+
+            return response.url;
+        }
+
+        public String GetSenderNumberMgtURL(String CorpNum, String UserID)
+        {
+            URLResponse response = httpget<URLResponse>("/FAX/?TG=SENDER", CorpNum, UserID);
+
+            return response.url;
+        }
+
         public string SendFAX(String CorpNum, String sendNum, String receiveNum, String receiveName, String filePath, DateTime? reserveDT, String UserID)
         {
             List<String> filePaths = new List<string>();

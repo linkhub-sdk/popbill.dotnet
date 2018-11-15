@@ -44,6 +44,20 @@ namespace Popbill.Message
             return response.url;
         }
 
+        public String GetSentListURL(String CorpNum, String UserID)
+        {
+            URLResponse response = httpget<URLResponse>("/Message/?TG=BOX", CorpNum, UserID);
+
+            return response.url;
+        }
+
+        public String GetSenderNumberMgtURL(String CorpNum, String UserID)
+        {
+            URLResponse response = httpget<URLResponse>("/Message/?TG=SENDER", CorpNum, UserID);
+
+            return response.url;
+        }
+
         public String SendSMS(String CorpNum, String sendNum, String senderName, String receiveNum, String receiveName, String content, DateTime? reserveDT, String UserID)
         {
             List<Message> messages = new List<Message>();

@@ -49,6 +49,21 @@ namespace Popbill
             return response.url;
         }
 
+        public String GetAccessURL(String CorpNum, String UserID)
+        {
+            URLResponse response = httpget<URLResponse>("/?TG=LOGIN", CorpNum, UserID);
+
+            return response.url;
+        }
+
+        public String GetChargeURL(String CorpNum, String UserID)
+        {
+            URLResponse response = httpget<URLResponse>("/?TG=CHRG", CorpNum, UserID);
+
+            return response.url;
+        }
+
+
         public Response JoinMember(JoinForm joinInfo)
         {
             if (joinInfo == null) throw new PopbillException(-99999999, "No JoinForm");
