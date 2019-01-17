@@ -410,6 +410,13 @@ namespace Popbill.Statement
             return httppost<Response>(uri, CorpNum, UserID, null, null);
         }
 
+        public String GetSealURL(String CorpNum, String UserID)
+        {
+            URLResponse response = httpget<URLResponse>("/?TG=SEAL", CorpNum, UserID);
+
+            return response.url;
+        }
+
         [DataContract]
         private class MemoRequest
         {
