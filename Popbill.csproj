@@ -52,6 +52,7 @@
     <Compile Include="Base\ChargeInfo.cs" />
     <Compile Include="Base\Contact.cs" />
     <Compile Include="Base\CorpInfo.cs" />
+    <Compile Include="Base\IssueResponse.cs" />
     <Compile Include="Base\JoinForm.cs" />
     <Compile Include="Base\PopbillException.cs" />
     <Compile Include="Base\Response.cs" />

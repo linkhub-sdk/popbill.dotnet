@@ -174,17 +174,17 @@ namespace Popbill.Taxinvoice
 
             return httppost<Response>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey, CorpNum, UserID, PostData, "DENY");
         }
-        public Response Issue(String CorpNum, MgtKeyType KeyType, String MgtKey, String Memo, String UserID)
+        public IssueResponse Issue(String CorpNum, MgtKeyType KeyType, String MgtKey, String Memo, String UserID)
         {
             return Issue(CorpNum, KeyType, MgtKey, Memo, null, false, UserID);
         }
 
-        public Response Issue(String CorpNum, MgtKeyType KeyType, String MgtKey, String Memo, bool ForceIssue, String UserID)
+        public IssueResponse Issue(String CorpNum, MgtKeyType KeyType, String MgtKey, String Memo, bool ForceIssue, String UserID)
         {
             return Issue(CorpNum, KeyType, MgtKey, Memo, null, ForceIssue, UserID);
         }
 
-        public Response Issue(String CorpNum, MgtKeyType KeyType, String MgtKey, String Memo, String EmailSubject, bool ForceIssue, String UserID)
+        public IssueResponse Issue(String CorpNum, MgtKeyType KeyType, String MgtKey, String Memo, String EmailSubject, bool ForceIssue, String UserID)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
 
@@ -196,7 +196,7 @@ namespace Popbill.Taxinvoice
 
             String PostData = toJsonString(request);
 
-            return httppost<Response>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey, CorpNum, UserID, PostData, "ISSUE");
+            return httppost<IssueResponse>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey, CorpNum, UserID, PostData, "ISSUE");
         }
 
         public Response CancelIssue(String CorpNum, MgtKeyType KeyType, String MgtKey, String Memo, String UserID)
@@ -357,6 +357,15 @@ namespace Popbill.Taxinvoice
             return response.url;
 
         }
+        public String GetViewURL(String CorpNum, MgtKeyType KeyType, String MgtKey, String UserID)
+        {
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+
+            URLResponse response = httpget<URLResponse>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey + "?TG=VIEW", CorpNum, UserID);
+
+            return response.url;
+
+        }
         public String GetMailURL(String CorpNum, MgtKeyType KeyType, String MgtKey, String UserID)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
@@ -428,16 +437,16 @@ namespace Popbill.Taxinvoice
             return httppost<Response>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey + "/Files/" + FileID, CorpNum, UserID, null, "DELETE");
         }
 
-        public Response RegistIssue(String CorpNum, Taxinvoice taxinvoice, bool ForceIssue, String Memo)
+        public IssueResponse RegistIssue(String CorpNum, Taxinvoice taxinvoice, bool ForceIssue, String Memo)
         {
             return RegistIssue(CorpNum, taxinvoice, ForceIssue, Memo, false, null, null, null);
         }
-        public Response RegistIssue(String CorpNum, Taxinvoice taxinvoice, bool ForceIssue, String Memo, bool WriteSpecification, String DealinvoiceMgtKey, String EmailSubject)
+        public IssueResponse RegistIssue(String CorpNum, Taxinvoice taxinvoice, bool ForceIssue, String Memo, bool WriteSpecification, String DealinvoiceMgtKey, String EmailSubject)
         {
             return RegistIssue(CorpNum, taxinvoice, ForceIssue, Memo, WriteSpecification, DealinvoiceMgtKey, EmailSubject, null);
         }
 
-        public Response RegistIssue(String CorpNum, Taxinvoice taxinvoice, bool ForceIssue, String Memo, bool WriteSpecification, String DealinvoiceMgtKey, String EmailSubject, String UserID)
+        public IssueResponse RegistIssue(String CorpNum, Taxinvoice taxinvoice, bool ForceIssue, String Memo, bool WriteSpecification, String DealinvoiceMgtKey, String EmailSubject, String UserID)
         {
             taxinvoice.writeSpecification = WriteSpecification;
             taxinvoice.forceIssue = ForceIssue;
@@ -446,8 +455,8 @@ namespace Popbill.Taxinvoice
             taxinvoice.emailSubject = EmailSubject;
 
             String PostData = toJsonString(taxinvoice);
-            
-            return httppost<Response>("/Taxinvoice", CorpNum, UserID, PostData, "ISSUE");
+
+            return httppost<IssueResponse>("/Taxinvoice", CorpNum, UserID, PostData, "ISSUE");
         }
         
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String Order, int Page, int PerPage)
