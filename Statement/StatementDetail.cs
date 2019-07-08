@@ -47,5 +47,25 @@ namespace Popbill.Statement
         public String spare9;
         [DataMember]
         public String spare10;
+        [DataMember]
+        public String spare11;
+        [DataMember]
+        public String spare12;
+        [DataMember]
+        public String spare13;
+        [DataMember]
+        public String spare14;
+        [DataMember]
+        public String spare15;
+        [DataMember]
+        public String spare16;
+        [DataMember]
+        public String spare17;
+        [DataMember]
+        public String spare18;
+        [DataMember]
+        public String spare19;
+        [DataMember]
+        public String spare20;
     }
 }
