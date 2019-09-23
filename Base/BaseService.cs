@@ -21,6 +21,7 @@ namespace Popbill
           
         private Dictionary<String, Token> _tokenTable = new Dictionary<String, Token>();
         private bool _IsTest;
+        private bool _IPRestrictOnOff;
         private Authority _LinkhubAuth;
         private List<String> _Scopes = new List<string>();
 
@@ -30,10 +31,17 @@ namespace Popbill
             get { return _IsTest; }
         }
 
+        public bool IPRestrictOnOff
+        {
+            set { _IPRestrictOnOff = value; }
+            get { return _IPRestrictOnOff; }
+        }
+
         public BaseService(String LinkID, String SecretKey)
         {
             _LinkhubAuth = new Authority(LinkID, SecretKey);
             _Scopes.Add("member");
+            _IPRestrictOnOff = true;
         }
 
         public void AddScope(String scope)
@@ -268,8 +276,16 @@ namespace Popbill
             {
                 try
                 {
-                    _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes);
-
+                    if (_IPRestrictOnOff) // IPRestrictOnOff 사용시
+                    {
+                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes);
+                    }
+                    else
+                    {
+                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, "*");
+                    }
+                    
+                    
                     if (_tokenTable.ContainsKey(CorpNum))
                     {
                         _tokenTable.Remove(CorpNum);
