@@ -196,6 +196,21 @@ namespace Popbill.HomeTax
             return response.url;
         }
 
+        public String GetPrintURL(String corpNum, String ntsconfirmNum)
+        {
+            return GetPrintURL(corpNum, ntsconfirmNum, null);
+        }
+
+        public String GetPrintURL(String corpNum, String ntsconfirmNum, String userID)
+        {
+            if (ntsconfirmNum.Length != 24) throw new PopbillException(-99999999, "국세청승인번호가 올바르지 않습니다.");
+
+            URLResponse response = httpget<URLResponse>("/HomeTax/Taxinvoice/" + ntsconfirmNum + "/Print", corpNum, userID);
+
+            return response.url;
+        }
+
+
         public Response CheckCertValidation(String corpNum)
         {
             return CheckCertValidation(corpNum, null);

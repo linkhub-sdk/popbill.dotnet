@@ -322,14 +322,23 @@ namespace Popbill.Statement
 
         public Response RegistIssue(String CorpNum, Statement statement, String Memo, String UserID)
         {
+            return RegistIssue(CorpNum, statement, Memo, UserID, null);
+        }
+
+        public Response RegistIssue(String CorpNum, Statement statement, String Memo, String UserID, String EmailSubject)
+        {
             if (statement == null) throw new PopbillException(-99999999, "명세서 정보가 입력되지 않았습니다.");
-            
+
             statement.memo = Memo;
-            
+
+            if (EmailSubject != null) statement.emailSubject = EmailSubject;
+
             String PostData = toJsonString(statement);
 
             return httppost<Response>("/Statement", CorpNum, UserID, PostData, "ISSUE");
         }
+
+
         public DocSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, int[] ItemCode, String Order, int Page, int PerPage)
         {
             return Search(CorpNum, DType, SDate, EDate, State, ItemCode, "", Order, Page, PerPage);

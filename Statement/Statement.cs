@@ -107,6 +107,9 @@ namespace Popbill.Statement
         [DataMember]
         public bool? autoacceptYN;
 
+        [DataMember]
+        public String emailSubject;
+
         [DataMember] public List<StatementDetail> detailList;
         [DataMember] public propertyBag propertyBag;
 

@@ -73,5 +73,8 @@ namespace Popbill.Cashbill
 
         [DataMember]
         public int cancelType;
+
+        [DataMember]
+        public string emailSubject;
     }
 }
