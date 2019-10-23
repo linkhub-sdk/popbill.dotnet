@@ -80,14 +80,20 @@ namespace Popbill.HomeTax
 
         public HTTaxinvoiceSearch Search(String CorpNum, String JobID, String[] Type, String[] TaxType, String[] PurposeType, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, int Page, int PerPage, String Order, String UserID)
         {
+            return Search(CorpNum, JobID, Type, TaxType, PurposeType, TaxRegIDYN, TaxRegIDType, TaxRegID, Page, PerPage, Order, UserID, null);
+        }
+
+        public HTTaxinvoiceSearch Search(String CorpNum, String JobID, String[] Type, String[] TaxType, String[] PurposeType, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, int Page, int PerPage, String Order, String UserID, String SearchString)
+        {
             if (JobID.Length != 18) throw new PopbillException(-99999999, "작업아이디(jobID)가 올바르지 않습니다.");
-            
+
             String uri = "/HomeTax/Taxinvoice/" + JobID;
             uri += "?Type=" + String.Join(",", Type);
             uri += "&TaxType=" + String.Join(",", TaxType);
             uri += "&PurposeType=" + String.Join(",", PurposeType);
 
             if (TaxRegIDYN != "") uri += "&TaxRegIDYN=" + TaxRegIDYN;
+            if (SearchString != null) uri += "&SearchString=" + SearchString;
 
             uri += "&TaxRegIDType=" + TaxRegIDType;
             uri += "&TaxRegID=" + TaxRegID;
@@ -95,7 +101,7 @@ namespace Popbill.HomeTax
             uri += "&Page=" + Page.ToString();
             uri += "&PerPage=" + PerPage.ToString();
             uri += "&Order=" + Order;
-            
+
             return httpget<HTTaxinvoiceSearch>(uri, CorpNum, UserID);
         }
 
@@ -106,6 +112,11 @@ namespace Popbill.HomeTax
 
         public HTTaxinvoiceSummary Summary(String CorpNum, String JobID, String[] Type, String[] TaxType, String[] PurposeType, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String UserID)
         {
+            return Summary(CorpNum, JobID, Type, TaxType, PurposeType, TaxRegIDYN, TaxRegIDType, TaxRegID, UserID, null);
+        }
+
+        public HTTaxinvoiceSummary Summary(String CorpNum, String JobID, String[] Type, String[] TaxType, String[] PurposeType, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String UserID, String SearchString)
+        {
             if (JobID.Length != 18) throw new PopbillException(-99999999, "작업아이디(jobID)가 올바르지 않습니다.");
 
             String uri = "/HomeTax/Taxinvoice/" + JobID + "/Summary";
@@ -114,6 +125,7 @@ namespace Popbill.HomeTax
             uri += "&PurposeType=" + String.Join(",", PurposeType);
 
             if (TaxRegIDYN != "") uri += "&TaxRegIDYN=" + TaxRegIDYN;
+            if (SearchString != null) uri += "&SearchString=" + SearchString;
 
             uri += "&TaxRegIDType=" + TaxRegIDType;
             uri += "&TaxRegID=" + TaxRegID;
