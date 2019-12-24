@@ -56,19 +56,23 @@ namespace Popbill.EasyFin
         public String RequestJob(String CorpNum, String BankCode, String AccountNumber, String SDate, String EDate, String UserID)
         {
             if (BankCode == null || BankCode == "") throw new PopbillException(-99999999, "은행코드가 입력되지 않습니다.");
-            if (AccountNumber == null || AccountNumber == "") throw new PopbillException(-99999999, "은행계좌번호가 입력되지않습니다.");
+            if (AccountNumber == null || AccountNumber == "") throw new PopbillException(-99999999, "은행계좌번호가 입력되지 않습니다.");
+            if (SDate == null || SDate == "") throw new PopbillException(-99999999, "거래내역 조회 시작일자가 입력되지 않습니다.");
+            if (EDate == null || EDate == "") throw new PopbillException(-99999999, "거래내역 조회 종료일자가 입력되 지않습니다.");
 
 
             String uri = "/EasyFin/Bank/BankAccount";
             uri += "?BankCode="+BankCode;
             uri += "&AccountNumber="+AccountNumber;
+            uri += "&SDate=" + SDate;
+            uri += "&EDate=" + EDate;
 
             return httppost<JobIDResponse>(uri, CorpNum, UserID, null, null).jobID;            
         }
 
         public EasyFinBankJobState GetJobState(String CorpNum, String JobID)
         {
-            return GetJobState(Corpum, JobID, null);
+            return GetJobState(CorpNum, JobID, null);
         }
 
         public EasyFinBankJobState GetJobState(String CorpNum, String JobID, String UserID)
