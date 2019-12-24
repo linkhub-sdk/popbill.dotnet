@@ -64,6 +64,13 @@
     <Compile Include="Base\EmailConfig.cs" />
     <Compile Include="Closedown\ClosedownService.cs" />
     <Compile Include="Closedown\CorpState.cs" />
+    <Compile Include="EasyFin\EasyFinBankAccount.cs" />
+    <Compile Include="EasyFin\EasyFinBankFlatRate.cs" />
+    <Compile Include="EasyFin\EasyFinBankJobState.cs" />
+    <Compile Include="EasyFin\EasyFinBankSearchDetail.cs" />
+    <Compile Include="EasyFin\EasyFinBankSearchResult.cs" />
+    <Compile Include="EasyFin\EasyFinBankService.cs" />
+    <Compile Include="EasyFin\EasyFinBankSummary.cs" />
     <Compile Include="Fax\FaxReceiver.cs" />
     <Compile Include="Fax\FaxResult.cs" />
     <Compile Include="Fax\FAXSearchResult.cs" />
