@@ -65,6 +65,7 @@
     <Compile Include="Closedown\ClosedownService.cs" />
     <Compile Include="Closedown\CorpState.cs" />
     <Compile Include="EasyFin\EasyFinBankAccount.cs" />
+    <Compile Include="EasyFin\EasyFinBankAccountForm.cs" />
     <Compile Include="EasyFin\EasyFinBankFlatRate.cs" />
     <Compile Include="EasyFin\EasyFinBankJobState.cs" />
     <Compile Include="EasyFin\EasyFinBankSearchDetail.cs" />
