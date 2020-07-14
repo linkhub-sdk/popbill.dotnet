@@ -16,12 +16,17 @@ namespace Popbill
         private const string ServiceID_TEST = "POPBILL_TEST";
         private const String ServiceURL_REAL = "https://popbill.linkhub.co.kr";
         private const String ServiceURL_TEST = "https://popbill-test.linkhub.co.kr";
+
+        private const String ServiceURL_REAL_GA = "https://ga-popbill.linkhub.co.kr";
+        private const String ServiceURL_TEST_GA = "https://ga-popbill-test.linkhub.co.kr";
+
         private const String APIVersion = "1.0";
         private const String CRLF = "\r\n";
           
         private Dictionary<String, Token> _tokenTable = new Dictionary<String, Token>();
         private bool _IsTest;
         private bool _IPRestrictOnOff;
+        private bool _UseStaticIP;
         private Authority _LinkhubAuth;
         private List<String> _Scopes = new List<string>();
 
@@ -36,6 +41,13 @@ namespace Popbill
             set { _IPRestrictOnOff = value; }
             get { return _IPRestrictOnOff; }
         }
+
+        public bool UseStaticIP
+        {
+            set { _UseStaticIP = value; }
+            get { return _UseStaticIP; }
+        }
+
 
         public BaseService(String LinkID, String SecretKey)
         {
@@ -98,7 +110,15 @@ namespace Popbill
         {
             get
             {
-                return _IsTest ? ServiceURL_TEST : ServiceURL_REAL;
+                if (_UseStaticIP)
+                {
+                    return _IsTest ? ServiceURL_TEST_GA : ServiceURL_REAL_GA;
+                }
+                else
+                {
+                    return _IsTest ? ServiceURL_TEST : ServiceURL_REAL;
+                }
+                
             }
         }
 
@@ -110,7 +130,7 @@ namespace Popbill
         {
             try
             {
-                return _LinkhubAuth.getPartnerURL(getSession_Token(CorpNum), ServiceID, TOGO);
+                return _LinkhubAuth.getPartnerURL(getSession_Token(CorpNum), ServiceID, TOGO, UseStaticIP);
             }
             catch (LinkhubException le)
             {
@@ -122,7 +142,7 @@ namespace Popbill
         {
             try
             {
-                return _LinkhubAuth.getBalance(getSession_Token(CorpNum), ServiceID);
+                return _LinkhubAuth.getBalance(getSession_Token(CorpNum), ServiceID, UseStaticIP);
             }
             catch (LinkhubException le)
             {
@@ -133,7 +153,7 @@ namespace Popbill
         {
             try
             {
-                return _LinkhubAuth.getPartnerBalance(getSession_Token(CorpNum), ServiceID);
+                return _LinkhubAuth.getPartnerBalance(getSession_Token(CorpNum), ServiceID, UseStaticIP);
             }
             catch (LinkhubException le)
             {
@@ -264,7 +284,7 @@ namespace Popbill
             bool expired = true;
             if (_token != null)
             {
-                DateTime now = DateTime.Parse(_LinkhubAuth.getTime());
+                DateTime now = DateTime.Parse(_LinkhubAuth.getTime(UseStaticIP));
 
                 DateTime expiration = DateTime.Parse( _token.expiration);
 
@@ -278,11 +298,11 @@ namespace Popbill
                 {
                     if (_IPRestrictOnOff) // IPRestrictOnOff 사용시
                     {
-                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes);
+                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, null, UseStaticIP);
                     }
                     else
                     {
-                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, "*");
+                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, "*", UseStaticIP);
                     }
                     
                     
