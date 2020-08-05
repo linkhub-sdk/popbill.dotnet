@@ -461,38 +461,44 @@ namespace Popbill.Taxinvoice
         
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String Order, int Page, int PerPage)
         {
-            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, null, null, null, "", Order, Page, PerPage, "", null);
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, null, null, null, "", Order, Page, PerPage, "", null, null, null, "");
         }
 
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String Order, int Page, int PerPage, String UserID)
         {
-            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, null, null, null, "", Order, Page, PerPage, "", UserID);
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, null, null, null, "", Order, Page, PerPage, "", UserID, null, null, "");
         }
 
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String Order, int Page, int PerPage)
         {
-            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, "", Order, Page, PerPage, "", null);
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, "", Order, Page, PerPage, "", null, null, null, "");
         }
 
             
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String Order, int Page, int PerPage, String UserID)
         {
-            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, "", Order, Page, PerPage, "", null);
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, "", Order, Page, PerPage, "", null, null, null, "");
         }
 
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String QString, String Order, int Page, int PerPage, String UserID)
         {
-            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, "", Order, Page, PerPage, "", null);
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, "", Order, Page, PerPage, "", null, null, null, "");
         }
 
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String QString, String Order, int Page, int PerPage, String InterOPYN, String UserID)
         {
-            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, QString, Order, Page, PerPage, InterOPYN, UserID);
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, QString, Order, Page, PerPage, InterOPYN, UserID, null, null, "");
+        }
+
+        public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, String[] IssueType, bool? LateOnly,
+            String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String QString, String Order, int Page, int PerPage, String InterOPYN, String UserID)
+        {
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, IssueType, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, QString, Order, Page, PerPage, InterOPYN, UserID, null, null, "");
         }
 
 
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, String[] IssueType, bool? LateOnly, 
-            String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String QString, String Order, int Page, int PerPage, String InterOPYN, String UserID)
+            String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String QString, String Order, int Page, int PerPage, String InterOPYN, String UserID, String[] RegType, String[] CloseDownState, String MgtKey)
         {
             if (String.IsNullOrEmpty(DType)) throw new PopbillException(-99999999, "검색일자 유형이 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
@@ -505,8 +511,10 @@ namespace Popbill.Taxinvoice
             uri += "&State=" + String.Join(",", State);
             uri += "&Type=" + String.Join(",", Type);
             uri += "&TaxType=" + String.Join(",", TaxType);
-            
+
             if (IssueType != null) uri += "&IssueType=" + String.Join(",", IssueType);
+            if (RegType != null) uri += "&RegType=" + String.Join(",", RegType);
+            if (CloseDownState != null) uri += "&CloseDownState=" + String.Join(",", CloseDownState);
             
             if (LateOnly != null)
             {
@@ -522,6 +530,7 @@ namespace Popbill.Taxinvoice
 
 
             if (TaxRegIDYN != "") uri += "&TaxRegIDYN=" + TaxRegIDYN;
+            if (MgtKey != "") uri += "&MgtKey=" + MgtKey;
 
             uri += "&InterOPYN=" + InterOPYN;
             uri += "&TaxRegIDType=" + TaxRegIDType;
