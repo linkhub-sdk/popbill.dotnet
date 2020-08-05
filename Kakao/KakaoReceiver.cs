@@ -17,6 +17,7 @@ namespace Popbill.Kakao
         public string msg;
         [DataMember]
         public string altmsg;
-        
+        [DataMember]
+        public string interOPRefKey;
     }
 }
