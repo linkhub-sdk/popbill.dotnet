@@ -247,6 +247,21 @@ namespace Popbill.Cashbill
             return response.url;
         }
 
+        public Response AssignMgtKey(String CorpNum, String ItemKey, String MgtKey)
+        {
+            return AssignMgtKey(CorpNum, ItemKey, MgtKey, null);
+        }
+
+        public Response AssignMgtKey(String CorpNum, String ItemKey, String MgtKey, String UserID)
+        {
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "할당할 문서번호가 입력되지 않았습니다.");
+
+
+            String PostData = "MgtKey=" + MgtKey;
+
+            return httppost<Response>("/Cashbill/" + ItemKey, CorpNum, UserID, PostData, null, "application/x-www-form-urlencoded; charset=utf-8");
+        }
+
         public Response RegistIssue(String CorpNum, Cashbill cashbill, String Memo)
         {
             return RegistIssue(CorpNum, cashbill, Memo, null);
