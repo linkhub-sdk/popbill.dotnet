@@ -44,7 +44,7 @@ namespace Popbill.Cashbill
 
         public bool CheckMgtKeyInUse(String CorpNum, String MgtKey)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             try
             {
@@ -76,7 +76,7 @@ namespace Popbill.Cashbill
 
         public Response Update(String CorpNum, String MgtKey, Cashbill cashbill, String UserID)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             if (cashbill == null) throw new PopbillException(-99999999, "현금영수증 정보가 입력되지 않았습니다.");
 
@@ -87,14 +87,14 @@ namespace Popbill.Cashbill
 
         public Response Delete(String CorpNum, String MgtKey, String UserID)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             return httppost<Response>("/Cashbill/" + MgtKey, CorpNum, UserID, null, "DELETE");
         }
 
         public Response Issue(String CorpNum, String MgtKey, String Memo, String UserID)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             MemoRequest request = new MemoRequest();
 
@@ -107,7 +107,7 @@ namespace Popbill.Cashbill
 
         public Response CancelIssue(String CorpNum, String MgtKey, String Memo, String UserID)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             MemoRequest request = new MemoRequest();
 
@@ -120,7 +120,7 @@ namespace Popbill.Cashbill
 
         public Response SendEmail(String CorpNum, String MgtKey, String Receiver, String UserID)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             ResendRequest request = new ResendRequest();
 
@@ -133,7 +133,7 @@ namespace Popbill.Cashbill
 
         public Response SendSMS(String CorpNum, String MgtKey,String Sender, String Receiver, String Contents, String UserID)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             ResendRequest request = new ResendRequest();
 
@@ -148,7 +148,7 @@ namespace Popbill.Cashbill
 
         public Response SendFAX(String CorpNum, String MgtKey, String Sender, String Receiver, String UserID)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             ResendRequest request = new ResendRequest();
 
@@ -162,21 +162,21 @@ namespace Popbill.Cashbill
 
         public Cashbill GetDetailInfo(String CorpNum, String MgtKey)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             return httpget<Cashbill>("/Cashbill/" + MgtKey + "?Detail", CorpNum, null);
         }
 
         public CashbillInfo GetInfo(String CorpNum, String MgtKey)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             return httpget<CashbillInfo>("/Cashbill/" + MgtKey, CorpNum, null);
         }
 
         public List<CashbillInfo> GetInfos(String CorpNum, List<String> MgtKeyList)
         {
-            if(MgtKeyList == null || MgtKeyList.Count == 0) throw new PopbillException(-99999999,"관리번호 목록이 입력되지 않았습니다.");
+            if(MgtKeyList == null || MgtKeyList.Count == 0) throw new PopbillException(-99999999,"문서번호 목록이 입력되지 않았습니다.");
 
             String PostData = toJsonString(MgtKeyList);
 
@@ -185,14 +185,14 @@ namespace Popbill.Cashbill
 
         public List<CashbillLog> GetLogs(String CorpNum, string MgtKey)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             return httpget<List<CashbillLog>>("/Cashbill/" + MgtKey + "/Logs", CorpNum, null);
         }
 
         public String GetPopUpURL(String CorpNum, String MgtKey, String UserID)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             URLResponse response = httpget<URLResponse>("/Cashbill/" + MgtKey + "?TG=POPUP", CorpNum, UserID);
 
@@ -202,16 +202,25 @@ namespace Popbill.Cashbill
 
         public String GetMailURL(String CorpNum, String MgtKey, String UserID)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             URLResponse response = httpget<URLResponse>("/Cashbill/" + MgtKey + "?TG=MAIL", CorpNum, UserID);
 
             return response.url;
 
         }
+        public String GetPDFURL(String CorpNum, String MgtKey, String UserID)
+        {
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
+
+            URLResponse response = httpget<URLResponse>("/Cashbill/" + MgtKey + "?TG=PDF", CorpNum, UserID);
+
+            return response.url;
+
+        }
         public String GetPrintURL(String CorpNum,String MgtKey, String UserID)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             URLResponse response = httpget<URLResponse>("/Cashbill/" + MgtKey + "?TG=PRINT", CorpNum, UserID);
 
@@ -220,7 +229,7 @@ namespace Popbill.Cashbill
         }
         public String GetEPrintURL(String CorpNum, String MgtKey, String UserID)
         {
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "관리번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             URLResponse response = httpget<URLResponse>("/Cashbill/" + MgtKey + "?TG=EPRINT", CorpNum, UserID);
 
@@ -229,7 +238,7 @@ namespace Popbill.Cashbill
         }
         public String GetMassPrintURL(String CorpNum, List<String> MgtKeyList, String UserID)
         {
-            if (MgtKeyList == null || MgtKeyList.Count == 0) throw new PopbillException(-99999999, "관리번호 목록이 입력되지 않았습니다.");
+            if (MgtKeyList == null || MgtKeyList.Count == 0) throw new PopbillException(-99999999, "문서번호 목록이 입력되지 않았습니다.");
 
             String PostData = toJsonString(MgtKeyList);
 
