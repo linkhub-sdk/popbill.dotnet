@@ -15,5 +15,7 @@ namespace Popbill.Kakao
         public bool? representYN;
         [DataMember]
         public int? state;
+        [DataMember]
+        public string memo;
     }
 }
