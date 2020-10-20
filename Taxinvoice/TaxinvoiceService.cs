@@ -393,6 +393,15 @@ namespace Popbill.Taxinvoice
             return response.url;
 
         }
+        public String GetOldPrintURL(String CorpNum, MgtKeyType KeyType, String MgtKey, String UserID)
+        {
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
+
+            URLResponse response = httpget<URLResponse>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey + "?TG=PRINTOLD", CorpNum, UserID);
+
+            return response.url;
+
+        }
         public String GetEPrintURL(String CorpNum, MgtKeyType KeyType, String MgtKey, String UserID)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
