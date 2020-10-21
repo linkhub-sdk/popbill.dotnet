@@ -27,6 +27,7 @@ namespace Popbill
         private bool _IsTest;
         private bool _IPRestrictOnOff;
         private bool _UseStaticIP;
+        private bool _UseLocalTimeYN;
         private Authority _LinkhubAuth;
         private List<String> _Scopes = new List<string>();
 
@@ -46,6 +47,12 @@ namespace Popbill
         {
             set { _UseStaticIP = value; }
             get { return _UseStaticIP; }
+        }
+
+        public bool UseLocalTimeYN
+        {
+            set { _UseLocalTimeYN = value; }
+            get { return _UseLocalTimeYN; }
         }
 
 
@@ -284,7 +291,7 @@ namespace Popbill
             bool expired = true;
             if (_token != null)
             {
-                DateTime now = DateTime.Parse(_LinkhubAuth.getTime(UseStaticIP));
+                DateTime now = DateTime.Parse(_LinkhubAuth.getTime(UseStaticIP, UseLocalTimeYN));
 
                 DateTime expiration = DateTime.Parse( _token.expiration);
 
@@ -298,11 +305,11 @@ namespace Popbill
                 {
                     if (_IPRestrictOnOff) // IPRestrictOnOff 사용시
                     {
-                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, null, UseStaticIP);
+                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, null, UseStaticIP, UseLocalTimeYN);
                     }
                     else
                     {
-                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, "*", UseStaticIP);
+                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, "*", UseStaticIP, UseLocalTimeYN);
                     }
                     
                     
