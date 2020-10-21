@@ -278,6 +278,19 @@ namespace Popbill
                 return jss.Deserialize<T>(t);
             }  
         }
+        protected byte[] readByte(Stream byteStream)
+        {
+            byte[] buffer = new byte[1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read = 0;
+                while ((read = byteStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
 
         private String getSession_Token(String CorpNum)
         {
@@ -357,6 +370,10 @@ namespace Popbill
                 {
                     using (Stream stReadData = response.GetResponseStream())
                     {
+                        if (response.ContentType.Equals("application/pdf;charset=utf-8", StringComparison.OrdinalIgnoreCase))
+                        {
+                            return (T)Convert.ChangeType(readByte(stReadData), typeof(T));
+                        }
                         return fromJson<T>(stReadData);
                     }
                 }

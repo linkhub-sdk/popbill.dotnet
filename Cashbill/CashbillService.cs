@@ -218,6 +218,15 @@ namespace Popbill.Cashbill
             return response.url;
 
         }
+        public byte[] GetPDF(String CorpNum, String MgtKey, String UserID)
+        {
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
+
+            byte[] response = httpget<byte[]>("/Cashbill/" + MgtKey + "?PDF", CorpNum, UserID);
+
+            return response;
+
+        }
         public String GetPrintURL(String CorpNum,String MgtKey, String UserID)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
