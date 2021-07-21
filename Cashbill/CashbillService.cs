@@ -200,6 +200,15 @@ namespace Popbill.Cashbill
 
         }
 
+        public string GetViewURL(String CorpNum, String MgtKey, String UserID)
+        {
+            if (string.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
+
+            URLResponse response = httpget<URLResponse>("/Cashbill/" + MgtKey + "?TG=VIEW", CorpNum, UserID);
+
+            return response.url;
+        }
+
         public String GetMailURL(String CorpNum, String MgtKey, String UserID)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
