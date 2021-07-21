@@ -324,17 +324,17 @@ namespace Popbill.Statement
             return response.receiptNum;
         }
 
-        public Response RegistIssue(String CorpNum, Statement statement, String Memo)
+        public STMIssueResponse RegistIssue(String CorpNum, Statement statement, String Memo)
         {
             return RegistIssue(CorpNum, statement, Memo, null);
         }
 
-        public Response RegistIssue(String CorpNum, Statement statement, String Memo, String UserID)
+        public STMIssueResponse RegistIssue(String CorpNum, Statement statement, String Memo, String UserID)
         {
             return RegistIssue(CorpNum, statement, Memo, UserID, null);
         }
 
-        public Response RegistIssue(String CorpNum, Statement statement, String Memo, String UserID, String EmailSubject)
+        public STMIssueResponse RegistIssue(String CorpNum, Statement statement, String Memo, String UserID, String EmailSubject)
         {
             if (statement == null) throw new PopbillException(-99999999, "명세서 정보가 입력되지 않았습니다.");
 
@@ -344,7 +344,7 @@ namespace Popbill.Statement
 
             String PostData = toJsonString(statement);
 
-            return httppost<Response>("/Statement", CorpNum, UserID, PostData, "ISSUE");
+            return httppost<STMIssueResponse>("/Statement", CorpNum, UserID, PostData, "ISSUE");
         }
 
 
