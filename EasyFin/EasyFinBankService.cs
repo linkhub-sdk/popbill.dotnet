@@ -110,6 +110,23 @@ namespace Popbill.EasyFin
             return httppost<Response>(uri, CorpNum, UserID, "", null);
         }
 
+        public Response DeleteBankAccount(String CorpNum, String BankCode, String AccountNumber)
+        {
+            return DeleteBankAccount(CorpNum, BankCode, AccountNumber, null);
+        }
+
+        public Response DeleteBankAccount(String CorpNum, String BankCode, String AccountNumber, String UserID)
+        {
+            if (BankCode == null || BankCode == "") throw new PopbillException(-99999999, "은행코드가 입력되지 않았습니다.");
+            if (BankCode.Length != 4) throw new PopbillException(-99999999, "은행코드가 올바르지 않습니다.");
+            if (AccountNumber == null || AccountNumber == "") throw new PopbillException(-99999999, "은행 계좌번호가 입력되지 않았습니다.");
+
+            String uri = "/EasyFin/Bank/BankAccount/Delete";
+            String PostData = "{'BankCode' : " + "'" + BankCode + "', " + "'AccountNumber' : " + "'" + AccountNumber + "'" + "}";
+
+            return httppost<Response>(uri, CorpNum, UserID, PostData, null);
+        }
+
 
         public String GetBankAccountMgtURL(String CorpNum)
         {
