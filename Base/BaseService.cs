@@ -7,6 +7,7 @@ using System.Text;
 using System.Net;
 using Linkhub;
 using System.Web.Script.Serialization;
+using System.Security.Cryptography;
 
 namespace Popbill
 {
@@ -524,6 +525,72 @@ namespace Popbill
                         throw new PopbillException(t.code, t.message);
                     }
                 }
+                throw new PopbillException(-99999999, we.Message);
+            }
+        }
+
+        protected T httpBulkPost<T>(String url, String CorpNum, String SubmitID, String PostData, String UserID, String Action)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
+
+
+            request.ContentType = "application/json;";
+
+            if (String.IsNullOrEmpty(CorpNum) == false)
+            {
+                String bearerToken = getSession_Token(CorpNum);
+                request.Headers.Add("Authorization", "Bearer" + " " + bearerToken);
+            }
+
+            request.Headers.Add("x-pb-version", APIVersion);
+
+            request.Headers.Add("Accept-Encoding", "gzip, deflate");
+            request.AutomaticDecompression = DecompressionMethods.GZip;
+
+            request.Headers.Add("x-pb-message-digest", Convert.ToBase64String(SHA1.Create().ComputeHash(Encoding.UTF8.GetBytes(PostData))));
+            request.Headers.Add("x-pb-submit-id", SubmitID);
+
+            if (String.IsNullOrEmpty(UserID) == false)
+            {
+                request.Headers.Add("x-pb-userid", UserID);
+            }
+
+            if (String.IsNullOrEmpty(Action) == false)
+            {
+                request.Headers.Add("X-HTTP-Method-Override", Action);
+            }
+
+            request.Method = "POST";
+
+            if (String.IsNullOrEmpty(PostData)) PostData = "";
+
+            byte[] btPostDAta = Encoding.UTF8.GetBytes(PostData);
+
+            request.ContentLength = btPostDAta.Length;
+
+            request.GetRequestStream().Write(btPostDAta, 0, btPostDAta.Length);
+
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (Stream stReadData = response.GetResponseStream())
+                    {
+                        return fromJson<T>(stReadData);
+                    }
+                }
+            }
+            catch (Exception we)
+            {
+                if (we is WebException && ((WebException)we).Response != null)
+                {
+                    using (Stream stReadData = ((WebException)we).Response.GetResponseStream())
+                    {
+                        Response t = fromJson<Response>(stReadData);
+                        throw new PopbillException(t.code, t.message);
+                    }
+                }
+
                 throw new PopbillException(-99999999, we.Message);
             }
         }

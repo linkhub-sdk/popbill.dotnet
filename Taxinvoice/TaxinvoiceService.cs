@@ -278,6 +278,26 @@ namespace Popbill.Taxinvoice
             return httppost<Response>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey, CorpNum, UserID, null, "NTS");
         }
 
+        public BulkResponse BulkSubmit(String CorpNum, String SubmitID, List<Taxinvoice> taxinvoiceList, bool ForceIssue)
+        {
+            return BulkSubmit(CorpNum, SubmitID, taxinvoiceList, ForceIssue, null);
+        }
+
+        public BulkResponse BulkSubmit(String CorpNum, String SubmitID, List<Taxinvoice> taxinvoiceList, bool ForceIssue, String UserID)
+        {
+            if (string.IsNullOrEmpty(SubmitID)) throw new PopbillException(-99999999, "제출아이디(SubmitID)가 입력되지 않았습니다.");
+            if (taxinvoiceList == null || taxinvoiceList.Count <= 0) throw new PopbillException(-99999999, "세금계산서 정보가 입력되지 않았습니다.");
+
+            BulkTaxinvoiceSubmit tx = new BulkTaxinvoiceSubmit();
+            tx.forceIssue = ForceIssue;
+            tx.invoices = taxinvoiceList;
+            
+            String PostData = toJsonString(tx);
+
+            return httpBulkPost<BulkResponse>("/Taxinvoice/", CorpNum, SubmitID, PostData, UserID, "BULKISSUE");
+
+        }
+
         public Response SendEmail(String CorpNum, MgtKeyType KeyType, String MgtKey, String Receiver, String UserID)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
@@ -342,6 +362,18 @@ namespace Popbill.Taxinvoice
 
             return httppost<List<TaxinvoiceInfo>>("/Taxinvoice/" +  KeyType.ToString(),CorpNum,null,PostData,null);
         }
+
+        public BulkTaxinvoiceResult GetBulkResult(String CorpNum, String SubmitID)
+        {
+            return GetBulkResult(CorpNum, SubmitID, null);
+        }
+        public BulkTaxinvoiceResult GetBulkResult(String CorpNum, String SubmitID, String UserID)
+        {
+            if (string.IsNullOrEmpty(SubmitID)) throw new PopbillException(-99999999, "제출아이디(SubmitID)가 입력되지 않았습니다.");
+
+            return httpget<BulkTaxinvoiceResult>("/Taxinvoice/BULK/" + SubmitID + "/State", CorpNum, UserID);
+        }
+
         public List<TaxinvoiceLog> GetLogs(String CorpNum, MgtKeyType KeyType ,String MgtKey)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
