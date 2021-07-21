@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace Popbill.Statement
 {
@@ -8,8 +9,8 @@ namespace Popbill.Statement
         [DataMember]
         public long code;
         [DataMember]
-        public string message;
+        public String message;
         [DataMember]
-        public string invoiceNum;
+        public String invoiceNum;
     }
 }

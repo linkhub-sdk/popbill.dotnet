@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace Popbill.Taxinvoice
 {
@@ -6,14 +7,14 @@ namespace Popbill.Taxinvoice
     public class BulkTaxinvoiceIssueResult
     {
         [DataMember]
-        public string invoicerMgtKey;
+        public String invoicerMgtKey;
         [DataMember]
-        public string trusteeMgtKey;
+        public String trusteeMgtKey;
         [DataMember]
         public long code;
         [DataMember]
-        public string issueDT;
+        public String issueDT;
         [DataMember]
-        public string ntsconfirmNum;
+        public String ntsconfirmNum;
     }
 }

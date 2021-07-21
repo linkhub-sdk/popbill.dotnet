@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using System.Collections.Generic;
 
 namespace Popbill.Taxinvoice
@@ -9,13 +10,13 @@ namespace Popbill.Taxinvoice
         [DataMember]
         public long code;
         [DataMember]
-        public string message;
+        public String message;
         [DataMember]
-        public string receiptID;
+        public String receiptID;
         [DataMember]
-        public string receiptDT;
+        public String receiptDT;
         [DataMember]
-        public string submitID;
+        public String submitID;
         [DataMember]
         public long submitCount;
         [DataMember]
@@ -25,9 +26,9 @@ namespace Popbill.Taxinvoice
         [DataMember]
         public long txState;
         [DataMember]
-        public string txStartDT;
+        public String txStartDT;
         [DataMember]
-        public string txEndDT;
+        public String txEndDT;
         [DataMember]
         public long txResultCode;
         [DataMember]
