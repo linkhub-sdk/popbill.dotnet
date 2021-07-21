@@ -219,6 +219,25 @@ namespace Popbill
             }
         }
 
+        public Contact GetContactInfo(String CorpNum, String ContactID)
+        {
+            return GetContactInfo(CorpNum, ContactID, null);
+        }
+
+        public Contact GetContactInfo(String CorpNum, String ContactID, String UserID)
+        {
+            String PostData = "{'id' :" + "'" + ContactID + "'}";
+
+            try
+            {
+                return httppost<Contact>("/Contact", CorpNum, UserID, PostData, null);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
         public Response RegistContact(String CorpNum, Contact contactInfo, String UserID)
         {
             if (contactInfo == null) throw new PopbillException(-99999999, "No ContactInfo form");

@@ -26,6 +26,8 @@ namespace Popbill
         [DataMember]
         public bool? searchAllAllowYN;
         [DataMember]
+        public int? searchRole;
+        [DataMember]
         public bool? mgrYN;
         [DataMember]
         public String regDT;
