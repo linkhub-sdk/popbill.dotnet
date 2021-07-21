@@ -12,6 +12,8 @@ namespace Popbill
         [DataMember]
         public String pwd;
         [DataMember]
+        public String Password;
+        [DataMember]
         public String personName;
         [DataMember]
         public String tel;

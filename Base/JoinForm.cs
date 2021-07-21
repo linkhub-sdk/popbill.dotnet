@@ -30,6 +30,8 @@ namespace Popbill
         [DataMember]
         public String PWD;
         [DataMember]
+        public String Password;
+        [DataMember]
         public String ContactName;
         [DataMember]
         public String ContactTEL;
