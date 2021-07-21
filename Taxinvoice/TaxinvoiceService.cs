@@ -634,6 +634,16 @@ namespace Popbill.Taxinvoice
             return httppost<Response>(uri, CorpNum, UserID, null, null);
         }
 
+        public bool GetSendToNTSConfig(String CorpNum)
+        {
+            return GetSendToNTSConfig(CorpNum, null);
+        }
+
+        public bool GetSendToNTSConfig(String CorpNum, String UserID)
+        {
+            return httpget<SendToNTSConfig>("/Taxinvoice/SendToNTSConfig", CorpNum, UserID).sendToNTS;
+        }
+
         public Response CheckCertValidation(String corpNum)
         {
             return CheckCertValidation(corpNum, null);
