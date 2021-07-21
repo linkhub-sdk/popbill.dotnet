@@ -22,5 +22,8 @@ namespace Popbill.Closedown
          */
         [DataMember]
         public String typeDate;
+
+        [DataMember]
+        public String taxType;
     }
 }
