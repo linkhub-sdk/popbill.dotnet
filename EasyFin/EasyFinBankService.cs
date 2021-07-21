@@ -124,7 +124,7 @@ namespace Popbill.EasyFin
             String uri = "/EasyFin/Bank/BankAccount/Delete";
             String PostData = "{'BankCode' : " + "'" + BankCode + "', " + "'AccountNumber' : " + "'" + AccountNumber + "'" + "}";
 
-            return httppost<Response>(uri, CorpNum, UserID, PostData, null);
+            return httppost<Response>(uri, CorpNum, UserID, PostData, UserID);
         }
 
 
