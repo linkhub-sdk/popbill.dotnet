@@ -156,6 +156,45 @@ namespace Popbill
                 throw new PopbillException(le);
             }
         }
+
+        public String GetPaymentURL(String CorpNum)
+        {
+            return GetPaymentURL(CorpNum, null);
+        }
+
+        public String GetPaymentURL(String CorpNum, String UserID)
+        {
+            try
+            {
+                URLResponse response = httpget<URLResponse>("/?TG=PAYMENT", CorpNum, UserID);
+
+                return response.url;
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        public String GetUseHistoryURL(String CorpNum)
+        {
+            return GetUseHistoryURL(CorpNum, null);
+        }
+
+        public String GetUseHistoryURL(String CorpNum, String UserID)
+        {
+            try
+            {
+                URLResponse response = httpget<URLResponse>("/?TG=USEHISTORY", CorpNum, UserID);
+
+                return response.url;
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
         public Double GetPartnerBalance(String CorpNum)
         {
             try
