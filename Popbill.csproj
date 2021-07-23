@@ -51,6 +51,7 @@
     <Compile Include="AccountCheck\AccountCheckInfo.cs" />
     <Compile Include="AccountCheck\AccountCheckService.cs" />
     <Compile Include="Base\BaseService.cs" />
+    <Compile Include="Base\BulkResponse.cs" />
     <Compile Include="Base\ChargeInfo.cs" />
     <Compile Include="Base\Contact.cs" />
     <Compile Include="Base\CorpInfo.cs" />
@@ -117,8 +118,13 @@
     <Compile Include="Statement\StatementInfo.cs" />
     <Compile Include="Statement\StatementLog.cs" />
     <Compile Include="Statement\StatementService.cs" />
+    <Compile Include="Statement\STMIssueResponse.cs" />
     <Compile Include="Taxinvoice\AttachedFile.cs" />
+    <Compile Include="Taxinvoice\BulkTaxinvoiceIssueResult.cs" />
+    <Compile Include="Taxinvoice\BulkTaxinvoiceResult.cs" />
+    <Compile Include="Taxinvoice\BulkTaxinvoiceSubmit.cs" />
     <Compile Include="Taxinvoice\EmailPublicKey.cs" />
+    <Compile Include="Taxinvoice\SendToNTSConfig.cs" />
     <Compile Include="Taxinvoice\TaxinvoiceAddContact.cs" />
     <Compile Include="Taxinvoice\TaxinvoiceDetail.cs" />
     <Compile Include="Taxinvoice\Taxinvoice.cs" />
@@ -129,7 +135,7 @@
     <Compile Include="Taxinvoice\TISearchResult.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Linkhub\Linkhub.csproj">
+    <ProjectReference Include="..\linkhub.dotnet\Linkhub.csproj">
       <Project>{F960F70D-9C37-46F8-A1D4-938A81BE9855}</Project>
       <Name>Linkhub</Name>
     </ProjectReference>
