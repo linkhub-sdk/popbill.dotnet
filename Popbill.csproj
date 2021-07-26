@@ -135,7 +135,7 @@
     <Compile Include="Taxinvoice\TISearchResult.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\linkhub.dotnet\Linkhub.csproj">
+    <ProjectReference Include="..\Linkhub\Linkhub.csproj">
       <Project>{F960F70D-9C37-46F8-A1D4-938A81BE9855}</Project>
       <Name>Linkhub</Name>
     </ProjectReference>
