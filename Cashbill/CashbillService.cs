@@ -92,7 +92,7 @@ namespace Popbill.Cashbill
             return httppost<Response>("/Cashbill/" + MgtKey, CorpNum, UserID, null, "DELETE");
         }
 
-        public Response Issue(String CorpNum, String MgtKey, String Memo, String UserID)
+        public CBIssueResponse Issue(String CorpNum, String MgtKey, String Memo, String UserID)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
@@ -102,7 +102,7 @@ namespace Popbill.Cashbill
          
             String PostData = toJsonString(request);
 
-            return httppost<Response>("/Cashbill/" + MgtKey, CorpNum, UserID, PostData, "ISSUE");
+            return httppost<CBIssueResponse>("/Cashbill/" + MgtKey, CorpNum, UserID, PostData, "ISSUE");
         }
 
         public Response CancelIssue(String CorpNum, String MgtKey, String Memo, String UserID)
@@ -280,17 +280,17 @@ namespace Popbill.Cashbill
             return httppost<Response>("/Cashbill/" + ItemKey, CorpNum, UserID, PostData, null, "application/x-www-form-urlencoded; charset=utf-8");
         }
 
-        public Response RegistIssue(String CorpNum, Cashbill cashbill, String Memo)
+        public CBIssueResponse RegistIssue(String CorpNum, Cashbill cashbill, String Memo)
         {
             return RegistIssue(CorpNum, cashbill, Memo, null);
         }
 
-        public Response RegistIssue(String CorpNum, Cashbill cashbill, String Memo, String UserID)
+        public CBIssueResponse RegistIssue(String CorpNum, Cashbill cashbill, String Memo, String UserID)
         {
             return RegistIssue(CorpNum, cashbill, Memo, UserID, null);
         }
 
-        public Response RegistIssue(String CorpNum, Cashbill cashbill, String Memo, String UserID, String EmailSubject)
+        public CBIssueResponse RegistIssue(String CorpNum, Cashbill cashbill, String Memo, String UserID, String EmailSubject)
         {
             if (cashbill == null) throw new PopbillException(-99999999, "현금영수증 정보가 입력되지 않았습니다.");
 
@@ -300,7 +300,7 @@ namespace Popbill.Cashbill
 
             String PostData = toJsonString(cashbill);
 
-            return httppost<Response>("/Cashbill", CorpNum, UserID, PostData, "ISSUE");
+            return httppost<CBIssueResponse>("/Cashbill", CorpNum, UserID, PostData, "ISSUE");
         }
 
 
@@ -346,34 +346,34 @@ namespace Popbill.Cashbill
         /*
          * 취소현금영수증 즉시발행 기능 추가 (2017/08/16)
          */
-        public Response RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate)
+        public CBIssueResponse RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate)
         {
             return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, false, null, null, false, null, null, null, null, null);
         }
 
-        public Response RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN)
+        public CBIssueResponse RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN)
         {
             return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, null, null, false, null, null, null, null, null);
         }
-        
-        public Response RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN, String memo)
+
+        public CBIssueResponse RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN, String memo)
         {
             return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo, null, false, null, null, null, null, null);
         }
 
-        public Response RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN, String memo, String UserID)
+        public CBIssueResponse RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN, String memo, String UserID)
         {
             return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo, UserID, false, null, null, null, null, null);
         }
 
-        public Response RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate,
+        public CBIssueResponse RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate,
             bool smssendYN, String memo, Boolean isPartCancel, int cancelType, String supplyCost,
             String tax, String serviceFee, String totalAmount)
         {
             return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo, null, false, null, null, null, null, null);
         }
 
-        public Response RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, 
+        public CBIssueResponse RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, 
             bool smssendYN, String memo, String UserID, Boolean isPartCancel, int? cancelType, String supplyCost, 
             String tax, String serviceFee, String totalAmount)
         {
@@ -393,7 +393,7 @@ namespace Popbill.Cashbill
 
             String PostData = toJsonString(request);
 
-            return httppost<Response>("/Cashbill", CorpNum, UserID, PostData, "REVOKEISSUE");
+            return httppost<CBIssueResponse>("/Cashbill", CorpNum, UserID, PostData, "REVOKEISSUE");
         }
         
         public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TaxationType, String Order, int Page, int PerPage)
