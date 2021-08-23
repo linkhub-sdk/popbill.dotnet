@@ -87,12 +87,11 @@ namespace Popbill.Taxinvoice
         {
             if (taxinvoice == null) throw new PopbillException(-99999999, "세금계산서 정보가 입력되지 않았습니다.");
 
-            String PostData = toJsonString(taxinvoice);
-
             if (writeSpecification)
             {
-                PostData = "{\"writeSpecification\":true," + PostData.Substring(1);
+                taxinvoice.writeSpecification = writeSpecification;
             }
+            String PostData = toJsonString(taxinvoice);
 
             return httppost<Response>("/Taxinvoice", CorpNum, UserID, PostData, null);
         }
