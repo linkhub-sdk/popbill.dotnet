@@ -129,11 +129,11 @@ namespace Popbill
             get
             {
                 if (_UseGAIP) {
-                    return _IsTest ? ServiceURL_TEST_Static : ServiceURL_REAL_Static;
+                    return _IsTest ? ServiceURL_TEST_GA : ServiceURL_REAL_GA;
                 }
                 else if (_UseStaticIP)
                 {
-                    return _IsTest ? ServiceURL_TEST_GA : ServiceURL_REAL_GA;
+                    return _IsTest ? ServiceURL_TEST_Static : ServiceURL_REAL_Static;
                 }
                 else
                 {
@@ -151,7 +151,7 @@ namespace Popbill
         {
             try
             {
-                return _LinkhubAuth.getPartnerURL(getSession_Token(CorpNum), ServiceID, TOGO, UseStaticIP);
+                return _LinkhubAuth.getPartnerURL(getSession_Token(CorpNum), ServiceID, TOGO, UseStaticIP, UseGAIP);
             }
             catch (LinkhubException le)
             {
@@ -163,7 +163,7 @@ namespace Popbill
         {
             try
             {
-                return _LinkhubAuth.getBalance(getSession_Token(CorpNum), ServiceID, UseStaticIP);
+                return _LinkhubAuth.getBalance(getSession_Token(CorpNum), ServiceID, UseStaticIP, UseGAIP);
             }
             catch (LinkhubException le)
             {
@@ -213,7 +213,7 @@ namespace Popbill
         {
             try
             {
-                return _LinkhubAuth.getPartnerBalance(getSession_Token(CorpNum), ServiceID, UseStaticIP);
+                return _LinkhubAuth.getPartnerBalance(getSession_Token(CorpNum), ServiceID, UseStaticIP, UseGAIP);
             }
             catch (LinkhubException le)
             {
