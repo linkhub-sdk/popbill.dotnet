@@ -18,6 +18,9 @@ namespace Popbill
         private const String ServiceURL_REAL = "https://popbill.linkhub.co.kr";
         private const String ServiceURL_TEST = "https://popbill-test.linkhub.co.kr";
 
+        private const String ServiceURL_REAL_Static = "https://static-popbill.linkhub.co.kr";
+        private const String ServiceURL_TEST_Static = "https://static-popbill-test.linkhub.co.kr";
+
         private const String ServiceURL_REAL_GA = "https://ga-popbill.linkhub.co.kr";
         private const String ServiceURL_TEST_GA = "https://ga-popbill-test.linkhub.co.kr";
 
@@ -28,6 +31,7 @@ namespace Popbill
         private bool _IsTest;
         private bool _IPRestrictOnOff;
         private bool _UseStaticIP;
+        private bool _UseGAIP;
         private bool _UseLocalTimeYN;
         private Authority _LinkhubAuth;
         private List<String> _Scopes = new List<string>();
@@ -48,6 +52,12 @@ namespace Popbill
         {
             set { _UseStaticIP = value; }
             get { return _UseStaticIP; }
+        }
+
+        public bool UseGAIP
+        {
+            set { _UseGAIP = value; }
+            get { return _UseGAIP; }
         }
 
         public bool UseLocalTimeYN
@@ -118,7 +128,10 @@ namespace Popbill
         {
             get
             {
-                if (_UseStaticIP)
+                if (_UseGAIP) {
+                    return _IsTest ? ServiceURL_TEST_Static : ServiceURL_REAL_Static;
+                }
+                else if (_UseStaticIP)
                 {
                     return _IsTest ? ServiceURL_TEST_GA : ServiceURL_REAL_GA;
                 }
@@ -363,7 +376,7 @@ namespace Popbill
             bool expired = true;
             if (_token != null)
             {
-                DateTime now = DateTime.Parse(_LinkhubAuth.getTime(UseStaticIP, UseLocalTimeYN));
+                DateTime now = DateTime.Parse(_LinkhubAuth.getTime(UseStaticIP, UseLocalTimeYN, UseGAIP));
 
                 DateTime expiration = DateTime.Parse( _token.expiration);
 
@@ -377,11 +390,11 @@ namespace Popbill
                 {
                     if (_IPRestrictOnOff) // IPRestrictOnOff 사용시
                     {
-                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, null, UseStaticIP, UseLocalTimeYN);
+                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, null, UseStaticIP, UseLocalTimeYN, UseGAIP);
                     }
                     else
                     {
-                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, "*", UseStaticIP, UseLocalTimeYN);
+                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, "*", UseStaticIP, UseLocalTimeYN, UseGAIP);
                     }
                     
                     
