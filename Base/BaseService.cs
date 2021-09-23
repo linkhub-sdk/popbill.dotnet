@@ -128,10 +128,10 @@ namespace Popbill
         {
             get
             {
-                if (_UseGAIP) {
+                if (UseGAIP) {
                     return _IsTest ? ServiceURL_TEST_GA : ServiceURL_REAL_GA;
                 }
-                else if (_UseStaticIP)
+                else if (UseStaticIP)
                 {
                     return _IsTest ? ServiceURL_TEST_Static : ServiceURL_REAL_Static;
                 }
