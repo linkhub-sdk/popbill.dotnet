@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="AccountCheck\AccountCheckInfo.cs" />
     <Compile Include="AccountCheck\AccountCheckService.cs" />
+    <Compile Include="AccountCheck\DepositorCheckInfo.cs" />
     <Compile Include="Base\BaseService.cs" />
     <Compile Include="Base\BulkResponse.cs" />
     <Compile Include="Base\ChargeInfo.cs" />

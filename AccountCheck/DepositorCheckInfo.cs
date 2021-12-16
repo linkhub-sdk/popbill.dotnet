@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Popbill.AccountCheck
 {
     [DataContract]
-    public class AccountCheckInfo
+    public class DepositorCheckInfo
     {
         [DataMember]
         public String bankCode;
@@ -15,10 +15,12 @@ namespace Popbill.AccountCheck
         [DataMember]
         public String checkDate;
         [DataMember]
-        public String resultCode;
+        public String result;
         [DataMember]
         public String resultMessage;
         [DataMember]
-        public String result;
+        public String identityNumType;
+        [DataMember]
+        public String identityNum;
     }
 }
