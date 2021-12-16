@@ -18,19 +18,33 @@ namespace Popbill.AccountCheck
 
         public ChargeInfo GetChargeInfo(String CorpNum)
         {
-            return GetChargeInfo(CorpNum, null);
+            return GetChargeInfo(CorpNum, null, null);
         }
 
-        public ChargeInfo GetChargeInfo(String CorpNum, String UserID)
+        public ChargeInfo GetChargeInfo(String CorpNum, String UserID) 
         {
-            ChargeInfo response = httpget<ChargeInfo>("/EasyFin/AccountCheck/ChargeInfo", CorpNum, UserID);
+            return GetChargeInfo(CorpNum, UserID, null);
+        }
+
+        public ChargeInfo GetChargeInfo(String CorpNum, String UserID, String ServiceType)
+        {
+            String url = "/EasyFin/AccountCheck/ChargeInfo?serviceType=" + ServiceType;
+
+            ChargeInfo response = httpget<ChargeInfo>(url, CorpNum, UserID);
 
             return response;
         }
 
         public Single GetUnitCost(String CorpNum)
         {
-            UnitCostResponse response = httpget<UnitCostResponse>("/EasyFin/AccountCheck/UnitCost", CorpNum, null);
+            return GetUnitCost(CorpNum, null, null);
+        }
+
+        public Single GetUnitCost(String CorpNum, String ServiceType, String UserID)
+        {
+            String url = "/EasyFin/AccountCheck/UnitCost?serviceType=" + ServiceType;
+
+            UnitCostResponse response = httpget<UnitCostResponse>(url, CorpNum, UserID);
 
             return response.unitCost;
         }
