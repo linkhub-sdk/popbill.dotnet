@@ -18,6 +18,10 @@ namespace Popbill.Kakao
         [DataMember]
         public string plusFriendID;
         [DataMember]
+        public string ads;
+        [DataMember]
+        public string appendix;
+        [DataMember]
         public List<KakaoButton> btns;
     }
 }
