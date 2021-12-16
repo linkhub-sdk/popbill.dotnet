@@ -38,6 +38,8 @@ namespace Popbill.Fax
         [DataMember]
         public int? cancelPageCnt;
         [DataMember]
+        public String receiveNumType;
+        [DataMember]
         public String reserveDT;
         [DataMember]
         public String sendDT;
