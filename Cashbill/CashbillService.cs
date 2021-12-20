@@ -398,22 +398,22 @@ namespace Popbill.Cashbill
         
         public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TaxationType, String Order, int Page, int PerPage)
         {
-            return Search(CorpNum, DType, SDate, EDate, State, TradeType, TradeUsage, null, TaxationType, "", Order, Page, PerPage);
+            return Search(CorpNum, DType, SDate, EDate, State, TradeType, TradeUsage, null, TaxationType, "", Order, Page, PerPage, "");
         }
 
         public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TradeOpt, String[] TaxationType, String Order, int Page, int PerPage)
         {
-            return Search(CorpNum, DType, SDate, EDate, State, TradeType, TradeUsage, TradeOpt, TaxationType, "", Order, Page, PerPage);
+            return Search(CorpNum, DType, SDate, EDate, State, TradeType, TradeUsage, TradeOpt, TaxationType, "", Order, Page, PerPage, "");
         }
 
         public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TaxationType, String QString, String Order, int Page, int PerPage)
         {
-            return Search(CorpNum, DType, SDate, EDate, State, TradeType, TradeUsage, null, TaxationType, QString, Order, Page, PerPage);
+            return Search(CorpNum, DType, SDate, EDate, State, TradeType, TradeUsage, null, TaxationType, QString, Order, Page, PerPage, "");
         }
 
         public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TradeOpt, String[] TaxationType, String QString, String Order, int Page, int PerPage)
         {
-            return Search(CorpNum, DType, SDate, EDate, State, TradeType, TradeUsage, null, TaxationType, QString, Order, Page, PerPage, null);
+            return Search(CorpNum, DType, SDate, EDate, State, TradeType, TradeUsage, null, TaxationType, QString, Order, Page, PerPage, "");
         }
 
         public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TradeOpt, String[] TaxationType, String QString, String Order, int Page, int PerPage, String FranchiseTaxRegID)
