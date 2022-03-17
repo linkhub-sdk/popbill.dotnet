@@ -303,6 +303,35 @@ namespace Popbill.Cashbill
             return httppost<CBIssueResponse>("/Cashbill", CorpNum, UserID, PostData, "ISSUE");
         }
 
+        public BulkResponse BulkSubmit(String CorpNum, String SubmitID, List<Cashbill> cashbillList)
+        {
+            return BulkSubmit(CorpNum, SubmitID, cashbillList, null);
+        }
+
+        public BulkResponse BulkSubmit(String CorpNum, String SubmitID, List<Cashbill> cashbillList, String UserID)
+        {
+            if (string.IsNullOrEmpty(SubmitID)) throw new PopbillException(-99999999, "제출아이디(SubmitID)가 입력되지 않았습니다.");
+            if (cashbillList == null || cashbillList.Count <= 0) throw new PopbillException(-99999999, "현금영수증 정보가 입력되지 않았습니다.");
+
+            BulkCashbillSubmit cb = new BulkCashbillSubmit();
+            cb.cashbills = cashbillList;
+
+            String PostData = toJsonString(cb);
+
+            return httpBulkPost<BulkResponse>("/Cashbill/", CorpNum, SubmitID, PostData, UserID, "BULKISSUE");
+
+        }
+
+        public BulkCashbillResult GetBulkResult(String CorpNum, String SubmitID)
+        {
+            return GetBulkResult(CorpNum, SubmitID, null);
+        }
+        public BulkCashbillResult GetBulkResult(String CorpNum, String SubmitID, String UserID)
+        {
+            if (string.IsNullOrEmpty(SubmitID)) throw new PopbillException(-99999999, "제출아이디(SubmitID)가 입력되지 않았습니다.");
+
+            return httpget<BulkCashbillResult>("/Cashbill/BULK/" + SubmitID + "/State", CorpNum, UserID);
+        }
 
         /*
          * 취소현금영수증 임시저장 기능 추가 (2017/08/16)

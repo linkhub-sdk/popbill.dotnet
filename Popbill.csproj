@@ -60,6 +60,9 @@
     <Compile Include="Base\JoinForm.cs" />
     <Compile Include="Base\PopbillException.cs" />
     <Compile Include="Base\Response.cs" />
+    <Compile Include="Cashbill\BulkCashbillIssueResult.cs" />
+    <Compile Include="Cashbill\BulkCashbillResult.cs" />
+    <Compile Include="Cashbill\BulkCashbillSubmit.cs" />
     <Compile Include="Cashbill\Cashbill.cs" />
     <Compile Include="Cashbill\CashbillLog.cs" />
     <Compile Include="Cashbill\CashbillInfo.cs" />
