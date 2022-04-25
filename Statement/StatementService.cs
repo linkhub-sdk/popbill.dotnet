@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Web;
 using Popbill;
 using System.Linq;
 
@@ -367,7 +368,7 @@ namespace Popbill.Statement
             
             String[] ItemCodeArr = Array.ConvertAll(ItemCode, x => x.ToString());
             uri += "&ItemCode=" + String.Join(",", ItemCodeArr);
-            uri += "&QString=" + QString;
+            uri += "&QString=" + HttpUtility.UrlEncode(QString);
             uri += "&Order=" + Order;
             uri += "&Page=" + Page.ToString();
             uri += "&PerPage=" + PerPage.ToString();

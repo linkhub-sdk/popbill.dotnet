@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
+using System.Web;
 using System.Runtime.Serialization;
 using Popbill;
 
@@ -593,7 +594,7 @@ namespace Popbill.Taxinvoice
             uri += "&InterOPYN=" + InterOPYN;
             uri += "&TaxRegIDType=" + TaxRegIDType;
             uri += "&TaxRegID=" + TaxRegID;
-            uri += "&QString=" + QString;
+            uri += "&QString=" + HttpUtility.UrlEncode(QString);
             uri += "&Order=" + Order;
             uri += "&Page=" + Page.ToString();
             uri += "&PerPage=" + PerPage.ToString();

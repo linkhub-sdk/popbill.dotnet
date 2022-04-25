@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Runtime.Serialization;
 
 namespace Popbill.Fax
@@ -588,7 +589,7 @@ namespace Popbill.Fax
             if ((bool)ReserveYN) uri += "&ReserveYN=1";
             if ((bool)SenderOnly) uri += "&SenderOnly=1";
 
-            if (QString != null) uri += "&QString=" + QString;
+            if (QString != null) uri += "&QString=" + HttpUtility.UrlEncode(QString);
 
             uri += "&Order=" + Order;
             uri += "&Page=" + Page.ToString();
