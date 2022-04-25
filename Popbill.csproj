@@ -132,6 +132,7 @@
     <Compile Include="Taxinvoice\EmailPublicKey.cs" />
     <Compile Include="Taxinvoice\SendToNTSConfig.cs" />
     <Compile Include="Taxinvoice\TaxinvoiceAddContact.cs" />
+    <Compile Include="Taxinvoice\TaxinvoiceCertificate.cs" />
     <Compile Include="Taxinvoice\TaxinvoiceDetail.cs" />
     <Compile Include="Taxinvoice\Taxinvoice.cs" />
     <Compile Include="Taxinvoice\TaxinvoiceLog.cs" />

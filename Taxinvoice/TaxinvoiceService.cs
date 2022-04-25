@@ -702,6 +702,16 @@ namespace Popbill.Taxinvoice
             return response.url;
         }
 
+        public TaxinvoiceCertificate GetTaxCertInfo(String CorpNum)
+        {
+            return GetTaxCertInfo(CorpNum, null);
+        }
+
+        public TaxinvoiceCertificate GetTaxCertInfo(String CorpNum, String UserID)
+        {
+            return httpget<TaxinvoiceCertificate>("/Taxinvoice/Certificate",CorpNum, UserID);
+        }
+
         [DataContract]
         public class CertResponse
         {
