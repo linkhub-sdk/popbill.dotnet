@@ -63,6 +63,18 @@ namespace Popbill.Kakao
             return response.url;
         }
 
+        public Response CheckSenderNumber(String CorpNum, String SenderNumber)
+        {
+            return CheckSenderNumber(CorpNum, SenderNumber, null);
+        }
+
+        public Response CheckSenderNumber(String CorpNum, String SenderNumber, String UserID)
+        {
+            if (SenderNumber == "") throw new PopbillException(-99999999, "확인할 발신번호가 입력되지 않았습니다.");
+
+            return httpget<Response>("/KakaoTalk/CheckSenderNumber/" + SenderNumber, CorpNum, UserID);
+        }
+
         public String GetATSTemplateMgtURL(String CorpNum, String UserID)
         {
             URLResponse response = httpget<URLResponse>("/KakaoTalk/?TG=TEMPLATE", CorpNum, UserID);

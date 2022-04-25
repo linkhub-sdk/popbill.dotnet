@@ -59,6 +59,18 @@ namespace Popbill.Message
             return response.url;
         }
 
+        public Response CheckSenderNumber(String CorpNum, String SenderNumber)
+        {
+            return CheckSenderNumber(CorpNum, SenderNumber, null);
+        }
+
+        public Response CheckSenderNumber(String CorpNum, String SenderNumber, String UserID)
+        {
+            if (SenderNumber == "") throw new PopbillException(-99999999, "확인할 발신번호가 입력되지 않았습니다.");
+
+            return httpget<Response>("/Message/CheckSenderNumber/" + SenderNumber, CorpNum, UserID);
+        }
+
         public String SendSMS(String CorpNum, String sendNum, String senderName, String receiveNum, String receiveName, String content, DateTime? reserveDT, String UserID)
         {
             List<Message> messages = new List<Message>();
