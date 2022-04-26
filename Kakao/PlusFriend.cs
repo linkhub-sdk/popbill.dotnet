@@ -15,5 +15,9 @@ namespace Popbill.Kakao
         public string plusFriendName;
         [DataMember]
         public string regDT;
+        [DataMember]
+        public int state;
+        [DataMember]
+        public string stateDT;
     }
 }
