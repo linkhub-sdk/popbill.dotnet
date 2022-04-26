@@ -712,6 +712,18 @@ namespace Popbill.Taxinvoice
             return httpget<TaxinvoiceCertificate>("/Taxinvoice/Certificate",CorpNum, UserID);
         }
 
+        public TaxinvoiceXML GetXML(String CorpNum, MgtKeyType KeyType, String MgtKey)
+        {
+            return GetXML(CorpNum, KeyType, MgtKey, null);
+        }
+
+        public TaxinvoiceXML GetXML(String CorpNum, MgtKeyType KeyType, String MgtKey, String UserID)
+        {
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
+
+            return httpget<TaxinvoiceXML>("/Taxinvoice/"+KeyType.ToString()+"/"+MgtKey+"?XML", CorpNum, UserID);
+        }
+
         [DataContract]
         public class CertResponse
         {

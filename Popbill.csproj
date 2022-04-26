@@ -139,6 +139,7 @@
     <Compile Include="Taxinvoice\TaxinvoiceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Taxinvoice\TaxinvoiceInfo.cs" />
+    <Compile Include="Taxinvoice\TaxinvoiceXML.cs" />
     <Compile Include="Taxinvoice\TISearchResult.cs" />
   </ItemGroup>
   <ItemGroup>
