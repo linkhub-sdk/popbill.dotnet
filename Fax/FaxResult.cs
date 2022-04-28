@@ -55,6 +55,8 @@ namespace Popbill.Fax
         public String requestNum;
         [DataMember]
         public String receiptNum;
+        [DataMember]
+        public string interOPRefKey;
 
         /* 과금페이지수, 변환파일용량
          * 2018-10-02 

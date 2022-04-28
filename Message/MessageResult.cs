@@ -43,5 +43,7 @@ namespace Popbill.Message
         public string receiptNum;
         [DataMember]
         public string requestNum;
+        [DataMember]
+        public string interOPRefKey;
     }
 }

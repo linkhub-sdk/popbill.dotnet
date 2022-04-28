@@ -21,5 +21,7 @@ namespace Popbill.Message
         public string subject;
         [DataMember(Name="msg")]
         public string content;
+        [DataMember]
+        public string interOPRefKey;
     }
 }
