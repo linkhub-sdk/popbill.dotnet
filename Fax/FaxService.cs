@@ -14,6 +14,7 @@ namespace Popbill.Fax
             : base(LinkID, SecretKey)
         {
             this.AddScope("160");
+            this.AddScope("161");
         }
 
         public ChargeInfo GetChargeInfo(String CorpNum)
@@ -28,10 +29,24 @@ namespace Popbill.Fax
             return response;
         }
 
+        public ChargeInfo GetChargeInfo(String CorpNum, String ReceiveNumType, String UserID)
+        {
+            ChargeInfo response = httpget<ChargeInfo>("/FAX/ChargeInfo?receiveNumType=" + ReceiveNumType, CorpNum, UserID);
+
+            return response;
+        }
+
 
         public Single GetUnitCost(String CorpNum)
         {
             UnitCostResponse response = httpget<UnitCostResponse>("/FAX/UnitCost", CorpNum, null);
+
+            return response.unitCost;
+        }
+
+        public Single GetUnitCost(String CorpNum, String ReceiveNumType)
+        {
+            UnitCostResponse response = httpget<UnitCostResponse>("/FAX/UnitCost?receiveNumType=" + ReceiveNumType, CorpNum, null);
 
             return response.unitCost;
         }
