@@ -634,6 +634,8 @@ namespace Popbill.Taxinvoice
         }
         public Response AssignMgtKey(String CorpNum, MgtKeyType KeyType, String ItemKey, String MgtKey, String UserID)
         {
+            if (String.IsNullOrEmpty(ItemKey)) throw new PopbillException(-99999999, "아이템키(itemKey)가 입력되지 않았습니다.");
+
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "할당할 문서번호가 입력되지 않았습니다.");
 
 
