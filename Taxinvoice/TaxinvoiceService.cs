@@ -347,6 +347,14 @@ namespace Popbill.Taxinvoice
             return httpget<Taxinvoice>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey + "?Detail", CorpNum,null);
         }
 
+        public Taxinvoice GetDetailInfoFromItemKey(String CorpNum, String ItemKey)
+        {
+            if (String.IsNullOrEmpty(ItemKey)) throw new PopbillException(-99999999, "아이템키가 입력되지 않았습니다.");
+
+            return httpget<Taxinvoice>("/Taxinvoice/" + ItemKey + "?Detail", CorpNum, null);
+        }
+
+
         public TaxinvoiceInfo GetInfo(String CorpNum, MgtKeyType KeyType, String MgtKey)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
