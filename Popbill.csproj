@@ -61,6 +61,8 @@
     <Compile Include="Base\JoinForm.cs" />
     <Compile Include="Base\PopbillException.cs" />
     <Compile Include="Base\Response.cs" />
+    <Compile Include="BizInfoCheck\BizInfoCheckService.cs" />
+    <Compile Include="BizInfoCheck\BizCheckInfo.cs" />
     <Compile Include="Cashbill\BulkCashbillIssueResult.cs" />
     <Compile Include="Cashbill\BulkCashbillResult.cs" />
     <Compile Include="Cashbill\BulkCashbillSubmit.cs" />

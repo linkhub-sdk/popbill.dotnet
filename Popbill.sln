@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Popbill", "Popbill.csproj", "{57F03B3E-C713-443A-AC04-90291B429204}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linkhub", "..\..\linkhub\linkhub.dotnet\Linkhub.csproj", "{F960F70D-9C37-46F8-A1D4-938A81BE9855}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57F03B3E-C713-443A-AC04-90291B429204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57F03B3E-C713-443A-AC04-90291B429204}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57F03B3E-C713-443A-AC04-90291B429204}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57F03B3E-C713-443A-AC04-90291B429204}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F960F70D-9C37-46F8-A1D4-938A81BE9855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F960F70D-9C37-46F8-A1D4-938A81BE9855}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F960F70D-9C37-46F8-A1D4-938A81BE9855}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F960F70D-9C37-46F8-A1D4-938A81BE9855}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
