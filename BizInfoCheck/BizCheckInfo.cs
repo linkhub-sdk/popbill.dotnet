@@ -16,16 +16,16 @@ namespace Popbill.BizInfoCheck
         public string corpName;
 
         [DataMember]
-        public string corpCode;
+        public int? corpCode;
 
         [DataMember]
-        public string corpScaleCode;
+        public int? corpScaleCode;
 
         [DataMember]
-        public string personCorpCode;
+        public int? personCorpCode;
 
         [DataMember]
-        public string headOfficeCode;
+        public int? headOfficeCode;
 
         [DataMember]
         public string industryCode;
@@ -37,16 +37,16 @@ namespace Popbill.BizInfoCheck
         public string establishDate;
 
         [DataMember]
-        public string establishCode;
+        public int? establishCode;
 
         [DataMember]
         public string ceoname;
 
         [DataMember]
-        public string workPlaceCode;
+        public int? workPlaceCode;
 
         [DataMember]
-        public string addrCode;
+        public int? addrCode;
 
         [DataMember]
         public string zipCode;
@@ -67,19 +67,19 @@ namespace Popbill.BizInfoCheck
         public string bizType;
 
         [DataMember]
-        public string result;
+        public int? result;
 
         [DataMember]
         public string resultMessage;
 
         [DataMember]
-        public string closeDownTaxType;
+        public int? closeDownTaxType;
 
         [DataMember]
         public string closeDownTaxTypeDate;
 
         [DataMember]
-        public string closeDownState;
+        public int? closeDownState;
 
         [DataMember]
         public string closeDownStateDate;
