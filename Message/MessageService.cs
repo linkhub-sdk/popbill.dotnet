@@ -672,6 +672,37 @@ namespace Popbill.Message
             return httpget<Response>("/Message/Cancel/"+requestNum, CorpNum, UserID);
         }
 
+
+        public Response CancelReservebyRCV(String CorpNum, String receiptNum, String receiveNum)
+        {
+            return CancelReservebyRCV(CorpNum, receiptNum, receiveNum,"");
+        }
+
+        public Response CancelReservebyRCV(String CorpNum, String receiptNum, String receiveNum, String UserID)
+        {
+            if (String.IsNullOrEmpty(receiptNum)) throw new PopbillException(-99999999, "접수번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(receiveNum)) throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
+
+            String PostData = toJsonString(receiveNum);
+
+            return httppost<Response>("/Message/" + receiptNum + "/Cancel", CorpNum, UserID, PostData, null);
+        }
+
+        public Response CancelReserveRNbyRCV(String CorpNum, String receiptNum, String receiveNum)
+        {
+            return CancelReserveRNbyRCV(CorpNum, receiptNum, receiveNum, "");
+        }
+
+        public Response CancelReserveRNbyRCV(String CorpNum, String requestNum, String receiveNum, String UserID)
+        {
+            if (String.IsNullOrEmpty(requestNum)) throw new PopbillException(-99999999, "요청번호(requestNum)가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(receiveNum)) throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
+
+            String PostData = toJsonString(receiveNum);
+
+            return httppost<Response>("/Message/Cancel/" + requestNum, CorpNum, UserID, PostData, null);
+        }
+
         private String sendMessage(MessageType msgType, String CorpNum, String sender, String senderName, String subject, String content, List<Message> messages, DateTime? reserveDT, String UserID, String requestNum)
         {
             return sendMessage(msgType, CorpNum, sender, senderName, subject, content, messages, reserveDT, UserID, requestNum, false);
