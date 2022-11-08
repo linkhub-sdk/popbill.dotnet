@@ -20,7 +20,7 @@ namespace Popbill.Cashbill
         [DataMember]
         public int pageCount;
         [DataMember]
-        public String message;
+        public string message;
         [DataMember]
         public List<CashbillInfo> list;
     }

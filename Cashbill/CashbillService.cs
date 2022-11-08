@@ -340,21 +340,34 @@ namespace Popbill.Cashbill
          */
         public Response RevokeRegister(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate)
         {
-            return RevokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, false, null, false, null, null, null, null, null);
+            return RevokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, false, null, false, null, null, null, null, null, null, null);
         }
 
         public Response RevokeRegister(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN)
         {
-            return RevokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, null, false, null, null, null, null, null);
+            return RevokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, null, false, null, null, null, null, null, null, null);
         }
 
         public Response RevokeRegister(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN, String UserID)
         {
-            return RevokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, UserID, false, null, null, null, null, null);
+            return RevokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, UserID, false, null, null, null, null, null, null, null);
         }
 
-        public Response RevokeRegister(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN, String UserID, 
-            bool isPartCancel, int? cancelType, String supplyCost, String tax, String serviceFee, String totalAmount)
+        public Response RevokeRegister
+            (String CorpNum, 
+            String mgtKey, 
+            String orgConfirmNum, 
+            String orgTradeDate, 
+            bool smssendYN, 
+            String UserID, 
+            bool isPartCancel,
+            int? cancelType, 
+            String supplyCost,
+            String tax,
+            String serviceFee,
+            String totalAmount, 
+            String emailSubject, 
+            String tradeDT)
         {
 
             RevokeRequest request = new RevokeRequest();
@@ -368,6 +381,8 @@ namespace Popbill.Cashbill
             request.tax = tax;
             request.serviceFee = serviceFee;
             request.totalAmount = totalAmount;
+            request.emailSubject = emailSubject;
+            request.tradeDT = tradeDT;
             
             String PostData = toJsonString(request);
 
@@ -379,34 +394,48 @@ namespace Popbill.Cashbill
          */
         public CBIssueResponse RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate)
         {
-            return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, false, null, null, false, null, null, null, null, null);
+            return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, false, null, null, false, null, null, null, null, null, null, null);
         }
 
         public CBIssueResponse RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN)
         {
-            return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, null, null, false, null, null, null, null, null);
+            return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, null, null, false, null, null, null, null, null, null, null);
         }
 
         public CBIssueResponse RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN, String memo)
         {
-            return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo, null, false, null, null, null, null, null);
+            return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo, null, false, null, null, null, null, null ,null ,null);
         }
 
         public CBIssueResponse RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, bool smssendYN, String memo, String UserID)
         {
-            return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo, UserID, false, null, null, null, null, null);
+            return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo, UserID, false, null, null, null, null, null, null, null);
         }
 
         public CBIssueResponse RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate,
             bool smssendYN, String memo, Boolean isPartCancel, int cancelType, String supplyCost,
             String tax, String serviceFee, String totalAmount)
         {
-            return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo, null, false, null, null, null, null, null);
+            return RevokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo, null, false, null, null, null, null, null, null, null);
         }
 
-        public CBIssueResponse RevokeRegistIssue(String CorpNum, String mgtKey, String orgConfirmNum, String orgTradeDate, 
-            bool smssendYN, String memo, String UserID, Boolean isPartCancel, int? cancelType, String supplyCost, 
-            String tax, String serviceFee, String totalAmount)
+        public CBIssueResponse RevokeRegistIssue
+            (String CorpNum, 
+            String mgtKey, 
+            String orgConfirmNum, 
+            String orgTradeDate, 
+            bool smssendYN, 
+            String memo, 
+            String UserID,
+            Boolean isPartCancel, 
+            int? cancelType, 
+            String supplyCost,
+            String tax, 
+            String serviceFee,
+            String totalAmount, 
+            String emailSubject, 
+            String tradeDT
+            )
         {
 
             RevokeRequest request = new RevokeRequest();
@@ -421,6 +450,8 @@ namespace Popbill.Cashbill
             request.tax = tax;
             request.serviceFee = serviceFee;
             request.totalAmount = totalAmount;
+            request.emailSubject = emailSubject;
+            request.tradeDT = tradeDT;
 
             String PostData = toJsonString(request);
 
@@ -538,6 +569,10 @@ namespace Popbill.Cashbill
             public String serviceFee;
             [DataMember]
             public String totalAmount;
+            [DataMember]
+            public String emailSubject;
+            [DataMember]
+            public String tradeDT;
         }
 
     }

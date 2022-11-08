@@ -78,5 +78,8 @@ namespace Popbill.Cashbill
 
         [DataMember]
         public string emailSubject;
+
+        [DataMember]
+        public string tradeDT;
     }
 }

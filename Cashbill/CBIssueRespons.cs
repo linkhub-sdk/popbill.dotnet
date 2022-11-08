@@ -9,10 +9,12 @@ namespace Popbill.Cashbill
         [DataMember]
         public long code;
         [DataMember]
-        public String message;
+        public string message;
         [DataMember]
-        public String confirmNum;
+        public string confirmNum;
         [DataMember]
-        public String tradeDate;
+        public string tradeDate;
+        [DataMember]
+        public string tradeDT;
     }
 }
