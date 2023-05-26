@@ -9,7 +9,7 @@ namespace Popbill
     public class RefundHistory
     {
         [DataMember]
-        public String regDT;
+        public String reqDT;
 
         [DataMember]
         public String requestPoint;

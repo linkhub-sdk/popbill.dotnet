@@ -24,6 +24,6 @@ namespace Popbill
         public long pageCount;
 
         [DataMember]
-        public List<PaymentHistory> list;
+        public List<RefundHistory> list;
     }
 }

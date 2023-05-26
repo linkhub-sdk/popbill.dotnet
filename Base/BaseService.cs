@@ -622,7 +622,7 @@ namespace Popbill
 
             request.Headers.Add("Accept-Encoding", "gzip, deflate");
 
-            request.Headers.Add("User-Agent", "DOTNET POPBILL SDK");
+            request.UserAgent = "DOTNET POPBILL SDK";
 
             request.AutomaticDecompression = DecompressionMethods.GZip;
 
@@ -691,7 +691,7 @@ namespace Popbill
             request.Headers.Add("x-pb-message-digest", Convert.ToBase64String(SHA1.Create().ComputeHash(Encoding.UTF8.GetBytes(PostData))));
             request.Headers.Add("x-pb-submit-id", SubmitID);
 
-            request.Headers.Add("User-Agent", "DOTNET POPBILL SDK");
+            request.UserAgent = "DOTNET POPBILL SDK";
 
             if (String.IsNullOrEmpty(UserID) == false)
             {
@@ -758,7 +758,7 @@ namespace Popbill
 
             request.Headers.Add("Accept-Encoding", "gzip, deflate");
 
-            request.Headers.Add("User-Agent", "DOTNET POPBILL SDK");
+            request.UserAgent = "DOTNET POPBILL SDK";
 
             request.AutomaticDecompression = DecompressionMethods.GZip;
 
