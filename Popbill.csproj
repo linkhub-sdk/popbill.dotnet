@@ -61,6 +61,16 @@
     <Compile Include="Base\JoinForm.cs" />
     <Compile Include="Base\PopbillException.cs" />
     <Compile Include="Base\Response.cs" />
+    <Compile Include="Base\RefundForm.cs" />
+    <Compile Include="Base\UseHistoryResult.cs" />
+    <Compile Include="Base\UseHistory.cs" />
+    <Compile Include="Base\RefundResponse.cs" />
+    <Compile Include="Base\RefundHistoryResult.cs" />
+    <Compile Include="Base\RefundHistory.cs" />
+    <Compile Include="Base\PaymentResponse.cs" />
+    <Compile Include="Base\PaymentHistoryResult.cs" />
+    <Compile Include="Base\PaymentHistory.cs" />
+    <Compile Include="Base\PaymentForm.cs" />
     <Compile Include="BizInfoCheck\BizInfoCheckService.cs" />
     <Compile Include="BizInfoCheck\BizCheckInfo.cs" />
     <Compile Include="Cashbill\BulkCashbillIssueResult.cs" />
@@ -118,6 +128,7 @@
     <Compile Include="Message\MSGSearchResult.cs" />
     <Compile Include="Message\SenderNumber.cs" />
     <Compile Include="Message\MessageState.cs" />
+    <Compile Include="Message\AutoDenyNumberInfo.cs" />
     <Compile Include="Statement\AttachedFile.cs" />
     <Compile Include="Statement\DocSearchResult.cs" />
     <Compile Include="Statement\propertyBag.cs" />

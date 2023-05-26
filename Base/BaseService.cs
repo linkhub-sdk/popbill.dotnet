@@ -26,7 +26,7 @@ namespace Popbill
 
         private const String APIVersion = "1.0";
         private const String CRLF = "\r\n";
-          
+
         private Dictionary<String, Token> _tokenTable = new Dictionary<String, Token>();
         private bool _IsTest;
         private bool _IPRestrictOnOff;
@@ -109,7 +109,7 @@ namespace Popbill
             String PostData = toJsonString(joinInfo);
 
             return httppost<Response>("/Join", "", "", PostData, null);
-            
+
         }
 
         public Response CheckIsMember(String CorpNum, String LinkID)
@@ -139,12 +139,12 @@ namespace Popbill
                 {
                     return _IsTest ? ServiceURL_TEST : ServiceURL_REAL;
                 }
-                
+
             }
         }
 
         /*
-         * 파트너 관리자 팝업 URL 
+         * 파트너 관리자 팝업 URL
          * - 2017/08/28 추가
          */
         public String GetPartnerURL(String CorpNum, String TOGO)
@@ -309,7 +309,7 @@ namespace Popbill
         }
 
         public Response UpdateCorpInfo(String CorpNum, CorpInfo corpInfo, String UserID)
-        { 
+        {
             if (corpInfo == null) throw new PopbillException(-99999999, "No CorpInfo data");
 
             String PostData = toJsonString(corpInfo);
@@ -324,7 +324,131 @@ namespace Popbill
             }
         }
 
-        
+
+        public PaymentResponse PaymentRequest(String CorpNum, PaymentForm PaymentForm, String UserID){
+            try
+            {
+                String PostData = toJsonString(PaymentForm);
+                return httppost<PaymentResponse>("/Payment",CorpNum, UserID, PostData, null);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        public PaymentHistory GetSettleResult(String CorpNum, String SettleCode, String UserID){
+            try
+            {
+                return httpget<PaymentHistory>("/Payment/"+ SettleCode,CorpNum, UserID);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        public PaymentHistoryResult GetPaymentHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage, String UserID){
+            String url = "/PaymentHistory";
+            url += "&SDate=" + SDate;
+            url += "&EDate=" + EDate;
+            url += "&Page=" + Page;
+            url += "&PerPage=" + PerPage;
+
+            try
+            {
+                return httpget<PaymentHistoryResult>(url, CorpNum, UserID);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        public UseHistoryResult GetUseHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage, String Order,String UserID){
+            String url = "/UseHistory?";
+            url += "&SDate="+SDate;
+            url += "&EDate="+EDate;
+            url += "&Page="+Page;
+            url += "&PerPage="+PerPage;
+            url += "&Order="+Order;
+            try
+            {
+                return httpget<UseHistoryResult>(url,CorpNum, UserID);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        public RefundResponse Refund(String CorpNum, RefundForm RefundForm, String UserID){
+
+            String PostData = toJsonString(RefundForm);
+
+            try
+            {
+                return httppost<RefundResponse>("/Refund",CorpNum, UserID, PostData, "");
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        public RefundHistoryResult GetRefundHistory(String CorpNum, int Page, int PerPage, String UserID){
+            try
+            {
+                return httpget<RefundHistoryResult>("/RefundHistory", CorpNum, UserID);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        public RefundHistory GetRefundInfo(String CorpNum, String RefundCode, String UserID){
+
+            if (RefundCode == null) throw new PopbillException(-99999999, "환불코드가 입력되지 않았습니다.");
+
+            try
+            {
+                return httpget<RefundHistory>("/Refund/"+RefundCode,CorpNum, UserID);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        public Double GetRefundableBalance(String CorpNum, String UserID){
+            try
+            {
+                return httpget<Double>("/RefundPoint",CorpNum, UserID);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+        public Response QuitMember(String CorpNum, String QuitReason,  String UserID){
+            if (QuitReason == null) throw new PopbillException(-99999999, "탈퇴사유가 입력되지 않았습니다.");
+
+            QuitRequest quitRequest = new QuitRequest();
+            quitRequest.quitReason = QuitReason;
+
+            String PostData = toJsonString(quitRequest);
+            try
+            {
+                return httppost<Response>("/QuitRequest", CorpNum, UserID, PostData, "");
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
 
 
         #region protected
@@ -348,7 +472,7 @@ namespace Popbill
                 JavaScriptSerializer jss = new JavaScriptSerializer();
 
                 return jss.Deserialize<T>(t);
-            }  
+            }
         }
         protected byte[] readByte(Stream byteStream)
         {
@@ -367,12 +491,12 @@ namespace Popbill
         private String getSession_Token(String CorpNum)
         {
             Token _token = null;
-            
+
             if(_tokenTable.ContainsKey(CorpNum))
             {
                 _token = _tokenTable[CorpNum];
             }
-            
+
             bool expired = true;
             if (_token != null)
             {
@@ -381,7 +505,7 @@ namespace Popbill
                 DateTime expiration = DateTime.Parse( _token.expiration);
 
                 expired = expiration < now;
-                
+
             }
 
             if (expired)
@@ -396,8 +520,8 @@ namespace Popbill
                     {
                         _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, "*", UseStaticIP, UseLocalTimeYN, UseGAIP);
                     }
-                    
-                    
+
+
                     if (_tokenTable.ContainsKey(CorpNum))
                     {
                         _tokenTable.Remove(CorpNum);
@@ -426,6 +550,8 @@ namespace Popbill
             request.Headers.Add("x-lh-version", APIVersion);
 
             request.Headers.Add("Accept-Encoding", "gzip, deflate");
+            
+            request.UserAgent = "DOTNET POPBILL SDK";
 
             request.AutomaticDecompression = DecompressionMethods.GZip;
 
@@ -472,7 +598,7 @@ namespace Popbill
 
         protected T httppost<T>(String url, String CorpNum, String UserID, String PostData, String httpMethod, String contentsType)
         {
-         
+
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
 
             if (contentsType == null)
@@ -495,6 +621,8 @@ namespace Popbill
             request.Headers.Add("x-lh-version", APIVersion);
 
             request.Headers.Add("Accept-Encoding", "gzip, deflate");
+
+            request.Headers.Add("User-Agent", "DOTNET POPBILL SDK");
 
             request.AutomaticDecompression = DecompressionMethods.GZip;
 
@@ -563,6 +691,8 @@ namespace Popbill
             request.Headers.Add("x-pb-message-digest", Convert.ToBase64String(SHA1.Create().ComputeHash(Encoding.UTF8.GetBytes(PostData))));
             request.Headers.Add("x-pb-submit-id", SubmitID);
 
+            request.Headers.Add("User-Agent", "DOTNET POPBILL SDK");
+
             if (String.IsNullOrEmpty(UserID) == false)
             {
                 request.Headers.Add("x-pb-userid", UserID);
@@ -613,7 +743,7 @@ namespace Popbill
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
 
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
-           
+
             request.ContentType = "multipart/form-data; boundary=" + boundary;
             request.KeepAlive = true;
             request.Method = "POST";
@@ -627,6 +757,8 @@ namespace Popbill
             request.Headers.Add("x-lh-version", APIVersion);
 
             request.Headers.Add("Accept-Encoding", "gzip, deflate");
+
+            request.Headers.Add("User-Agent", "DOTNET POPBILL SDK");
 
             request.AutomaticDecompression = DecompressionMethods.GZip;
 
@@ -642,7 +774,7 @@ namespace Popbill
 
             Stream wstream = request.GetRequestStream();
 
-            
+
             if (String.IsNullOrEmpty(form) == false)
             {
                 String formBody = "--" + boundary + CRLF;
@@ -724,6 +856,13 @@ namespace Popbill
         {
             [DataMember]
             public Single unitCost;
+        }
+
+        [DataContract]
+        private class QuitRequest
+        {
+            [DataMember]
+            public String quitReason;
         }
 
     }

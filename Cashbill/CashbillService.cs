@@ -531,6 +531,8 @@ namespace Popbill.Cashbill
         {
             [DataMember]
             public String memo;
+            [DataMember]
+            public String EmailSubject;
         }
 
         [DataContract]

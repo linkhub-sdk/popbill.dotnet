@@ -783,6 +783,10 @@ namespace Popbill.Message
             return httppost<List<MessageState>>("/Message/States", CorpNum, UserID, PostData, null);
         }
 
+        public AutoDenyNumberInfo CheckAutoDenyNumber(String CorpNum, String UserID)
+        {
+            return httpget<AutoDenyNumberInfo>("/Message/AutoDenyNumberInfo", CorpNum, UserID);
+        }
 
         [DataContract]
         private class sendRequest

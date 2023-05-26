@@ -686,6 +686,56 @@ namespace Popbill.Kakao
             return response.receiptNum;
         }
 
+        public Response CancelReservebyRCV(String CorpNum, String receiptNum, String receiveNum, String UserID) {
+            if (receiptNum == "" || receiptNum == null)
+            {
+                throw new PopbillException(-99999999, "접수번호가 입력되지 않았습니다.");
+            }
+            if (receiveNum == "" || receiveNum == null)
+            {
+                throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
+            }
+
+            CancelReserveRequest request = new CancelReserveRequest();
+            request.receiptNum = receiptNum;
+            request.receiveNum = receiveNum;
+
+            try
+            {
+                String PostData = toJsonString(request);
+                return httppost<Response>("/KakaoTalk/" + receiptNum + "/Cancel", CorpNum, UserID, PostData, "");
+            }
+            catch(Exception fe){
+                throw new PopbillException(-99999999, fe.Message);
+            }
+        }
+
+        public Response CancelReserveRNbyRCV(String CorpNum, String requestNum, String receiveNum, String UserID)
+        {
+            if (requestNum == "" || requestNum == null)
+            {
+                throw new PopbillException(-99999999, "접수번호가 입력되지 않았습니다.");
+            }
+            if (receiveNum == "" || receiveNum == null)
+            {
+                throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
+            }
+
+            CancelReserveRequest request = new CancelReserveRequest();
+            request.requestNum = requestNum;
+            request.receiveNum = receiveNum;
+
+            try
+            {
+                String PostData = toJsonString(request);
+                return httppost<Response>("/KakaoTalk/Cancel/" + requestNum , CorpNum, UserID, PostData, "");
+            }
+            catch (Exception fe)
+            {
+                throw new PopbillException(-99999999, fe.Message);
+            }
+        }
+
 
         [DataContract]
         private class FTSSendRequest
@@ -746,6 +796,14 @@ namespace Popbill.Kakao
         {
             [DataMember]
             public String receiptNum = null;
+        }
+
+        [DataContract]
+        public class CancelReserveRequest
+        {
+            public String receiptNum;
+            public String receiveNum;
+            public String requestNum;
         }
 
     }
