@@ -686,19 +686,19 @@ namespace Popbill.Kakao
             return response.receiptNum;
         }
 
-        public Response CancelReservebyRCV(String CorpNum, String receiptNum, String receiverNum, String UserID)
+        public Response CancelReservebyRCV(String CorpNum, String receiptNum, String receiveNum, String UserID)
         {
             if (receiptNum == "" || receiptNum == null)
             {
                 throw new PopbillException(-99999999, "접수번호가 입력되지 않았습니다.");
             }
-            if (receiverNum == "" || receiverNum == null)
+            if (receiveNum == "" || receiveNum == null)
             {
                 throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
             }
 
             CancelReserveRequest request = new CancelReserveRequest();
-            request.rcv = receiverNum;
+            request.rcv = receiveNum;
 
 
             try
@@ -711,19 +711,19 @@ namespace Popbill.Kakao
             }
         }
 
-        public Response CancelReserveRNbyRCV(String CorpNum, String requestNum, String receiverNum, String UserID)
+        public Response CancelReserveRNbyRCV(String CorpNum, String requestNum, String receiveNum, String UserID)
         {
             if (requestNum == "" || requestNum == null)
             {
                 throw new PopbillException(-99999999, "접수번호가 입력되지 않았습니다.");
             }
-            if (receiverNum == "" || receiverNum == null)
+            if (receiveNum == "" || receiveNum == null)
             {
                 throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
             }
 
             CancelReserveRequest request = new CancelReserveRequest();
-            request.rcv = receiverNum;
+            request.rcv = receiveNum;
 
             try
             {
