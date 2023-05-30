@@ -412,7 +412,7 @@ namespace Popbill
 
         public RefundHistory GetRefundInfo(String CorpNum, String RefundCode, String UserID){
 
-            if (RefundCode == null) throw new PopbillException(-99999999, "환불코드가 입력되지 않았습니다.");
+            if (RefundCode == null || RefundCode == "") throw new PopbillException(-99999999, "환불코드가 입력되지 않았습니다.");
 
             try
             {
@@ -439,7 +439,7 @@ namespace Popbill
         }
 
         public Response QuitMember(String CorpNum, String QuitReason,  String UserID){
-            if (QuitReason == null) throw new PopbillException(-99999999, "탈퇴사유가 입력되지 않았습니다.");
+            if (QuitReason == null || QuitReason == "") throw new PopbillException(-99999999, "탈퇴사유가 입력되지 않았습니다.");
 
             QuitRequest quitRequest = new QuitRequest();
             quitRequest.quitReason = QuitReason;
