@@ -147,7 +147,7 @@ namespace Popbill.Kakao
         {
             if (String.IsNullOrEmpty(requestNum)) throw new PopbillException(-99999999, "요청번호(requestNum)가 입력되지 않았습니다.");
 
-            return httpget<Response>("/KakaoTalk//Cancel/" + requestNum, CorpNum, UserID);
+            return httpget<Response>("/KakaoTalk/Cancel/" + requestNum, CorpNum, UserID);
         }
 
 
@@ -686,19 +686,20 @@ namespace Popbill.Kakao
             return response.receiptNum;
         }
 
-        public Response CancelReservebyRCV(String CorpNum, String receiptNum, String receiveNum, String UserID) {
+        public Response CancelReservebyRCV(String CorpNum, String receiptNum, String receiverNum, String UserID)
+        {
             if (receiptNum == "" || receiptNum == null)
             {
                 throw new PopbillException(-99999999, "접수번호가 입력되지 않았습니다.");
             }
-            if (receiveNum == "" || receiveNum == null)
+            if (receiverNum == "" || receiverNum == null)
             {
                 throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
             }
 
             CancelReserveRequest request = new CancelReserveRequest();
-            request.receiptNum = receiptNum;
-            request.receiveNum = receiveNum;
+            request.rcv = receiverNum;
+
 
             try
             {
@@ -710,20 +711,19 @@ namespace Popbill.Kakao
             }
         }
 
-        public Response CancelReserveRNbyRCV(String CorpNum, String requestNum, String receiveNum, String UserID)
+        public Response CancelReserveRNbyRCV(String CorpNum, String requestNum, String receiverNum, String UserID)
         {
             if (requestNum == "" || requestNum == null)
             {
                 throw new PopbillException(-99999999, "접수번호가 입력되지 않았습니다.");
             }
-            if (receiveNum == "" || receiveNum == null)
+            if (receiverNum == "" || receiverNum == null)
             {
                 throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
             }
 
             CancelReserveRequest request = new CancelReserveRequest();
-            request.requestNum = requestNum;
-            request.receiveNum = receiveNum;
+            request.rcv = receiverNum;
 
             try
             {
@@ -801,9 +801,8 @@ namespace Popbill.Kakao
         [DataContract]
         public class CancelReserveRequest
         {
-            public String receiptNum;
-            public String receiveNum;
-            public String requestNum;
+            [DataMember]
+            public String rcv;
         }
 
     }
