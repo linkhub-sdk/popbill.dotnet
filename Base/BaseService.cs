@@ -338,6 +338,9 @@ namespace Popbill
         }
 
         public PaymentHistory GetSettleResult(String CorpNum, String SettleCode, String UserID){
+
+            if (SettleCode == null || SettleCode == "") throw new PopbillException(-99999999, "정산코드가 입력되지 않았습니다.");
+
             try
             {
                 return httpget<PaymentHistory>("/Payment/"+ SettleCode,CorpNum, UserID);
@@ -422,9 +425,12 @@ namespace Popbill
         }
 
         public Double GetRefundableBalance(String CorpNum, String UserID){
+            
             try
             {
-                return httpget<Double>("/RefundPoint",CorpNum, UserID);
+             RefundableResult result =    httpget<RefundableResult>("/RefundPoint", CorpNum, UserID);
+             return result.refundableBalance;
+                
             }
             catch (LinkhubException le)
             {
@@ -865,5 +871,11 @@ namespace Popbill
             public String quitReason;
         }
 
+        [DataContract]
+        private class RefundableResult
+        {
+            [DataMember]
+            public Double refundableBalance;
+        }
     }
 }
