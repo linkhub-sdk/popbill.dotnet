@@ -60,6 +60,8 @@ namespace Popbill.Cashbill
 
         [DataMember]
         public bool? printYN;
+        [DataMember]
+        public bool? interOPYN;
 
         [DataMember]
         public string tradeDT;
