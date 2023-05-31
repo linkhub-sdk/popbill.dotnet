@@ -13,6 +13,8 @@ namespace Popbill.Taxinvoice
         [DataMember]
         public long code;
         [DataMember]
+        public String message;
+        [DataMember]
         public String issueDT;
         [DataMember]
         public String ntsconfirmNum;

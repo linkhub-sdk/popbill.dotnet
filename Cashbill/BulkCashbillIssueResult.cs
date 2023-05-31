@@ -13,6 +13,8 @@ namespace Popbill.Cashbill
         [DataMember]
         public string confirmNum;
         [DataMember]
+        public String message;
+        [DataMember]
         public string tradeDate;
         [DataMember]
         public string tradeDT;
