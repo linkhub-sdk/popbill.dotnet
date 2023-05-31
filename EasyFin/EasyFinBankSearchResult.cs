@@ -31,6 +31,9 @@ namespace Popbill.EasyFin
         public String lastScrapDT;
 
         [DataMember]
+        public String balance;
+
+        [DataMember]
         public List<EasyFinBankSearchDetail> list;
     }
 }
