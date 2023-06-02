@@ -353,7 +353,7 @@ namespace Popbill
 
         public PaymentHistoryResult GetPaymentHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage, String UserID){
             String url = "/PaymentHistory";
-            url += "&SDate=" + SDate;
+            url += "?SDate=" + SDate;
             url += "&EDate=" + EDate;
             url += "&Page=" + Page;
             url += "&PerPage=" + PerPage;
