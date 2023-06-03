@@ -686,6 +686,11 @@ namespace Popbill.Kakao
             return response.receiptNum;
         }
 
+        public Response CancelReservebyRCV(String CorpNum, String receiptNum, String receiveNum)
+        {
+            return CancelReservebyRCV(CorpNum, receiptNum, receiveNum, null);
+        }
+        
         public Response CancelReservebyRCV(String CorpNum, String receiptNum, String receiveNum, String UserID)
         {
             if (receiptNum == "" || receiptNum == null)
@@ -711,6 +716,11 @@ namespace Popbill.Kakao
             }
         }
 
+        public Response CancelReserveRNbyRCV(String CorpNum, String requestNum, String receiveNum)
+        {
+            return CancelReserveRNbyRCV(CorpNum, requestNum, receiveNum, null);
+        }
+        
         public Response CancelReserveRNbyRCV(String CorpNum, String requestNum, String receiveNum, String UserID)
         {
             if (requestNum == "" || requestNum == null)
