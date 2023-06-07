@@ -112,19 +112,19 @@ namespace Popbill.Statement
         }
 
 
-        public Response Issue(String CorpNum, int itemCode, String mgtKey, String memo, String UserID)
+        public Response Issue(String CorpNum, int itemCode, String mgtKey, String memo, String EmailSubject)
         {
-            return this.Issue(CorpNum, itemCode, mgtKey, memo, UserID, null);
+            return this.Issue(CorpNum, itemCode, mgtKey, memo, EmailSubject, null);
         }
 
-        public Response Issue(String CorpNum, int itemCode, String mgtKey, String memo, String UserID, String EmailSubject)
+        public Response Issue(String CorpNum, int itemCode, String mgtKey, String memo, String EmailSubject, String UserID)
         {
             if (String.IsNullOrEmpty(mgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
             MemoRequest request = new MemoRequest();
 
             request.memo = memo;
-            if(EmailSubject != null)
+            if(EmailSubject != null )
                 request.EmailSubject = EmailSubject;
 
             String PostData = toJsonString(request);
