@@ -324,6 +324,10 @@ namespace Popbill
             }
         }
 
+        public PaymentResponse PaymentRequest(String CorpNum, PaymentForm PaymentForm)
+        {
+            return PaymentRequest(CorpNum, PaymentForm, null);
+        }
 
         public PaymentResponse PaymentRequest(String CorpNum, PaymentForm PaymentForm, String UserID){
             try
@@ -335,6 +339,11 @@ namespace Popbill
             {
                 throw new PopbillException(le);
             }
+        }
+
+        public PaymentHistory GetSettleResult(String CorpNum, String SettleCode)
+        {
+            return GetSettleResult(CorpNum, SettleCode, null);
         }
 
         public PaymentHistory GetSettleResult(String CorpNum, String SettleCode, String UserID){
@@ -349,6 +358,11 @@ namespace Popbill
             {
                 throw new PopbillException(le);
             }
+        }
+
+        public PaymentHistoryResult GetPaymentHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage)
+        {
+            return GetPaymentHistory(CorpNum, SDate, EDate, Page, PerPage, null);
         }
 
         public PaymentHistoryResult GetPaymentHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage, String UserID){
@@ -368,6 +382,11 @@ namespace Popbill
             }
         }
 
+        public UseHistoryResult GetUseHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage, String Order)
+        {
+            return GetUseHistory(CorpNum, SDate, EDate, Page, PerPage, Order, null);
+        }
+
         public UseHistoryResult GetUseHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage, String Order,String UserID){
             String url = "/UseHistory?";
             url += "&SDate="+SDate;
@@ -385,6 +404,11 @@ namespace Popbill
             }
         }
 
+        public RefundResponse Refund(String CorpNum, RefundForm RefundForm, String UserID)
+        {
+            return Refund(CorpNum, RefundForm, null);
+        }
+
         public RefundResponse Refund(String CorpNum, RefundForm RefundForm, String UserID){
 
             String PostData = toJsonString(RefundForm);
@@ -399,6 +423,11 @@ namespace Popbill
             }
         }
 
+        public RefundHistoryResult GetRefundHistory(String CorpNum, int Page, int PerPage, String UserID)
+        {
+            return GetRefundHistory(CorpNum, Page, PerPage, null);
+        }
+
         public RefundHistoryResult GetRefundHistory(String CorpNum, int Page, int PerPage, String UserID){
             try
             {
@@ -408,6 +437,12 @@ namespace Popbill
             {
                 throw new PopbillException(le);
             }
+        }
+
+        public RefundHistory GetRefundInfo(String CorpNum, String RefundCode)
+        {
+            return GetRefundInfo(CorpNum, RefundCode, null);
+            
         }
 
         public RefundHistory GetRefundInfo(String CorpNum, String RefundCode, String UserID){
@@ -424,6 +459,12 @@ namespace Popbill
             }
         }
 
+        public Double GetRefundableBalance(String CorpNum)
+        {
+
+            return GetRefundableBalance(CorpNum, null);
+        }
+
         public Double GetRefundableBalance(String CorpNum, String UserID){
             
             try
@@ -436,6 +477,11 @@ namespace Popbill
             {
                 throw new PopbillException(le);
             }
+        }
+
+        public Response QuitMember(String CorpNum, String QuitReason)
+        {
+            return QuitMember(CorpNum, QuitReason, null);
         }
 
         public Response QuitMember(String CorpNum, String QuitReason,  String UserID){
