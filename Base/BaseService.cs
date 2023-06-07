@@ -326,11 +326,6 @@ namespace Popbill
             return PaymentRequest(CorpNum, PaymentForm, null);
         }
 
-        public PaymentResponse PaymentRequest(String CorpNum, PaymentForm PaymentForm)
-        {
-            return PaymentRequest(CorpNum, PaymentForm, null);
-        }
-
         public PaymentResponse PaymentRequest(String CorpNum, PaymentForm PaymentForm, String UserID)
         {
             try
