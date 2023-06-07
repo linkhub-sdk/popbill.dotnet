@@ -109,7 +109,6 @@ namespace Popbill
             String PostData = toJsonString(joinInfo);
 
             return httppost<Response>("/Join", "", "", PostData, null);
-
         }
 
         public Response CheckIsMember(String CorpNum, String LinkID)
@@ -119,16 +118,15 @@ namespace Popbill
 
         protected String ServiceID
         {
-            get
-            {
-                return _IsTest ? ServiceID_TEST : ServiceID_REAL;
-            }
+            get { return _IsTest ? ServiceID_TEST : ServiceID_REAL; }
         }
+
         protected String ServiceURL
         {
             get
             {
-                if (UseGAIP) {
+                if (UseGAIP)
+                {
                     return _IsTest ? ServiceURL_TEST_GA : ServiceURL_REAL_GA;
                 }
                 else if (UseStaticIP)
@@ -139,7 +137,6 @@ namespace Popbill
                 {
                     return _IsTest ? ServiceURL_TEST : ServiceURL_REAL;
                 }
-
             }
         }
 
@@ -288,7 +285,7 @@ namespace Popbill
         {
             try
             {
-                return httpget<Response>("/IDCheck?ID="+ID, "", "");
+                return httpget<Response>("/IDCheck?ID=" + ID, "", "");
             }
             catch (LinkhubException le)
             {
@@ -329,11 +326,17 @@ namespace Popbill
             return PaymentRequest(CorpNum, PaymentForm, null);
         }
 
-        public PaymentResponse PaymentRequest(String CorpNum, PaymentForm PaymentForm, String UserID){
+        public PaymentResponse PaymentRequest(String CorpNum, PaymentForm PaymentForm)
+        {
+            return PaymentRequest(CorpNum, PaymentForm, null);
+        }
+
+        public PaymentResponse PaymentRequest(String CorpNum, PaymentForm PaymentForm, String UserID)
+        {
             try
             {
                 String PostData = toJsonString(PaymentForm);
-                return httppost<PaymentResponse>("/Payment",CorpNum, UserID, PostData, null);
+                return httppost<PaymentResponse>("/Payment", CorpNum, UserID, PostData, null);
             }
             catch (LinkhubException le)
             {
@@ -346,13 +349,14 @@ namespace Popbill
             return GetSettleResult(CorpNum, SettleCode, null);
         }
 
+
         public PaymentHistory GetSettleResult(String CorpNum, String SettleCode, String UserID){
 
             if (SettleCode == null || SettleCode == "") throw new PopbillException(-99999999, "정산코드가 입력되지 않았습니다.");
 
             try
             {
-                return httpget<PaymentHistory>("/Payment/"+ SettleCode,CorpNum, UserID);
+                return httpget<PaymentHistory>("/Payment/" + SettleCode, CorpNum, UserID);
             }
             catch (LinkhubException le)
             {
@@ -360,17 +364,21 @@ namespace Popbill
             }
         }
 
+
         public PaymentHistoryResult GetPaymentHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage)
+
         {
             return GetPaymentHistory(CorpNum, SDate, EDate, Page, PerPage, null);
         }
 
+
         public PaymentHistoryResult GetPaymentHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage, String UserID){
+
             String url = "/PaymentHistory";
             url += "?SDate=" + SDate;
             url += "&EDate=" + EDate;
-            url += "&Page=" + Page;
-            url += "&PerPage=" + PerPage;
+            url += "&Page=" + Page.ToString();
+            url += "&PerPage=" + PerPage.ToString();
 
             try
             {
@@ -382,21 +390,24 @@ namespace Popbill
             }
         }
 
+
         public UseHistoryResult GetUseHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage, String Order)
         {
             return GetUseHistory(CorpNum, SDate, EDate, Page, PerPage, Order, null);
         }
 
+
         public UseHistoryResult GetUseHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage, String Order,String UserID){
+
             String url = "/UseHistory?";
-            url += "&SDate="+SDate;
-            url += "&EDate="+EDate;
-            url += "&Page="+Page;
-            url += "&PerPage="+PerPage;
-            url += "&Order="+Order;
+            url += "&SDate=" + SDate;
+            url += "&EDate=" + EDate;
+            url += "&Page=" + Page.ToString();
+            url += "&PerPage=" + PerPage.ToString();
+            url += "&Order=" + Order;
             try
             {
-                return httpget<UseHistoryResult>(url,CorpNum, UserID);
+                return httpget<UseHistoryResult>(url, CorpNum, UserID);
             }
             catch (LinkhubException le)
             {
@@ -404,18 +415,20 @@ namespace Popbill
             }
         }
 
-        public RefundResponse Refund(String CorpNum, RefundForm RefundForm, String UserID)
+
+        public RefundResponse Refund(String CorpNum, RefundForm RefundForm)
         {
             return Refund(CorpNum, RefundForm, null);
         }
 
-        public RefundResponse Refund(String CorpNum, RefundForm RefundForm, String UserID){
 
+        public RefundResponse Refund(String CorpNum, RefundForm RefundForm, String UserID)
+        {
             String PostData = toJsonString(RefundForm);
 
             try
             {
-                return httppost<RefundResponse>("/Refund",CorpNum, UserID, PostData, "");
+                return httppost<RefundResponse>("/Refund", CorpNum, UserID, PostData, "");
             }
             catch (LinkhubException le)
             {
@@ -423,12 +436,15 @@ namespace Popbill
             }
         }
 
-        public RefundHistoryResult GetRefundHistory(String CorpNum, int Page, int PerPage, String UserID)
+
+        public RefundHistoryResult GetRefundHistory(String CorpNum, int Page, int PerPage)
         {
             return GetRefundHistory(CorpNum, Page, PerPage, null);
         }
 
+
         public RefundHistoryResult GetRefundHistory(String CorpNum, int Page, int PerPage, String UserID){
+
             try
             {
                 return httpget<RefundHistoryResult>("/RefundHistory", CorpNum, UserID);
@@ -442,16 +458,16 @@ namespace Popbill
         public RefundHistory GetRefundInfo(String CorpNum, String RefundCode)
         {
             return GetRefundInfo(CorpNum, RefundCode, null);
-            
         }
 
-        public RefundHistory GetRefundInfo(String CorpNum, String RefundCode, String UserID){
 
+        public RefundHistory GetRefundInfo(String CorpNum, String RefundCode, String UserID)
+        {
             if (RefundCode == null || RefundCode == "") throw new PopbillException(-99999999, "환불코드가 입력되지 않았습니다.");
 
             try
             {
-                return httpget<RefundHistory>("/Refund/"+RefundCode,CorpNum, UserID);
+                return httpget<RefundHistory>("/Refund/" + RefundCode, CorpNum, UserID);
             }
             catch (LinkhubException le)
             {
@@ -461,17 +477,15 @@ namespace Popbill
 
         public Double GetRefundableBalance(String CorpNum)
         {
-
             return GetRefundableBalance(CorpNum, null);
         }
 
-        public Double GetRefundableBalance(String CorpNum, String UserID){
-            
+
+        public Double GetRefundableBalance(String CorpNum, String UserID)
+        {
             try
             {
-             RefundableResult result =    httpget<RefundableResult>("/RefundPoint", CorpNum, UserID);
-             return result.refundableBalance;
-                
+                return httpget<Double>("/RefundPoint", CorpNum, UserID);
             }
             catch (LinkhubException le)
             {
@@ -483,6 +497,7 @@ namespace Popbill
         {
             return QuitMember(CorpNum, QuitReason, null);
         }
+
 
         public Response QuitMember(String CorpNum, String QuitReason,  String UserID){
             if (QuitReason == null || QuitReason == "") throw new PopbillException(-99999999, "탈퇴사유가 입력되지 않았습니다.");
@@ -502,7 +517,6 @@ namespace Popbill
         }
 
 
-
         #region protected
 
         protected String toJsonString(Object graph)
@@ -515,6 +529,7 @@ namespace Popbill
                 return new StreamReader(ms).ReadToEnd();
             }
         }
+
         protected T fromJson<T>(Stream jsonStream)
         {
             using (StreamReader reader = new StreamReader(jsonStream, Encoding.UTF8, true))
@@ -526,6 +541,7 @@ namespace Popbill
                 return jss.Deserialize<T>(t);
             }
         }
+
         protected byte[] readByte(Stream byteStream)
         {
             byte[] buffer = new byte[1024];
@@ -536,6 +552,7 @@ namespace Popbill
                 {
                     ms.Write(buffer, 0, read);
                 }
+
                 return ms.ToArray();
             }
         }
@@ -544,7 +561,7 @@ namespace Popbill
         {
             Token _token = null;
 
-            if(_tokenTable.ContainsKey(CorpNum))
+            if (_tokenTable.ContainsKey(CorpNum))
             {
                 _token = _tokenTable[CorpNum];
             }
@@ -554,10 +571,9 @@ namespace Popbill
             {
                 DateTime now = DateTime.Parse(_LinkhubAuth.getTime(UseStaticIP, UseLocalTimeYN, UseGAIP));
 
-                DateTime expiration = DateTime.Parse( _token.expiration);
+                DateTime expiration = DateTime.Parse(_token.expiration);
 
                 expired = expiration < now;
-
             }
 
             if (expired)
@@ -566,11 +582,13 @@ namespace Popbill
                 {
                     if (_IPRestrictOnOff) // IPRestrictOnOff 사용시
                     {
-                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, null, UseStaticIP, UseLocalTimeYN, UseGAIP);
+                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, null, UseStaticIP, UseLocalTimeYN,
+                            UseGAIP);
                     }
                     else
                     {
-                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, "*", UseStaticIP, UseLocalTimeYN, UseGAIP);
+                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, "*", UseStaticIP, UseLocalTimeYN,
+                            UseGAIP);
                     }
 
 
@@ -578,6 +596,7 @@ namespace Popbill
                     {
                         _tokenTable.Remove(CorpNum);
                     }
+
                     _tokenTable.Add(CorpNum, _token);
                 }
                 catch (LinkhubException le)
@@ -602,7 +621,7 @@ namespace Popbill
             request.Headers.Add("x-lh-version", APIVersion);
 
             request.Headers.Add("Accept-Encoding", "gzip, deflate");
-            
+
             request.UserAgent = "DOTNET POPBILL SDK";
 
             request.AutomaticDecompression = DecompressionMethods.GZip;
@@ -620,10 +639,12 @@ namespace Popbill
                 {
                     using (Stream stReadData = response.GetResponseStream())
                     {
-                        if (response.ContentType.Equals("application/pdf;charset=utf-8", StringComparison.OrdinalIgnoreCase))
+                        if (response.ContentType.Equals("application/pdf;charset=utf-8",
+                                StringComparison.OrdinalIgnoreCase))
                         {
                             return (T)Convert.ChangeType(readByte(stReadData), typeof(T));
                         }
+
                         return fromJson<T>(stReadData);
                     }
                 }
@@ -638,9 +659,9 @@ namespace Popbill
                         throw new PopbillException(t.code, t.message);
                     }
                 }
+
                 throw new PopbillException(-99999999, we.Message);
             }
-
         }
 
         protected T httppost<T>(String url, String CorpNum, String UserID, String PostData, String httpMethod)
@@ -648,9 +669,9 @@ namespace Popbill
             return httppost<T>(url, CorpNum, UserID, PostData, httpMethod, null);
         }
 
-        protected T httppost<T>(String url, String CorpNum, String UserID, String PostData, String httpMethod, String contentsType)
+        protected T httppost<T>(String url, String CorpNum, String UserID, String PostData, String httpMethod,
+            String contentsType)
         {
-
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
 
             if (contentsType == null)
@@ -661,7 +682,6 @@ namespace Popbill
             {
                 request.ContentType = contentsType;
             }
-
 
 
             if (String.IsNullOrEmpty(CorpNum) == false)
@@ -718,11 +738,13 @@ namespace Popbill
                         throw new PopbillException(t.code, t.message);
                     }
                 }
+
                 throw new PopbillException(-99999999, we.Message);
             }
         }
 
-        protected T httpBulkPost<T>(String url, String CorpNum, String SubmitID, String PostData, String UserID, String Action)
+        protected T httpBulkPost<T>(String url, String CorpNum, String SubmitID, String PostData, String UserID,
+            String Action)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
 
@@ -740,7 +762,8 @@ namespace Popbill
             request.Headers.Add("Accept-Encoding", "gzip, deflate");
             request.AutomaticDecompression = DecompressionMethods.GZip;
 
-            request.Headers.Add("x-pb-message-digest", Convert.ToBase64String(SHA1.Create().ComputeHash(Encoding.UTF8.GetBytes(PostData))));
+            request.Headers.Add("x-pb-message-digest",
+                Convert.ToBase64String(SHA1.Create().ComputeHash(Encoding.UTF8.GetBytes(PostData))));
             request.Headers.Add("x-pb-submit-id", SubmitID);
 
             request.UserAgent = "DOTNET POPBILL SDK";
@@ -790,7 +813,8 @@ namespace Popbill
             }
         }
 
-        protected T httppostFile<T>(String url, String CorpNum, String UserID, String form, List<UploadFile> UploadFiles, String httpMethod)
+        protected T httppostFile<T>(String url, String CorpNum, String UserID, String form,
+            List<UploadFile> UploadFiles, String httpMethod)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
 
@@ -841,7 +865,8 @@ namespace Popbill
             foreach (UploadFile f in UploadFiles)
             {
                 String fileHeader = CRLF + "--" + boundary + CRLF;
-                fileHeader += "content-disposition: form-data; name=\"" + f.FieldName + "\"; filename=\"" + f.FileName + "\"" + CRLF;
+                fileHeader += "content-disposition: form-data; name=\"" + f.FieldName + "\"; filename=\"" + f.FileName +
+                              "\"" + CRLF;
                 fileHeader += "content-type: Application/octet-stream" + CRLF + CRLF;
 
                 byte[] btFileHeader = Encoding.UTF8.GetBytes(fileHeader);
@@ -854,6 +879,7 @@ namespace Popbill
                 {
                     wstream.Write(buffer, 0, read);
                 }
+
                 f.FileData.Close();
             }
 
@@ -883,9 +909,11 @@ namespace Popbill
                         throw new PopbillException(t.code, t.message);
                     }
                 }
+
                 throw new PopbillException(-99999999, we.Message);
             }
         }
+
         #endregion
 
 
@@ -899,29 +927,19 @@ namespace Popbill
         [DataContract]
         public class URLResponse
         {
-            [DataMember]
-            public String url;
+            [DataMember] public String url;
         }
 
         [DataContract]
         public class UnitCostResponse
         {
-            [DataMember]
-            public Single unitCost;
+            [DataMember] public Single unitCost;
         }
 
         [DataContract]
         private class QuitRequest
         {
-            [DataMember]
-            public String quitReason;
-        }
-
-        [DataContract]
-        private class RefundableResult
-        {
-            [DataMember]
-            public Double refundableBalance;
+            [DataMember] public String quitReason;
         }
     }
 }
