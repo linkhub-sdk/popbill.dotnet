@@ -360,14 +360,14 @@ namespace Popbill
         }
 
 
-        public PaymentHistoryResult GetPaymentHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage)
+        public PaymentHistoryResult GetPaymentHistory(String CorpNum, String SDate, String EDate, int? Page, int? PerPage)
 
         {
             return GetPaymentHistory(CorpNum, SDate, EDate, Page, PerPage, null);
         }
 
 
-        public PaymentHistoryResult GetPaymentHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage, String UserID){
+        public PaymentHistoryResult GetPaymentHistory(String CorpNum, String SDate, String EDate, int? Page, int? PerPage, String UserID){
 
             String url = "/PaymentHistory";
             url += "?SDate=" + SDate;
@@ -386,13 +386,13 @@ namespace Popbill
         }
 
 
-        public UseHistoryResult GetUseHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage, String Order)
+        public UseHistoryResult GetUseHistory(String CorpNum, String SDate, String EDate, int? Page, int? PerPage, String Order)
         {
             return GetUseHistory(CorpNum, SDate, EDate, Page, PerPage, Order, null);
         }
 
 
-        public UseHistoryResult GetUseHistory(String CorpNum, String SDate, String EDate, int Page, int PerPage, String Order,String UserID){
+        public UseHistoryResult GetUseHistory(String CorpNum, String SDate, String EDate, int? Page, int? PerPage, String Order,String UserID){
 
             String url = "/UseHistory?";
             url += "&SDate=" + SDate;
@@ -432,13 +432,13 @@ namespace Popbill
         }
 
 
-        public RefundHistoryResult GetRefundHistory(String CorpNum, int Page, int PerPage)
+        public RefundHistoryResult GetRefundHistory(String CorpNum, int? Page, int? PerPage)
         {
             return GetRefundHistory(CorpNum, Page, PerPage, null);
         }
 
 
-        public RefundHistoryResult GetRefundHistory(String CorpNum, int Page, int PerPage, String UserID){
+        public RefundHistoryResult GetRefundHistory(String CorpNum, int? Page, int? PerPage, String UserID){
 
             try
             {
