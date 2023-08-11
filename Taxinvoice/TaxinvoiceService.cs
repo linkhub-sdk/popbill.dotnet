@@ -489,6 +489,25 @@ namespace Popbill.Taxinvoice
             return httppostFile<Response>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey + "/Files", CorpNum, UserID, null, files, null);
         }
 
+        public Response AttachFile(String CorpNum, MgtKeyType KeyType, String MgtKey, String DisplayName, String FilePath, String UserID)
+        {
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(FilePath)) throw new PopbillException(-99999999, "파일경로가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(DisplayName)) throw new PopbillException(-99999999, "첨부파일명이 입력되지 않았습니다.");
+
+            List<UploadFile> files = new List<UploadFile>();
+
+            UploadFile file = new UploadFile();
+
+            file.FieldName = "Filedata";
+            file.FileName = DisplayName;
+            file.FileData = new FileStream(FilePath, FileMode.Open, FileAccess.Read);
+
+            files.Add(file);
+
+            return httppostFile<Response>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey + "/Files", CorpNum, UserID, null, files, null);
+        }
+
         public List<AttachedFile> GetFiles(String CorpNum, MgtKeyType KeyType, String MgtKey)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");

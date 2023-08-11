@@ -298,6 +298,24 @@ namespace Popbill.Statement
             return httppostFile<Response>("/Statement/" + itemCode.ToString() + "/" + mgtKey + "/Files", CorpNum, UserID, null, files, null);
         }
 
+        public Response AttachFile(String CorpNum, int itemCode, String mgtKey, String DIsplayName, String FilePath, String UserID)
+        {
+            if (String.IsNullOrEmpty(mgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(FilePath)) throw new PopbillException(-99999999, "파일경로가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(DisplayName)) throw new PopbillException(-99999999, "첨부파일명이 입력되지 않았습니다.");
+
+            List<UploadFile> files = new List<UploadFile>();
+
+            UploadFile file = new UploadFile();
+
+            file.FieldName = "Filedata";
+            file.FileName = DIsplayName;
+            file.FileData = new FileStream(FilePath, FileMode.Open, FileAccess.Read);
+
+            files.Add(file);
+
+            return httppostFile<Response>("/Statement/" + itemCode.ToString() + "/" + mgtKey + "/Files", CorpNum, UserID, null, files, null);
+        }
 
         public List<AttachedFile> GetFiles(String CorpNum, int itemCode, String MgtKey)
         {
