@@ -81,7 +81,7 @@ namespace Popbill.Taxinvoice
         }
         public Response Register(String CorpNum, Taxinvoice taxinvoice, String UserID)
         {
-            return Register(CorpNum, taxinvoice, null, false);
+            return Register(CorpNum, taxinvoice, UserID, false);
         }
 
         public Response Register(String CorpNum, Taxinvoice taxinvoice, String UserID  , bool writeSpecification )
@@ -563,12 +563,12 @@ namespace Popbill.Taxinvoice
             
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String Order, int Page, int PerPage, String UserID)
         {
-            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, "", Order, Page, PerPage, "", null, null, null, "");
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, "", Order, Page, PerPage, "", UserID, null, null, "");
         }
 
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String QString, String Order, int Page, int PerPage, String UserID)
         {
-            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, "", Order, Page, PerPage, "", null, null, null, "");
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, QString, Order, Page, PerPage, "", UserID, null, null, "");
         }
 
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String QString, String Order, int Page, int PerPage, String InterOPYN, String UserID)

@@ -508,7 +508,7 @@ namespace Popbill.Fax
             if (title != null) request.title = title;
             if (reserveDT != null) reserveDT.Value.ToString("yyyyMMddHHmmss");
             if (receivers != null) request.rcvs = receivers;
-            
+            if (requestNum != null) request.requestNum = requestNum;
 
             String PostData = toJsonString(request);
 
