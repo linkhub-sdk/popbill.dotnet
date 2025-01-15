@@ -163,23 +163,23 @@ namespace Popbill.Kakao
 
         public KakaoSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, String[] Item, String ReserveYN, bool? SenderYN, String Order, int Page, int PerPage, String UserID, String QString)
         {
+            if (String.IsNullOrEmpty(CorpNum)) throw new PopbillException(-99999999, "사업자번호가 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
-
+            if (State == null || State.Count == 0) throw new PopbillException(-99999999, "전송상태가 입력되지 않았습니다.");
 
             String uri = "/KakaoTalk/Search";
             uri += "?SDate=" + SDate;
             uri += "&EDate=" + EDate;
             uri += "&State=" + String.Join(",", State);
-            uri += "&Item=" + String.Join(",", Item);
 
-            uri += "&ReserveYN=" + ReserveYN;
+            if (Item != null) uri += "&Item=" + String.Join(",", Item);
+            if (ReserveYN != null && ReserveYN != "") uri += "&ReserveYN=" + ReserveYN;
             if ((bool)SenderYN) uri += "&SenderYN=1";
-            if (QString != null) uri += "&QString=" + HttpUtility.UrlEncode(QString);
-
-            uri += "&Order=" + Order;
-            uri += "&Page=" + Page.ToString();
-            uri += "&PerPage=" + PerPage.ToString();
+            if (Order != null && Order != "") uri += "&Order=" + Order;
+            if (Page != null) uri += "&Page=" + Page.ToString();
+            if (PerPage != null) uri += "&PerPage=" + PerPage.ToString();
+            if (QString != null && QString != "") uri += "&QString=" + HttpUtility.UrlEncode(QString);
 
             return httpget<KakaoSearchResult>(uri, CorpNum, UserID);
         }

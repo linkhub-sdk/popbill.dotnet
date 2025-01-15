@@ -488,16 +488,17 @@ namespace Popbill.Cashbill
             uri += "?DType=" + DType;
             uri += "&SDate=" + SDate;
             uri += "&EDate=" + EDate;
-            uri += "&State=" + String.Join(",", State);
-            uri += "&TradeType=" + String.Join(",", TradeType);
-            uri += "&TradeUsage=" + String.Join(",", TradeUsage);
+
+            if (State != null) uri += "&State=" + String.Join(",", State);
+            if (TradeType != null) uri += "&TradeType=" + String.Join(",", TradeType);
+            if (TradeUsage != null) uri += "&TradeUsage=" + String.Join(",", TradeUsage);
             if (TradeOpt != null) uri += "&TradeOpt=" + String.Join(",", TradeOpt);
-            uri += "&TaxationType=" + String.Join(",", TaxationType);
-            if (QString != "") uri += "&QString=" + QString;
-            uri += "&Order=" + Order;
-            uri += "&Page=" + Page.ToString();
-            uri += "&PerPage=" + PerPage.ToString();
-            uri += "&FranchiseTaxRegID=" + FranchiseTaxRegID;
+            if (TaxationType != null) uri += "&TaxationType=" + String.Join(",", TaxationType);
+            if (QString != null && QString != "") uri += "&QString=" + QString;
+            if (Order != null && Order != "") uri += "&Order=" + Order;
+            if (Page != null) uri += "&Page=" + Page.ToString();
+            if (PerPage != null) uri += "&PerPage=" + PerPage.ToString();
+            if (FranchiseTaxRegID != null && FranchiseTaxRegID != "") uri += "&FranchiseTaxRegID=" + FranchiseTaxRegID;
 
             return httpget<CBSearchResult>(uri, CorpNum, null);
         }

@@ -389,14 +389,17 @@ namespace Popbill.Statement
             uri += "?DType=" + DType;
             uri += "&SDate=" + SDate;
             uri += "&EDate=" + EDate;
-            uri += "&State=" + String.Join(",", State);
             
-            String[] ItemCodeArr = Array.ConvertAll(ItemCode, x => x.ToString());
-            uri += "&ItemCode=" + String.Join(",", ItemCodeArr);
-            uri += "&QString=" + HttpUtility.UrlEncode(QString);
-            uri += "&Order=" + Order;
-            uri += "&Page=" + Page.ToString();
-            uri += "&PerPage=" + PerPage.ToString();
+            if (State != null) uri += "&State=" + String.Join(",", State);
+            if (ItemCode != null)
+            {
+                String[] ItemCodeArr = Array.ConvertAll(ItemCode, x => x.ToString());
+                uri += "&ItemCode=" + String.Join(",", ItemCodeArr);
+            }
+            if (QString != null && QString != "") uri += "&QString=" + HttpUtility.UrlEncode(QString);
+            if (Order != null && Order != "") uri += "&Order=" + Order;
+            if (Page != null) uri += "&Page=" + Page.ToString();
+            if (PerPage != null) uri += "&PerPage=" + PerPage.ToString();
 
             return httpget<DocSearchResult>(uri, CorpNum, null);
         }

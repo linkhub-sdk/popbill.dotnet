@@ -594,14 +594,11 @@ namespace Popbill.Taxinvoice
             uri += "?DType=" + DType;
             uri += "&SDate=" + SDate;
             uri += "&EDate=" + EDate;
-            uri += "&State=" + String.Join(",", State);
-            uri += "&Type=" + String.Join(",", Type);
-            uri += "&TaxType=" + String.Join(",", TaxType);
 
+            if (State != null) uri += "&State=" + String.Join(",", State);
+            if (Type != null) uri += "&Type=" + String.Join(",", Type);
+            if (TaxType != null) uri += "&TaxType=" + String.Join(",", TaxType);
             if (IssueType != null) uri += "&IssueType=" + String.Join(",", IssueType);
-            if (RegType != null) uri += "&RegType=" + String.Join(",", RegType);
-            if (CloseDownState != null) uri += "&CloseDownState=" + String.Join(",", CloseDownState);
-            
             if (LateOnly != null)
             {
                 if ((bool)LateOnly)
@@ -613,19 +610,18 @@ namespace Popbill.Taxinvoice
                     uri += "&LateOnly=0";
                 }
             }
-
-
-            if (TaxRegIDYN != "") uri += "&TaxRegIDYN=" + TaxRegIDYN;
-            if (MgtKey != "") uri += "&MgtKey=" + MgtKey;
-
-            uri += "&InterOPYN=" + InterOPYN;
-            uri += "&TaxRegIDType=" + TaxRegIDType;
-            uri += "&TaxRegID=" + TaxRegID;
-            uri += "&QString=" + HttpUtility.UrlEncode(QString);
-            uri += "&Order=" + Order;
-            uri += "&Page=" + Page.ToString();
-            uri += "&PerPage=" + PerPage.ToString();
-
+            if (TaxRegIDYN != null && TaxRegIDYN != "") uri += "&TaxRegIDYN=" + TaxRegIDYN;
+            if (TaxRegIDType != null && TaxRegIDType != "") uri += "&TaxRegIDType=" + TaxRegIDType;
+            if (TaxRegID != null && TaxRegID != "") uri += "&TaxRegID=" + TaxRegID;
+            if (QString != null && QString != "") uri += "&QString=" + HttpUtility.UrlEncode(QString);
+            if (Order != null && Order != "") uri += "&Order=" + Order;
+            if (Page != null) uri += "&Page=" + Page.ToString();
+            if (PerPage != null) uri += "&PerPage=" + PerPage.ToString();
+            if (InterOPYN != null && InterOPYN != "") uri += "&InterOPYN=" + InterOPYN;
+            if (RegType != null) uri += "&RegType=" + String.Join(",", RegType);
+            if (CloseDownState != null) uri += "&CloseDownState=" + String.Join(",", CloseDownState);
+            if (MgtKey != null && MgtKey != "") uri += "&MgtKey=" + MgtKey;
+            
             return httpget<TISearchResult>(uri, CorpNum, UserID);
         }
 

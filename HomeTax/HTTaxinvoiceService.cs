@@ -88,20 +88,18 @@ namespace Popbill.HomeTax
         {
             if (JobID.Length != 18) throw new PopbillException(-99999999, "작업아이디(jobID)가 올바르지 않습니다.");
 
-            String uri = "/HomeTax/Taxinvoice/" + JobID;
-            uri += "?Type=" + String.Join(",", Type);
-            uri += "&TaxType=" + String.Join(",", TaxType);
-            uri += "&PurposeType=" + String.Join(",", PurposeType);
+            String uri = "/HomeTax/Taxinvoice/" + JobID + "?Type=";
 
-            if (TaxRegIDYN != "") uri += "&TaxRegIDYN=" + TaxRegIDYN;
-            if (SearchString != null) uri += "&SearchString=" + HttpUtility.UrlEncode(SearchString);
-
-            uri += "&TaxRegIDType=" + TaxRegIDType;
-            uri += "&TaxRegID=" + TaxRegID;
-
-            uri += "&Page=" + Page.ToString();
-            uri += "&PerPage=" + PerPage.ToString();
-            uri += "&Order=" + Order;
+            if (Type != null) uri += String.Join(",", Type);
+            if (TaxType != null) uri += "&TaxType=" + String.Join(",", TaxType);
+            if (PurposeType != null) uri += "&PurposeType=" + String.Join(",", PurposeType);
+            if (TaxRegIDYN != null && TaxRegIDYN != "") uri += "&TaxRegIDYN=" + TaxRegIDYN;
+            if (TaxRegIDType != null && TaxRegIDType != "") uri += "&TaxRegIDType=" + TaxRegIDType;
+            if (TaxRegID != null && TaxRegID != "") uri += "&TaxRegID=" + TaxRegID;   
+            if (Page != null) uri += "&Page=" + Page.ToString();
+            if (PerPage != null) uri += "&PerPage=" + PerPage.ToString();
+            if (Order != null && Order != "") uri += "&Order=" + Order;
+            if (SearchString != null && SearchString != "") uri += "&SearchString=" + HttpUtility.UrlEncode(SearchString);
 
             return httpget<HTTaxinvoiceSearch>(uri, CorpNum, UserID);
         }
@@ -120,16 +118,15 @@ namespace Popbill.HomeTax
         {
             if (JobID.Length != 18) throw new PopbillException(-99999999, "작업아이디(jobID)가 올바르지 않습니다.");
 
-            String uri = "/HomeTax/Taxinvoice/" + JobID + "/Summary";
-            uri += "?Type=" + String.Join(",", Type);
-            uri += "&TaxType=" + String.Join(",", TaxType);
-            uri += "&PurposeType=" + String.Join(",", PurposeType);
+            String uri = "/HomeTax/Taxinvoice/" + JobID + "/Summary" + "?Type=";
 
-            if (TaxRegIDYN != "") uri += "&TaxRegIDYN=" + TaxRegIDYN;
-            if (SearchString != null) uri += "&SearchString=" + HttpUtility.UrlEncode(SearchString);
-
-            uri += "&TaxRegIDType=" + TaxRegIDType;
-            uri += "&TaxRegID=" + TaxRegID;
+            if (Type != null) uri += String.Join(",", Type);
+            if (TaxType != null) uri += "&TaxType=" + String.Join(",", TaxType);
+            if (PurposeType != null) uri += "&PurposeType=" + String.Join(",", PurposeType);
+            if (TaxRegIDYN != null && TaxRegIDYN != "") uri += "&TaxRegIDYN=" + TaxRegIDYN;
+            if (TaxRegIDType != null && TaxRegIDType != "") uri += "&TaxRegIDType=" + TaxRegIDType;
+            if (TaxRegID != null && TaxRegID != "") uri += "&TaxRegID=" + TaxRegID;
+            if (SearchString != null && SearchString != "") uri += "&SearchString=" + HttpUtility.UrlEncode(SearchString);
 
             return httpget<HTTaxinvoiceSummary>(uri, CorpNum, UserID);
         }

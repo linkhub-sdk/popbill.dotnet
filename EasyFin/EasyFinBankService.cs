@@ -221,14 +221,13 @@ namespace Popbill.EasyFin
         {
             if (JobID == null || JobID == "") throw new PopbillException(-99999999, "작업아이디가 입력되지 않습니다.");
 
-            String uri = "/EasyFin/Bank/" + JobID;
-            uri += "?TradeType=" + String.Join(",", TradeType);
+            String uri = "/EasyFin/Bank/" + JobID + "?TradeType=";
 
+            if (TradeType != null) uri += String.Join(",", TradeType);
             if (SearchString != null && SearchString != "") uri += "&SearchString=" + HttpUtility.UrlEncode(SearchString);
-
-            uri += "&Page=" + Page.ToString();
-            uri += "&PerPage=" + PerPage.ToString();
-            uri += "&Order=" + Order;
+            if (Page != null) uri += "&Page=" + Page.ToString();
+            if (PerPage != null) uri += "&PerPage=" + PerPage.ToString();
+            if (Order != null && Order != "") uri += "&Order=" + Order;
 
             return httpget<EasyFinBankSearchResult>(uri, CorpNum, UserID);
 
@@ -243,9 +242,9 @@ namespace Popbill.EasyFin
         {
             if (JobID == null || JobID == "") throw new PopbillException(-99999999, "작업아이디가 입력되지 않습니다.");
 
-            String uri = "/EasyFin/Bank/"+JobID+"/Summary";
-            uri += "?TradeType=" + String.Join(",", TradeType);
+            String uri = "/EasyFin/Bank/" + JobID + "/Summary" + "?TradeType=";
 
+            if (TradeType != null) uri += String.Join(",", TradeType);
             if (SearchString != null && SearchString != "") uri += "&SearchString=" + HttpUtility.UrlEncode(SearchString);
 
             return httpget<EasyFinBankSummary>(uri, CorpNum, UserID);

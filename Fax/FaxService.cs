@@ -611,16 +611,14 @@ namespace Popbill.Fax
             String uri = "/FAX/Search";
             uri += "?SDate=" + SDate;
             uri += "&EDate=" + EDate;
-            uri += "&State=" + String.Join(",", State);
 
+            if (State != null) uri += "&State=" + String.Join(",", State);
             if ((bool)ReserveYN) uri += "&ReserveYN=1";
             if ((bool)SenderOnly) uri += "&SenderOnly=1";
-
+            if (Order != null && Order != "") uri += "&Order=" + Order;
+            if (Page != null) uri += "&Page=" + Page.ToString();
+            if (PerPage != null) uri += "&PerPage=" + PerPage.ToString();
             if (QString != null) uri += "&QString=" + HttpUtility.UrlEncode(QString);
-
-            uri += "&Order=" + Order;
-            uri += "&Page=" + Page.ToString();
-            uri += "&PerPage=" + PerPage.ToString();
 
             return httpget<FAXSearchResult>(uri, CorpNum, null);
         }
