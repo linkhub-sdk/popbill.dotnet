@@ -81,8 +81,8 @@ namespace Popbill.HomeTax
             
             if (TradeType != null) uri += String.Join(",", TradeType);
             if (TradeUsage != null) uri += "&TradeUsage=" + String.Join(",", TradeUsage);
-            if (Page != null) uri += "&Page=" + Page.ToString();
-            if (PerPage != null) uri += "&PerPage=" + PerPage.ToString();
+            if (Page < 1) uri += "&Page=" + Page.ToString();
+            if (PerPage < 1 || PerPage > 1000) uri += "&PerPage=" + PerPage.ToString();
             if (Order != null && Order != "") uri += "&Order=" + Order;
 
             return httpget<HTCashbillSearch>(uri, CorpNum, UserID);

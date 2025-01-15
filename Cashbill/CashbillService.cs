@@ -496,8 +496,8 @@ namespace Popbill.Cashbill
             if (TaxationType != null) uri += "&TaxationType=" + String.Join(",", TaxationType);
             if (QString != null && QString != "") uri += "&QString=" + QString;
             if (Order != null && Order != "") uri += "&Order=" + Order;
-            if (Page != null) uri += "&Page=" + Page.ToString();
-            if (PerPage != null) uri += "&PerPage=" + PerPage.ToString();
+            if (Page < 1) uri += "&Page=" + Page.ToString();
+            if (PerPage < 1 || PerPage > 1000) uri += "&PerPage=" + PerPage.ToString();
             if (FranchiseTaxRegID != null && FranchiseTaxRegID != "") uri += "&FranchiseTaxRegID=" + FranchiseTaxRegID;
 
             return httpget<CBSearchResult>(uri, CorpNum, null);

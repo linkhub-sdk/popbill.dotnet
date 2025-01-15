@@ -225,8 +225,8 @@ namespace Popbill.EasyFin
 
             if (TradeType != null) uri += String.Join(",", TradeType);
             if (SearchString != null && SearchString != "") uri += "&SearchString=" + HttpUtility.UrlEncode(SearchString);
-            if (Page != null) uri += "&Page=" + Page.ToString();
-            if (PerPage != null) uri += "&PerPage=" + PerPage.ToString();
+            if (Page < 1) uri += "&Page=" + Page.ToString();
+            if (PerPage < 1 || PerPage > 1000) uri += "&PerPage=" + PerPage.ToString();
             if (Order != null && Order != "") uri += "&Order=" + Order;
 
             return httpget<EasyFinBankSearchResult>(uri, CorpNum, UserID);
