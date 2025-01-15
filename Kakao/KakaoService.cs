@@ -178,7 +178,7 @@ namespace Popbill.Kakao
             if ((bool)SenderYN) uri += "&SenderYN=1";
             if (Order != null && Order != "") uri += "&Order=" + Order;
             if (Page > 0) uri += "&Page=" + Page.ToString();
-            if (PerPage > 0 || PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
+            if (PerPage > 0 && PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
             if (QString != null && QString != "") uri += "&QString=" + HttpUtility.UrlEncode(QString);
 
             return httpget<KakaoSearchResult>(uri, CorpNum, UserID);

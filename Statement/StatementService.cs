@@ -399,7 +399,7 @@ namespace Popbill.Statement
             if (QString != null && QString != "") uri += "&QString=" + HttpUtility.UrlEncode(QString);
             if (Order != null && Order != "") uri += "&Order=" + Order;
             if (Page > 0) uri += "&Page=" + Page.ToString();
-            if (PerPage > 0 || PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
+            if (PerPage > 0 && PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
 
             return httpget<DocSearchResult>(uri, CorpNum, null);
         }

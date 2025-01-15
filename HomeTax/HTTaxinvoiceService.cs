@@ -97,7 +97,7 @@ namespace Popbill.HomeTax
             if (TaxRegIDType != null && TaxRegIDType != "") uri += "&TaxRegIDType=" + TaxRegIDType;
             if (TaxRegID != null && TaxRegID != "") uri += "&TaxRegID=" + TaxRegID;   
             if (Page > 0) uri += "&Page=" + Page.ToString();
-            if (PerPage > 0 || PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
+            if (PerPage > 0 && PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
             if (Order != null && Order != "") uri += "&Order=" + Order;
             if (SearchString != null && SearchString != "") uri += "&SearchString=" + HttpUtility.UrlEncode(SearchString);
 

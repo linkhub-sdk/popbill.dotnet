@@ -616,7 +616,7 @@ namespace Popbill.Taxinvoice
             if (QString != null && QString != "") uri += "&QString=" + HttpUtility.UrlEncode(QString);
             if (Order != null && Order != "") uri += "&Order=" + Order;
             if (Page > 0) uri += "&Page=" + Page.ToString();
-            if (PerPage > 0 || PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
+            if (PerPage > 0 && PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
             if (InterOPYN != null && InterOPYN != "") uri += "&InterOPYN=" + InterOPYN;
             if (RegType != null) uri += "&RegType=" + String.Join(",", RegType);
             if (CloseDownState != null) uri += "&CloseDownState=" + String.Join(",", CloseDownState);
