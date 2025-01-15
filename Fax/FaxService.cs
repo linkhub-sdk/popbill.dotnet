@@ -616,8 +616,8 @@ namespace Popbill.Fax
             if ((bool)ReserveYN) uri += "&ReserveYN=1";
             if ((bool)SenderOnly) uri += "&SenderOnly=1";
             if (Order != null && Order != "") uri += "&Order=" + Order;
-            if (Page < 1) uri += "&Page=" + Page.ToString();
-            if (PerPage < 1 || PerPage > 1000) uri += "&PerPage=" + PerPage.ToString();
+            if (Page > 0) uri += "&Page=" + Page.ToString();
+            if (PerPage > 0 || PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
             if (QString != null) uri += "&QString=" + HttpUtility.UrlEncode(QString);
 
             return httpget<FAXSearchResult>(uri, CorpNum, null);
