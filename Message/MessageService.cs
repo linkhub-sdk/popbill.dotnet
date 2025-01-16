@@ -883,8 +883,20 @@ namespace Popbill.Message
             uri += "&State=" + String.Join(",", State);
 
             if (Item != null) uri += "&Item=" + String.Join(",", Item);
-            if ((bool)ReserveYN) uri += "&ReserveYN=1";
-            if ((bool)SenderYN) uri += "&SenderYN=1";
+            if (ReserveYN != null)
+            {
+                if ((bool)ReserveYN)
+                    uri += "&ReserveYN=1";
+                else
+                    uri += "&ReserveYN=0";
+            }
+            if (SenderYN != null)
+            {
+                if ((bool)SenderYN)
+                    uri += "&SenderYN=1";
+                else
+                    uri += "&SenderYN=0";
+            }
             if (Page > 0) uri += "&Page=" + Page.ToString();
             if (PerPage > 0 && PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
             if (Order != null && Order != "") uri += "&Order=" + Order;

@@ -175,7 +175,13 @@ namespace Popbill.Kakao
 
             if (Item != null) uri += "&Item=" + String.Join(",", Item);
             if (ReserveYN != null && ReserveYN != "") uri += "&ReserveYN=" + ReserveYN;
-            if ((bool)SenderYN) uri += "&SenderYN=1";
+            if (SenderYN != null)
+            {
+                if ((bool)SenderYN)
+                    uri += "&SenderYN=1";
+                else
+                    uri += "&SenderYN=0";
+            }
             if (Order != null && Order != "") uri += "&Order=" + Order;
             if (Page > 0) uri += "&Page=" + Page.ToString();
             if (PerPage > 0 && PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();

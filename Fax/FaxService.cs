@@ -613,8 +613,20 @@ namespace Popbill.Fax
             uri += "&EDate=" + EDate;
 
             if (State != null) uri += "&State=" + String.Join(",", State);
-            if ((bool)ReserveYN) uri += "&ReserveYN=1";
-            if ((bool)SenderOnly) uri += "&SenderOnly=1";
+            if (ReserveYN != null)
+            {
+                if ((bool)ReserveYN)
+                    uri += "&ReserveYN=1";
+                else
+                    uri += "&ReserveYN=0";
+            }
+            if (SenderOnly != null)
+            {
+                if ((bool)SenderOnly)
+                    uri += "&SenderOnly=1";
+                else
+                    uri += "&SenderOnly=0";
+            }
             if (Order != null && Order != "") uri += "&Order=" + Order;
             if (Page > 0) uri += "&Page=" + Page.ToString();
             if (PerPage > 0 && PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
