@@ -178,9 +178,9 @@ namespace Popbill.Kakao
             if (SenderYN != null)
             {
                 if ((bool)SenderYN)
-                    uri += "&SenderYN=1";
+                    uri += "&SenderOnly=1";
                 else
-                    uri += "&SenderYN=0";
+                    uri += "&SenderOnly=0";
             }
             if (Order != null && Order != "") uri += "&Order=" + Order;
             if (Page > 0) uri += "&Page=" + Page.ToString();

@@ -893,9 +893,9 @@ namespace Popbill.Message
             if (SenderYN != null)
             {
                 if ((bool)SenderYN)
-                    uri += "&SenderYN=1";
+                    uri += "&SenderOnly=1";
                 else
-                    uri += "&SenderYN=0";
+                    uri += "&SenderOnly=0";
             }
             if (Page > 0) uri += "&Page=" + Page.ToString();
             if (PerPage > 0 && PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
