@@ -265,6 +265,21 @@ namespace Popbill
             }
         }
 
+        public Response DeleteContact(String CorpNum, String ContactID, String UserID)
+        {
+            if (ContactID == null) throw new PopbillException(-99999999, "ContactID not entered");
+
+            try
+            {
+                return httppost<Response>("/Contact/Delete?ContactID=" + ContactID, CorpNum, UserID, null, null);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
+
         public Response UpdateContact(String CorpNum, Contact contactInfo, String UserID)
         {
             if (contactInfo == null) throw new PopbillException(-99999999, "No ContactInfo form");
