@@ -607,7 +607,7 @@ namespace Popbill
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
 
-            request.Timeout = 180;
+            request.Timeout = 180 * 1000;
 
             if (String.IsNullOrEmpty(CorpNum) == false)
             {
@@ -747,7 +747,7 @@ namespace Popbill
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
 
-            request.Timeout = 180;
+            request.Timeout = 180 * 1000;
 
 
             request.ContentType = "application/json;";
@@ -819,7 +819,7 @@ namespace Popbill
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
 
-            request.Timeout = 180;
+            request.Timeout = 180 * 1000;
 
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
 
