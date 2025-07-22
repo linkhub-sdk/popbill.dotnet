@@ -79,7 +79,7 @@ namespace Popbill.Fax
 
         public Response CheckSenderNumber(String CorpNum, String SenderNumber, String UserID)
         {
-            if (SenderNumber == "") throw new PopbillException(-99999999, "확인할 발신번호가 입력되지 않았습니다.");
+            if (SenderNumber == "") throw new PopbillException(-99999999, "발신번호가 입력되지 않았습니다.");
 
             return httpget<Response>("/FAX/CheckSenderNumber/" + SenderNumber, CorpNum, UserID);
         }
@@ -416,8 +416,7 @@ namespace Popbill.Fax
         private string RequestFAX(String CorpNum, String sendNum, String senderName, 
             List<FaxReceiver> receivers, List<String> filePaths, DateTime? reserveDT, String UserID, Boolean adsYN, String title, String requestNum)
         {
-            if (filePaths == null || filePaths.Count == 0) throw new PopbillException(-99999999, "전송할 파일정보가 입력되지 않았습니다.");
-            if (receivers == null || receivers.Count == 0) throw new PopbillException(-99999999, "수신처 정보가 입력되지 않았습니다.");
+            if (filePaths == null || filePaths.Count == 0) throw new PopbillException(-99999999, "파일 목록이 입력되지 않았습니다.");
 
             List<UploadFile> UploadFiles = new List<UploadFile>();
 
@@ -499,7 +498,7 @@ namespace Popbill.Fax
 
         public string ResendFAX(String CorpNum, String receiptNum, String sendNum, String senderName, List<FaxReceiver> receivers, DateTime? reserveDT, String UserID, String title, String requestNum)
         {
-            if (receiptNum == "") throw new PopbillException(-99999999, "팩스접수번호(receiptNum)가 입력되지 않았습니다.");
+            if (receiptNum == "") throw new PopbillException(-99999999, "접수번호가 입력되지 않았습니다.");
 
             sendRequest request = new sendRequest();
 
@@ -538,7 +537,7 @@ namespace Popbill.Fax
 
         public string ResendFAXRN(String CorpNum, String requestNum, String assignRequestNum, String sendNum, String senderName, List<FaxReceiver> receivers, DateTime? reserveDT, String UserID, String title)
         {
-            if (requestNum == "") throw new PopbillException(-99999999, "팩스요청번호(requestNum)가 입력되지 않았습니다.");
+            if (requestNum == "") throw new PopbillException(-99999999, "원본 팩스 요청번호가 입력되지 않았습니다.");
 
             sendRequest request = new sendRequest();
 
@@ -581,7 +580,7 @@ namespace Popbill.Fax
 
         public List<FaxResult> GetFaxResultRN(String CorpNum, String requestNum, String UserID)
         {
-            if (String.IsNullOrEmpty(requestNum)) throw new PopbillException(-99999999, "요청번호(requestNum)가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(requestNum)) throw new PopbillException(-99999999, "요청번호가 입력되지 않았습니다.");
 
             return httpget<List<FaxResult>>("/FAX/Get/" + requestNum, CorpNum, UserID);
         }
@@ -593,7 +592,7 @@ namespace Popbill.Fax
 
         public Response CancelReserveRN(String CorpNum, String requestNum, String UserID)
         {
-            if (String.IsNullOrEmpty(requestNum)) throw new PopbillException(-99999999, "요청번호(requestNum)가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(requestNum)) throw new PopbillException(-99999999, "요청번호가 입력되지 않았습니다.");
 
             return httpget<Response>("/FAX/Cancel/" + requestNum, CorpNum, UserID);
         }
@@ -605,8 +604,6 @@ namespace Popbill.Fax
         }
         public FAXSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, bool? ReserveYN, bool? SenderOnly, String Order, int Page, int PerPage, String QString)
         {
-            if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
 
             String uri = "/FAX/Search";
             uri += "?SDate=" + SDate;

@@ -65,10 +65,9 @@ namespace Popbill.Cashbill
         {
             return Register(CorpNum, cashbill, null);
         }
+        
         public Response Register(String CorpNum, Cashbill cashbill, String UserID)
         {
-            if (cashbill == null) throw new PopbillException(-99999999, "현금영수증 정보가 입력되지 않았습니다.");
-
             String PostData = toJsonString(cashbill);
 
             return httppost<Response>("/Cashbill", CorpNum, UserID, PostData, null);
@@ -77,8 +76,6 @@ namespace Popbill.Cashbill
         public Response Update(String CorpNum, String MgtKey, Cashbill cashbill, String UserID)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
-
-            if (cashbill == null) throw new PopbillException(-99999999, "현금영수증 정보가 입력되지 않았습니다.");
 
             String PostData = toJsonString(cashbill);
 
@@ -272,9 +269,7 @@ namespace Popbill.Cashbill
 
         public Response AssignMgtKey(String CorpNum, String ItemKey, String MgtKey, String UserID)
         {
-            if (String.IsNullOrEmpty(ItemKey)) throw new PopbillException(-99999999, "아이템키(itemKey)가 입력되지 않았습니다.");
-
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "할당할 문서번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(ItemKey)) throw new PopbillException(-99999999, "팝빌에서 할당한 식별번호가 입력되지 않았습니다.");
 
 
             String PostData = "MgtKey=" + MgtKey;
@@ -312,8 +307,6 @@ namespace Popbill.Cashbill
 
         public BulkResponse BulkSubmit(String CorpNum, String SubmitID, List<Cashbill> cashbillList, String UserID)
         {
-            if (string.IsNullOrEmpty(SubmitID)) throw new PopbillException(-99999999, "제출아이디(SubmitID)가 입력되지 않았습니다.");
-            if (cashbillList == null || cashbillList.Count <= 0) throw new PopbillException(-99999999, "현금영수증 정보가 입력되지 않았습니다.");
 
             BulkCashbillSubmit cb = new BulkCashbillSubmit();
             cb.cashbills = cashbillList;
@@ -330,7 +323,7 @@ namespace Popbill.Cashbill
         }
         public BulkCashbillResult GetBulkResult(String CorpNum, String SubmitID, String UserID)
         {
-            if (string.IsNullOrEmpty(SubmitID)) throw new PopbillException(-99999999, "제출아이디(SubmitID)가 입력되지 않았습니다.");
+            if (string.IsNullOrEmpty(SubmitID)) throw new PopbillException(-99999999, "제출아이디가 입력되지 않았습니다.");
 
             return httpget<BulkCashbillResult>("/Cashbill/BULK/" + SubmitID + "/State", CorpNum, UserID);
         }
@@ -480,10 +473,7 @@ namespace Popbill.Cashbill
 
         public CBSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, String[] TradeType, String[] TradeUsage, String[] TradeOpt, String[] TaxationType, String QString, String Order, int Page, int PerPage, String FranchiseTaxRegID)
         {
-            if (String.IsNullOrEmpty(DType)) throw new PopbillException(-99999999, "검색일자 유형이 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
-
+            
             String uri = "/Cashbill/Search";
             uri += "?DType=" + DType;
             uri += "&SDate=" + SDate;
@@ -520,7 +510,6 @@ namespace Popbill.Cashbill
 
         public Response UpdateEmailConfig(String CorpNum, String EmailType, bool SendYN, String UserID)
         {
-            if (String.IsNullOrEmpty(EmailType)) throw new PopbillException(-99999999, "메일전송 타입이 입력되지 않았습니다.");
 
             String uri = "/Cashbill/EmailSendConfig?EmailType=" + EmailType + "&SendYN=" + SendYN;
 

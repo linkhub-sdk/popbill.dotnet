@@ -70,7 +70,7 @@ namespace Popbill.Kakao
 
         public Response CheckSenderNumber(String CorpNum, String SenderNumber, String UserID)
         {
-            if (SenderNumber == "") throw new PopbillException(-99999999, "확인할 발신번호가 입력되지 않았습니다.");
+            if (SenderNumber == "") throw new PopbillException(-99999999, "발신번호가 입력되지 않았습니다.");
 
             return httpget<Response>("/KakaoTalk/CheckSenderNumber/" + SenderNumber, CorpNum, UserID);
         }
@@ -145,7 +145,7 @@ namespace Popbill.Kakao
 
         public Response CancelReserveRN(String CorpNum, String requestNum, String UserID)
         {
-            if (String.IsNullOrEmpty(requestNum)) throw new PopbillException(-99999999, "요청번호(requestNum)가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(requestNum)) throw new PopbillException(-99999999, "요청번호가 입력되지 않았습니다.");
 
             return httpget<Response>("/KakaoTalk/Cancel/" + requestNum, CorpNum, UserID);
         }
@@ -163,10 +163,6 @@ namespace Popbill.Kakao
 
         public KakaoSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, String[] Item, String ReserveYN, bool? SenderYN, String Order, int Page, int PerPage, String UserID, String QString)
         {
-            if (String.IsNullOrEmpty(CorpNum)) throw new PopbillException(-99999999, "사업자번호가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
-            if (State == null || State.Length < 1) throw new PopbillException(-99999999, "전송상태가 입력되지 않았습니다.");
 
             String uri = "/KakaoTalk/Search";
             uri += "?SDate=" + SDate;
@@ -209,7 +205,7 @@ namespace Popbill.Kakao
 
         public KakaoSentResult GetMessagesRN(String CorpNum, String requestNum, String UserID)
         {
-            if (String.IsNullOrEmpty(requestNum)) throw new PopbillException(-99999999, "요청번호(requestNum)가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(requestNum)) throw new PopbillException(-99999999, "요청번호가 입력되지 않았습니다.");
 
             return httpget<KakaoSentResult>("/KakaoTalk/Get/" + requestNum, CorpNum, UserID);
         }
@@ -236,8 +232,6 @@ namespace Popbill.Kakao
         // 버튼 추가
         public String SendATS(String CorpNum, String templateCode, String snd, String altSendType, DateTime? sndDT, String receiveNum, String receiveName, String msg, String altmsg, List<KakaoButton> buttons)
         {
-            if (String.IsNullOrEmpty(receiveNum)) throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
-
             List<KakaoReceiver> messages = new List<KakaoReceiver>();
             KakaoReceiver messageObj = new KakaoReceiver();
             messageObj.rcv = receiveNum;
@@ -253,8 +247,6 @@ namespace Popbill.Kakao
         // 전송요청번호 추가
         public String SendATS(String CorpNum, String templateCode, String snd, String altSendType, DateTime? sndDT, String receiveNum, String receiveName, String msg, String altmsg, String requestNum)
         {
-            if (String.IsNullOrEmpty(receiveNum)) throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
-
             List<KakaoReceiver> messages = new List<KakaoReceiver>();
             KakaoReceiver messageObj = new KakaoReceiver();
             messageObj.rcv = receiveNum;
@@ -270,8 +262,6 @@ namespace Popbill.Kakao
         // 버튼, 전송요청번호 추가
         public String SendATS(String CorpNum, String templateCode, String snd, String altSendType, DateTime? sndDT, String receiveNum, String receiveName, String msg, String altmsg, String requestNum, List<KakaoButton> buttons)
         {
-            if (String.IsNullOrEmpty(receiveNum)) throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
-
             List<KakaoReceiver> messages = new List<KakaoReceiver>();
             KakaoReceiver messageObj = new KakaoReceiver();
             messageObj.rcv = receiveNum;
@@ -287,8 +277,6 @@ namespace Popbill.Kakao
         // 버튼, 전송요청번호, 대체문자제목 추가
         public String SendATS(String CorpNum, String templateCode, String snd, String altSubject, String altSendType, DateTime? sndDT, String receiveNum, String receiveName, String msg, String altmsg, String requestNum, List<KakaoButton> buttons)
         {
-            if (String.IsNullOrEmpty(receiveNum)) throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
-
             List<KakaoReceiver> messages = new List<KakaoReceiver>();
             KakaoReceiver messageObj = new KakaoReceiver();
             messageObj.rcv = receiveNum;
@@ -380,9 +368,7 @@ namespace Popbill.Kakao
         }
 
         public String SendATS(String CorpNum, String templateCode, String snd, String content, String altSubject, String altContent, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, String UserID, String requestNum, List<KakaoButton> buttons)
-        {
-            if (String.IsNullOrEmpty(templateCode)) throw new PopbillException(-99999999, "알림톡 템플릿 코드가 입력되지 않았습니다.");
-            
+        {            
             ATSSendRequest request = new ATSSendRequest();
 
             request.templateCode = templateCode;
@@ -514,9 +500,8 @@ namespace Popbill.Kakao
 
         public String SendFTS(String CorpNum, String plusFriendID, String snd, String content, String altSubject, String altContent, String altSendType, bool adsYN, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons, String UserID, String requestNum)
         {
-            if (String.IsNullOrEmpty(plusFriendID)) throw new PopbillException(-99999999, "카카오톡 검색용 아이디가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(snd)) throw new PopbillException(-99999999, "발신번호가 입력되지 않았습니다.");
-
+            if (String.IsNullOrEmpty(plusFriendID)) throw new PopbillException(-99999999, "검색용 아이디가 입력되지 않았습니다.");
+            
             FTSSendRequest request = new FTSSendRequest();
 
             request.plusFriendID = plusFriendID;
@@ -649,9 +634,10 @@ namespace Popbill.Kakao
 
         public String SendFMS(String CorpNum, String plusFriendID, String snd, String content, String altSubject, String altContent, String altSendType, bool adsYN, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons, String fmsfilepath, String imageURL, String UserID, String requestNum)
         {
-            if (String.IsNullOrEmpty(plusFriendID)) throw new PopbillException(-99999999, "카카오톡 검색용 아이디가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(snd)) throw new PopbillException(-99999999, "발신번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(plusFriendID)) throw new PopbillException(-99999999, "검색용 아이디가 입력되지 않았습니다.");
 
+            if (String.IsNullOrEmpty(fmsfilepath)) throw new PopbillException(-99999999, "이미지 파일 경로가 입력되지 않았습니다.");
+            
             FTSSendRequest request = new FTSSendRequest();
 
             request.plusFriendID = plusFriendID;
@@ -702,10 +688,7 @@ namespace Popbill.Kakao
             {
                 throw new PopbillException(-99999999, "접수번호가 입력되지 않았습니다.");
             }
-            if (receiveNum == "" || receiveNum == null)
-            {
-                throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
-            }
+            
 
             CancelReserveRequest request = new CancelReserveRequest();
             request.rcv = receiveNum;
@@ -731,10 +714,6 @@ namespace Popbill.Kakao
             if (requestNum == "" || requestNum == null)
             {
                 throw new PopbillException(-99999999, "접수번호가 입력되지 않았습니다.");
-            }
-            if (receiveNum == "" || receiveNum == null)
-            {
-                throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
             }
 
             CancelReserveRequest request = new CancelReserveRequest();

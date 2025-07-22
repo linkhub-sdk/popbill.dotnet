@@ -35,10 +35,6 @@ namespace Popbill.BizInfoCheck
 
         public BizCheckInfo checkBizInfo(string MemberCorpNum, string CheckCorpNum)
         {
-            if (CheckCorpNum == null || CheckCorpNum == "")
-            {
-                throw new PopbillException(-99999999, "조회할 사업자번호가 입력되지 않았습니다");
-            }
 
             return httpget<BizCheckInfo>("/BizInfo/Check?CN=" + CheckCorpNum, MemberCorpNum, null);
         }

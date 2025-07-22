@@ -74,7 +74,7 @@ namespace Popbill.Message
 
         public Response CheckSenderNumber(String CorpNum, String SenderNumber, String UserID)
         {
-            if (SenderNumber == "") throw new PopbillException(-99999999, "확인할 발신번호가 입력되지 않았습니다.");
+            if (SenderNumber == "") throw new PopbillException(-99999999, "발신번호가 입력되지 않았습니다.");
 
             return httpget<Response>("/Message/CheckSenderNumber/" + SenderNumber, CorpNum, UserID);
         }
@@ -723,7 +723,9 @@ namespace Popbill.Message
             List<Message> messages, String mmsfilepath, DateTime? reserveDT, String UserID, String requestNum,
             Boolean adsYN)
         {
-            if (messages == null || messages.Count == 0) throw new PopbillException(-99999999, "전송할 메시지가 입력되지 않았습니다.");
+            if (messages == null || messages.Count == 0) throw new PopbillException(-99999999, "문자 정보가 입력되지 않았습니다.");
+
+            if (String.IsNullOrEmpty(mmsfilepath)) throw new PopbillException(-99999999, "이미지 파일 경로가 입력되지 않았습니다.");
 
             sendRequest request = new sendRequest();
 
@@ -765,7 +767,7 @@ namespace Popbill.Message
         public List<MessageResult> GetMessageResultRN(String CorpNum, String requestNum)
         {
             if (String.IsNullOrEmpty(requestNum))
-                throw new PopbillException(-99999999, "요청번호(requestNum)가 입력되지 않았습니다.");
+                throw new PopbillException(-99999999, "요청번호가 입력되지 않았습니다.");
 
             return httpget<List<MessageResult>>("/Message/Get/" + requestNum, CorpNum, null);
         }
@@ -790,7 +792,7 @@ namespace Popbill.Message
         public Response CancelReserveRN(String CorpNum, String requestNum, String UserID)
         {
             if (String.IsNullOrEmpty(requestNum))
-                throw new PopbillException(-99999999, "요청번호(requestNum)가 입력되지 않았습니다.");
+                throw new PopbillException(-99999999, "요청번호가 입력되지 않았습니다.");
 
             return httpget<Response>("/Message/Cancel/" + requestNum, CorpNum, UserID);
         }
@@ -804,7 +806,6 @@ namespace Popbill.Message
         public Response CancelReservebyRCV(String CorpNum, String receiptNum, String receiveNum, String UserID)
         {
             if (String.IsNullOrEmpty(receiptNum)) throw new PopbillException(-99999999, "접수번호가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(receiveNum)) throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
 
             String PostData = toJsonString(receiveNum);
 
@@ -819,8 +820,7 @@ namespace Popbill.Message
         public Response CancelReserveRNbyRCV(String CorpNum, String requestNum, String receiveNum, String UserID)
         {
             if (String.IsNullOrEmpty(requestNum))
-                throw new PopbillException(-99999999, "요청번호(requestNum)가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(receiveNum)) throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
+                throw new PopbillException(-99999999, "요청번호가 입력되지 않았습니다.");
 
             String PostData = toJsonString(receiveNum);
 
@@ -840,7 +840,7 @@ namespace Popbill.Message
             String subject, String content, List<Message> messages, DateTime? reserveDT, String UserID,
             String requestNum, Boolean adsYN)
         {
-            if (messages == null || messages.Count == 0) throw new PopbillException(-99999999, "전송할 메시지가 입력되지 않았습니다.");
+            if (messages == null || messages.Count == 0) throw new PopbillException(-99999999, "문자 정보가 입력되지 않았습니다.");
 
             sendRequest request = new sendRequest();
 
@@ -872,10 +872,6 @@ namespace Popbill.Message
         public MSGSearchResult Search(String CorpNum, String SDate, String EDate, String[] State, String[] Item,
             bool? ReserveYN, bool? SenderYN, String Order, int Page, int PerPage, String QString)
         {
-            if (String.IsNullOrEmpty(CorpNum)) throw new PopbillException(-99999999, "사업자번호가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
-            if (State == null || State.Length < 1) throw new PopbillException(-99999999, "전송상태가 입력되지 않았습니다.");
 
             String uri = "/Message/Search";
             uri += "?SDate=" + SDate;
@@ -922,9 +918,8 @@ namespace Popbill.Message
 
         public List<MessageState> GetStates(String CorpNum, List<String> ReciptNumList, String UserID)
         {
-            if (ReciptNumList == null || ReciptNumList.Count == 0)
-                throw new PopbillException(-99999999, "문자전송 접수번호가 입력되지 않았습니다.");
             String PostData = toJsonString(ReciptNumList);
+
             return httppost<List<MessageState>>("/Message/States", CorpNum, UserID, PostData, null);
         }
 
