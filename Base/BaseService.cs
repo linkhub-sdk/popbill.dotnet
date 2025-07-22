@@ -503,7 +503,16 @@ namespace Popbill
             String PostData = toJsonString(quitRequest);
             try
             {
-                return httppost<Response>("/QuitRequest", CorpNum, UserID, PostData, "");
+                Response rtn = httppost<Response>("/QuitRequest", CorpNum, UserID, PostData, "");
+
+                if (rtn.code == 1)
+                {
+                    if (_tokenTable.ContainsKey(CorpNum))
+                    {
+                        _tokenTable.Remove(CorpNum);
+                    }
+                }
+                return rtn;
             }
             catch (LinkhubException le)
             {
