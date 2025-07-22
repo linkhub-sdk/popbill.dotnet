@@ -65,5 +65,19 @@ namespace Popbill.Cashbill
 
         [DataMember]
         public string tradeDT;
+
+        [DataMember]
+        public string supplyCost;
+        [DataMember]
+        public string tax;
+        [DataMember]
+        public string serviceFee;
+        [DataMember]
+        public string orderNumber;
+
+        [DataMember]
+        public string email;
+        [DataMember]
+        public string hp;
     }
 }
