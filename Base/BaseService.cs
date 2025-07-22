@@ -82,21 +82,21 @@ namespace Popbill
 
         public String GetPopbillURL(String CorpNum, String UserID, String TOGO)
         {
-            URLResponse response = httpget<URLResponse>("/?TG=" + TOGO, CorpNum, UserID);
+            URLResponse response = httpget<URLResponse>("/Member?TG=" + TOGO, CorpNum, UserID);
 
             return response.url;
         }
 
         public String GetAccessURL(String CorpNum, String UserID)
         {
-            URLResponse response = httpget<URLResponse>("/?TG=LOGIN", CorpNum, UserID);
+            URLResponse response = httpget<URLResponse>("/Member?TG=LOGIN", CorpNum, UserID);
 
             return response.url;
         }
 
         public String GetChargeURL(String CorpNum, String UserID)
         {
-            URLResponse response = httpget<URLResponse>("/?TG=CHRG", CorpNum, UserID);
+            URLResponse response = httpget<URLResponse>("/Member?TG=CHRG", CorpNum, UserID);
 
             return response.url;
         }
@@ -177,7 +177,7 @@ namespace Popbill
         {
             try
             {
-                URLResponse response = httpget<URLResponse>("/?TG=PAYMENT", CorpNum, UserID);
+                URLResponse response = httpget<URLResponse>("/Member?TG=PAYMENT", CorpNum, UserID);
 
                 return response.url;
             }
@@ -196,7 +196,7 @@ namespace Popbill
         {
             try
             {
-                URLResponse response = httpget<URLResponse>("/?TG=USEHISTORY", CorpNum, UserID);
+                URLResponse response = httpget<URLResponse>("/Member?TG=USEHISTORY", CorpNum, UserID);
 
                 return response.url;
             }
@@ -607,6 +607,8 @@ namespace Popbill
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
 
+            request.Timeout = 180;
+
             if (String.IsNullOrEmpty(CorpNum) == false)
             {
                 String bearerToken = getSession_Token(CorpNum);
@@ -668,6 +670,8 @@ namespace Popbill
             String contentsType)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
+
+            request.Timeout = 180;
 
             if (contentsType == null)
             {
@@ -743,6 +747,8 @@ namespace Popbill
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
 
+            request.Timeout = 180;
+
 
             request.ContentType = "application/json;";
 
@@ -812,6 +818,8 @@ namespace Popbill
             List<UploadFile> UploadFiles, String httpMethod)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
+
+            request.Timeout = 180;
 
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
 

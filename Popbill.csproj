@@ -93,6 +93,7 @@
     <Compile Include="EasyFin\EasyFinBankSearchResult.cs" />
     <Compile Include="EasyFin\EasyFinBankService.cs" />
     <Compile Include="EasyFin\EasyFinBankSummary.cs" />
+    <Compile Include="EasyFin\UpdateEasyFinBankAccountForm.cs" />
     <Compile Include="Fax\FaxReceiver.cs" />
     <Compile Include="Fax\FaxResult.cs" />
     <Compile Include="Fax\FAXSearchResult.cs" />
