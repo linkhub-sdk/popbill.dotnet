@@ -36,6 +36,8 @@ namespace Popbill
         private Authority _LinkhubAuth;
         private List<String> _Scopes = new List<string>();
 
+
+
         public bool IsTest
         {
             set { _IsTest = value; }
@@ -78,7 +80,6 @@ namespace Popbill
         {
             _Scopes.Add(scope);
         }
-
 
         public String GetPopbillURL(String CorpNum, String UserID, String TOGO)
         {
