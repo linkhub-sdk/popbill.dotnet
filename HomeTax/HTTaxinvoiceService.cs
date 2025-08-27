@@ -248,7 +248,7 @@ namespace Popbill.HomeTax
 
             request.id = deptUserID;
             request.pwd = deptUserPWD;
-
+            request.secAuth = identityNum;
 
             String PostData = toJsonString(request);
 
