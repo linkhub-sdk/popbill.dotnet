@@ -154,15 +154,21 @@ namespace Popbill.HomeTax
 
         public Response RegistDeptUser(String corpNum, String deptUserID, String deptUserPWD)
         {
-            return RegistDeptUser(corpNum, deptUserID, deptUserPWD, null);
+            return RegistDeptUser(corpNum, deptUserID, deptUserPWD, null, null);
         }
 
-        public Response RegistDeptUser(String corpNum, String deptUserID, String deptUserPWD, String userID)
+        public Response RegistDeptUser(String corpNum, String deptUserID, String deptUserPWD, String UserID)
+        {
+            return RegistDeptUser(corpNum, deptUserID, deptUserPWD, null, UserID);
+        }
+
+        public Response RegistDeptUser(String corpNum, String deptUserID, String deptUserPWD, String identityNum, String userID)
         {
             RegistDeptUserRequest request = new RegistDeptUserRequest();
 
             request.id = deptUserID;
             request.pwd = deptUserPWD;
+            request.secAuth = identityNum;
 
             String PostData = toJsonString(request);
 
@@ -221,6 +227,8 @@ namespace Popbill.HomeTax
             public String id;
             [DataMember]
             public String pwd;
+            [DataMember]
+            public String secAuth;
         }
     }
 
