@@ -12,16 +12,16 @@ namespace Popbill
         public long code;
         
         [DataMember]
-        public long total;
+        public int total;
 
         [DataMember]
-        public long perPage;
+        public int perPage;
 
         [DataMember]
-        public long pageNum;
+        public int pageNum;
 
         [DataMember]
-        public long pageCount;
+        public int pageCount;
 
         [DataMember]
         public List<RefundHistory> list;

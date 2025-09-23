@@ -36,6 +36,8 @@ namespace Popbill
         private Authority _LinkhubAuth;
         private List<String> _Scopes = new List<string>();
 
+
+
         public bool IsTest
         {
             set { _IsTest = value; }
@@ -79,24 +81,23 @@ namespace Popbill
             _Scopes.Add(scope);
         }
 
-
         public String GetPopbillURL(String CorpNum, String UserID, String TOGO)
         {
-            URLResponse response = httpget<URLResponse>("/?TG=" + TOGO, CorpNum, UserID);
+            URLResponse response = httpget<URLResponse>("/Member?TG=" + TOGO, CorpNum, UserID);
 
             return response.url;
         }
 
         public String GetAccessURL(String CorpNum, String UserID)
         {
-            URLResponse response = httpget<URLResponse>("/?TG=LOGIN", CorpNum, UserID);
+            URLResponse response = httpget<URLResponse>("/Member?TG=LOGIN", CorpNum, UserID);
 
             return response.url;
         }
 
         public String GetChargeURL(String CorpNum, String UserID)
         {
-            URLResponse response = httpget<URLResponse>("/?TG=CHRG", CorpNum, UserID);
+            URLResponse response = httpget<URLResponse>("/Member?TG=CHRG", CorpNum, UserID);
 
             return response.url;
         }
@@ -177,7 +178,7 @@ namespace Popbill
         {
             try
             {
-                URLResponse response = httpget<URLResponse>("/?TG=PAYMENT", CorpNum, UserID);
+                URLResponse response = httpget<URLResponse>("/Member?TG=PAYMENT", CorpNum, UserID);
 
                 return response.url;
             }
@@ -196,7 +197,7 @@ namespace Popbill
         {
             try
             {
-                URLResponse response = httpget<URLResponse>("/?TG=USEHISTORY", CorpNum, UserID);
+                URLResponse response = httpget<URLResponse>("/Member?TG=USEHISTORY", CorpNum, UserID);
 
                 return response.url;
             }
@@ -264,6 +265,21 @@ namespace Popbill
                 throw new PopbillException(le);
             }
         }
+
+        public Response DeleteContact(String CorpNum, String ContactID, String UserID)
+        {
+            if (ContactID == null) throw new PopbillException(-99999999, "ContactID not entered");
+
+            try
+            {
+                return httppost<Response>("/Contact/Delete?ContactID=" + ContactID, CorpNum, UserID, null, null);
+            }
+            catch (LinkhubException le)
+            {
+                throw new PopbillException(le);
+            }
+        }
+
 
         public Response UpdateContact(String CorpNum, Contact contactInfo, String UserID)
         {
@@ -503,7 +519,16 @@ namespace Popbill
             String PostData = toJsonString(quitRequest);
             try
             {
-                return httppost<Response>("/QuitRequest", CorpNum, UserID, PostData, "");
+                Response rtn = httppost<Response>("/QuitRequest", CorpNum, UserID, PostData, "");
+
+                if (rtn.code == 1)
+                {
+                    if (_tokenTable.ContainsKey(CorpNum))
+                    {
+                        _tokenTable.Remove(CorpNum);
+                    }
+                }
+                return rtn;
             }
             catch (LinkhubException le)
             {
@@ -554,6 +579,8 @@ namespace Popbill
 
         private String getSession_Token(String CorpNum)
         {
+            if (String.IsNullOrEmpty(CorpNum)) throw new PopbillException(-99999999, "팝빌회원 사업자번호가 입력되지 않았습니다."); 
+
             Token _token = null;
 
             if (_tokenTable.ContainsKey(CorpNum))
@@ -606,6 +633,8 @@ namespace Popbill
         protected T httpget<T>(String url, String CorpNum, String UserID)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
+
+            request.Timeout = 180 * 1000;
 
             if (String.IsNullOrEmpty(CorpNum) == false)
             {
@@ -668,6 +697,8 @@ namespace Popbill
             String contentsType)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
+
+            request.Timeout = 180 * 1000;
 
             if (contentsType == null)
             {
@@ -743,6 +774,8 @@ namespace Popbill
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
 
+            request.Timeout = 180 * 1000;
+
 
             request.ContentType = "application/json;";
 
@@ -812,6 +845,8 @@ namespace Popbill
             List<UploadFile> UploadFiles, String httpMethod)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ServiceURL + url);
+
+            request.Timeout = 180 * 1000;
 
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
 

@@ -81,12 +81,12 @@ namespace Popbill.Taxinvoice
         }
         public Response Register(String CorpNum, Taxinvoice taxinvoice, String UserID)
         {
-            return Register(CorpNum, taxinvoice, null, false);
+            return Register(CorpNum, taxinvoice, UserID, false);
         }
 
         public Response Register(String CorpNum, Taxinvoice taxinvoice, String UserID  , bool writeSpecification )
         {
-            if (taxinvoice == null) throw new PopbillException(-99999999, "세금계산서 정보가 입력되지 않았습니다.");
+            if (taxinvoice == null) throw new PopbillException(-99999999, "전자세금계산서 정보가 입력되지 않았습니다.");
 
             if (writeSpecification)
             {
@@ -101,7 +101,7 @@ namespace Popbill.Taxinvoice
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
 
-            if (taxinvoice == null) throw new PopbillException(-99999999, "세금계산서 정보가 입력되지 않았습니다.");
+            if (taxinvoice == null) throw new PopbillException(-99999999, "전자세금계산서 정보가 입력되지 않았습니다.");
 
             String PostData = toJsonString(taxinvoice);
 
@@ -285,8 +285,8 @@ namespace Popbill.Taxinvoice
 
         public BulkResponse BulkSubmit(String CorpNum, String SubmitID, List<Taxinvoice> taxinvoiceList, bool ForceIssue, String UserID)
         {
-            if (string.IsNullOrEmpty(SubmitID)) throw new PopbillException(-99999999, "제출아이디(SubmitID)가 입력되지 않았습니다.");
-            if (taxinvoiceList == null || taxinvoiceList.Count <= 0) throw new PopbillException(-99999999, "세금계산서 정보가 입력되지 않았습니다.");
+            if (string.IsNullOrEmpty(SubmitID)) throw new PopbillException(-99999999, "제출아이디가 입력되지 않았습니다.");
+            if (taxinvoiceList == null || taxinvoiceList.Count <= 0) throw new PopbillException(-99999999, "전자세금계산서 정보가 입력되지 않았습니다.");
 
             BulkTaxinvoiceSubmit tx = new BulkTaxinvoiceSubmit();
             tx.forceIssue = ForceIssue;
@@ -377,7 +377,7 @@ namespace Popbill.Taxinvoice
         }
         public BulkTaxinvoiceResult GetBulkResult(String CorpNum, String SubmitID, String UserID)
         {
-            if (string.IsNullOrEmpty(SubmitID)) throw new PopbillException(-99999999, "제출아이디(SubmitID)가 입력되지 않았습니다.");
+            if (string.IsNullOrEmpty(SubmitID)) throw new PopbillException(-99999999, "제출아이디가 입력되지 않았습니다.");
 
             return httpget<BulkTaxinvoiceResult>("/Taxinvoice/BULK/" + SubmitID + "/State", CorpNum, UserID);
         }
@@ -489,6 +489,25 @@ namespace Popbill.Taxinvoice
             return httppostFile<Response>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey + "/Files", CorpNum, UserID, null, files, null);
         }
 
+        public Response AttachFile(String CorpNum, MgtKeyType KeyType, String MgtKey, String DisplayName, String FilePath, String UserID)
+        {
+            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(DisplayName)) throw new PopbillException(-99999999, "파일명이 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(FilePath)) throw new PopbillException(-99999999, "파일경로가 입력되지 않았습니다.");
+            
+            List<UploadFile> files = new List<UploadFile>();
+
+            UploadFile file = new UploadFile();
+
+            file.FieldName = "Filedata";
+            file.FileName = DisplayName;
+            file.FileData = new FileStream(FilePath, FileMode.Open, FileAccess.Read);
+
+            files.Add(file);
+
+            return httppostFile<Response>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey + "/Files", CorpNum, UserID, null, files, null);
+        }
+
         public List<AttachedFile> GetFiles(String CorpNum, MgtKeyType KeyType, String MgtKey)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
@@ -499,7 +518,7 @@ namespace Popbill.Taxinvoice
         public Response DeleteFile(String CorpNum, MgtKeyType KeyType, String MgtKey,String FileID , String UserID)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(FileID)) throw new PopbillException(-99999999, "파일 아이디가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(FileID)) throw new PopbillException(-99999999, "파일 식별번호가 입력되지 않았습니다.");
 
             return httppost<Response>("/Taxinvoice/" + KeyType.ToString() + "/" + MgtKey + "/Files/" + FileID, CorpNum, UserID, null, "DELETE");
         }
@@ -544,12 +563,12 @@ namespace Popbill.Taxinvoice
             
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String Order, int Page, int PerPage, String UserID)
         {
-            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, "", Order, Page, PerPage, "", null, null, null, "");
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, "", Order, Page, PerPage, "", UserID, null, null, "");
         }
 
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String QString, String Order, int Page, int PerPage, String UserID)
         {
-            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, "", Order, Page, PerPage, "", null, null, null, "");
+            return Search(CorpNum, KeyType, DType, SDate, EDate, State, Type, TaxType, null, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID, QString, Order, Page, PerPage, "", UserID, null, null, "");
         }
 
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, bool? LateOnly, String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String QString, String Order, int Page, int PerPage, String InterOPYN, String UserID)
@@ -567,22 +586,16 @@ namespace Popbill.Taxinvoice
         public TISearchResult Search(String CorpNum, MgtKeyType KeyType, String DType, String SDate, String EDate, String[] State, String[] Type, String[] TaxType, String[] IssueType, bool? LateOnly, 
             String TaxRegIDYN, String TaxRegIDType, String TaxRegID, String QString, String Order, int Page, int PerPage, String InterOPYN, String UserID, String[] RegType, String[] CloseDownState, String MgtKey)
         {
-            if (String.IsNullOrEmpty(DType)) throw new PopbillException(-99999999, "검색일자 유형이 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
 
             String uri = "/Taxinvoice/" + KeyType;
             uri += "?DType=" + DType;
             uri += "&SDate=" + SDate;
             uri += "&EDate=" + EDate;
-            uri += "&State=" + String.Join(",", State);
-            uri += "&Type=" + String.Join(",", Type);
-            uri += "&TaxType=" + String.Join(",", TaxType);
 
+            if (State != null) uri += "&State=" + String.Join(",", State);
+            if (Type != null) uri += "&Type=" + String.Join(",", Type);
+            if (TaxType != null) uri += "&TaxType=" + String.Join(",", TaxType);
             if (IssueType != null) uri += "&IssueType=" + String.Join(",", IssueType);
-            if (RegType != null) uri += "&RegType=" + String.Join(",", RegType);
-            if (CloseDownState != null) uri += "&CloseDownState=" + String.Join(",", CloseDownState);
-            
             if (LateOnly != null)
             {
                 if ((bool)LateOnly)
@@ -594,19 +607,18 @@ namespace Popbill.Taxinvoice
                     uri += "&LateOnly=0";
                 }
             }
-
-
-            if (TaxRegIDYN != "") uri += "&TaxRegIDYN=" + TaxRegIDYN;
-            if (MgtKey != "") uri += "&MgtKey=" + MgtKey;
-
-            uri += "&InterOPYN=" + InterOPYN;
-            uri += "&TaxRegIDType=" + TaxRegIDType;
-            uri += "&TaxRegID=" + TaxRegID;
-            uri += "&QString=" + HttpUtility.UrlEncode(QString);
-            uri += "&Order=" + Order;
-            uri += "&Page=" + Page.ToString();
-            uri += "&PerPage=" + PerPage.ToString();
-
+            if (TaxRegIDYN != null && TaxRegIDYN != "") uri += "&TaxRegIDYN=" + TaxRegIDYN;
+            if (TaxRegIDType != null && TaxRegIDType != "") uri += "&TaxRegIDType=" + TaxRegIDType;
+            if (TaxRegID != null && TaxRegID != "") uri += "&TaxRegID=" + TaxRegID;
+            if (QString != null && QString != "") uri += "&QString=" + HttpUtility.UrlEncode(QString);
+            if (Order != null && Order != "") uri += "&Order=" + Order;
+            if (Page > 0) uri += "&Page=" + Page.ToString();
+            if (PerPage > 0 && PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
+            if (InterOPYN != null && InterOPYN != "") uri += "&InterOPYN=" + InterOPYN;
+            if (RegType != null) uri += "&RegType=" + String.Join(",", RegType);
+            if (CloseDownState != null) uri += "&CloseDownState=" + String.Join(",", CloseDownState);
+            if (MgtKey != null && MgtKey != "") uri += "&MgtKey=" + MgtKey;
+            
             return httpget<TISearchResult>(uri, CorpNum, UserID);
         }
 
@@ -642,10 +654,7 @@ namespace Popbill.Taxinvoice
         }
         public Response AssignMgtKey(String CorpNum, MgtKeyType KeyType, String ItemKey, String MgtKey, String UserID)
         {
-            if (String.IsNullOrEmpty(ItemKey)) throw new PopbillException(-99999999, "아이템키(itemKey)가 입력되지 않았습니다.");
-
-            if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "할당할 문서번호가 입력되지 않았습니다.");
-
+            if (String.IsNullOrEmpty(ItemKey)) throw new PopbillException(-99999999, "팝빌에서 할당한 식별번호가 입력되지 않았습니다.");
 
             String PostData = "MgtKey="+MgtKey;
 
@@ -669,8 +678,6 @@ namespace Popbill.Taxinvoice
 
         public Response UpdateEmailConfig(String CorpNum, String EmailType, bool SendYN, String UserID)
         {
-            if (String.IsNullOrEmpty(EmailType)) throw new PopbillException(-99999999, "메일전송 타입이 입력되지 않았습니다.");
-
             String uri = "/Taxinvoice/EmailSendConfig?EmailType="+EmailType+"&SendYN="+SendYN;
 
             return httppost<Response>(uri, CorpNum, UserID, null, null);
@@ -693,8 +700,6 @@ namespace Popbill.Taxinvoice
 
         public Response CheckCertValidation(String corpNum, String userID)
         {
-            if (String.IsNullOrEmpty(corpNum)) throw new PopbillException(-99999999, "연동회원 사업자번호가 입력되지 않았습니다.");
-
             return httpget<Response>("/Taxinvoice/CertCheck", corpNum, userID);
         }
 

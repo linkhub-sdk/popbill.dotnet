@@ -79,8 +79,6 @@ namespace Popbill.Statement
 
         public Response Register(String CorpNum, Statement statement, String UserID)
         {
-            if (statement == null) throw new PopbillException(-99999999, "명세서 정보가 입력되지 않았습니다.");
-
 
             String PostData = toJsonString(statement);
 
@@ -92,9 +90,6 @@ namespace Popbill.Statement
         public Response Update(String CorpNum, int itemCode, String mgtKey, Statement statement, String UserID)
         {
             if (String.IsNullOrEmpty(mgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
-
-            if (statement == null) throw new PopbillException(-99999999, "명세서 정보가 입력되지 않았습니다.");
-
 
             String PostData = toJsonString(statement);
 
@@ -298,6 +293,24 @@ namespace Popbill.Statement
             return httppostFile<Response>("/Statement/" + itemCode.ToString() + "/" + mgtKey + "/Files", CorpNum, UserID, null, files, null);
         }
 
+        public Response AttachFile(String CorpNum, int itemCode, String mgtKey, String DisplayName, String FilePath, String UserID)
+        {
+            if (String.IsNullOrEmpty(mgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(DisplayName)) throw new PopbillException(-99999999, "파일명이 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(FilePath)) throw new PopbillException(-99999999, "파일경로가 입력되지 않았습니다.");
+            
+            List<UploadFile> files = new List<UploadFile>();
+
+            UploadFile file = new UploadFile();
+
+            file.FieldName = "Filedata";
+            file.FileName = DisplayName;
+            file.FileData = new FileStream(FilePath, FileMode.Open, FileAccess.Read);
+
+            files.Add(file);
+
+            return httppostFile<Response>("/Statement/" + itemCode.ToString() + "/" + mgtKey + "/Files", CorpNum, UserID, null, files, null);
+        }
 
         public List<AttachedFile> GetFiles(String CorpNum, int itemCode, String MgtKey)
         {
@@ -310,17 +323,15 @@ namespace Popbill.Statement
         public Response DeleteFile(String CorpNum, int itemCode, String MgtKey, String FileID, String UserID)
         {
             if (String.IsNullOrEmpty(MgtKey)) throw new PopbillException(-99999999, "문서번호가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(FileID)) throw new PopbillException(-99999999, "파일 아이디가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(FileID)) throw new PopbillException(-99999999, "파일 식별번호가 입력되지 않았습니다.");
 
             return httppost<Response>("/Statement/" + itemCode.ToString() + "/" + MgtKey + "/Files/" + FileID, CorpNum, UserID, null, "DELETE");
         }
 
         public String FAXSend(String CorpNum, Statement statement, String SendNum, String ReceiveNum, String UserID)
         {
-            if (statement == null) throw new PopbillException(-99999999, "명세서 정보가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(SendNum)) throw new PopbillException(-99999999, "발신번호가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(ReceiveNum)) throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
-            
+            if (statement == null) throw new PopbillException(-99999999, "전자명세서 정보가 입력되지 않았습니다.");
+                        
             statement.sendNum = SendNum;
             statement.receiveNum = ReceiveNum;
 
@@ -344,7 +355,7 @@ namespace Popbill.Statement
 
         public STMIssueResponse RegistIssue(String CorpNum, Statement statement, String Memo, String UserID, String EmailSubject)
         {
-            if (statement == null) throw new PopbillException(-99999999, "명세서 정보가 입력되지 않았습니다.");
+            if (statement == null) throw new PopbillException(-99999999, "전자명세서 정보가 입력되지 않았습니다.");
 
             statement.memo = Memo;
 
@@ -363,22 +374,21 @@ namespace Popbill.Statement
 
         public DocSearchResult Search(String CorpNum, String DType, String SDate, String EDate, String[] State, int[] ItemCode, String QString, String Order, int Page, int PerPage)
         {
-            if (String.IsNullOrEmpty(DType)) throw new PopbillException(-99999999, "검색일자 유형이 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(SDate)) throw new PopbillException(-99999999, "시작일자가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(EDate)) throw new PopbillException(-99999999, "종료일자가 입력되지 않았습니다.");
-
             String uri = "/Statement/Search";
             uri += "?DType=" + DType;
             uri += "&SDate=" + SDate;
             uri += "&EDate=" + EDate;
-            uri += "&State=" + String.Join(",", State);
             
-            String[] ItemCodeArr = Array.ConvertAll(ItemCode, x => x.ToString());
-            uri += "&ItemCode=" + String.Join(",", ItemCodeArr);
-            uri += "&QString=" + HttpUtility.UrlEncode(QString);
-            uri += "&Order=" + Order;
-            uri += "&Page=" + Page.ToString();
-            uri += "&PerPage=" + PerPage.ToString();
+            if (State != null) uri += "&State=" + String.Join(",", State);
+            if (ItemCode != null)
+            {
+                String[] ItemCodeArr = Array.ConvertAll(ItemCode, x => x.ToString());
+                uri += "&ItemCode=" + String.Join(",", ItemCodeArr);
+            }
+            if (QString != null && QString != "") uri += "&QString=" + HttpUtility.UrlEncode(QString);
+            if (Order != null && Order != "") uri += "&Order=" + Order;
+            if (Page > 0) uri += "&Page=" + Page.ToString();
+            if (PerPage > 0 && PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
 
             return httpget<DocSearchResult>(uri, CorpNum, null);
         }
@@ -429,8 +439,6 @@ namespace Popbill.Statement
 
         public Response UpdateEmailConfig(String CorpNum, String EmailType, bool SendYN, String UserID)
         {
-            if (String.IsNullOrEmpty(EmailType)) throw new PopbillException(-99999999, "메일전송 타입이 입력되지 않았습니다.");
-
             String uri = "/Statement/EmailSendConfig?EmailType=" + EmailType + "&SendYN=" + SendYN;
 
             return httppost<Response>(uri, CorpNum, UserID, null, null);

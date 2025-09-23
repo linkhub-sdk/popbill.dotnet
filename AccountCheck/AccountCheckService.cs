@@ -57,16 +57,6 @@ namespace Popbill.AccountCheck
 
         public AccountCheckInfo CheckAccountInfo(String MemberCorpNum, String BankCode, String AccountNumber, String UserID)
         {
-            if (BankCode == null || BankCode == "")
-            {
-                throw new PopbillException(-99999999, "기관코드가 입력되지 않았습니다");
-            }
-
-            if (AccountNumber == null || AccountNumber == "")
-            {
-                throw new PopbillException(-99999999, "조회할 계좌번호가 입력되지 않았습니다");
-            }
-
             String url = "/EasyFin/AccountCheck";
             url += "?c=" + BankCode;
             url += "&n=" + AccountNumber;
@@ -81,37 +71,6 @@ namespace Popbill.AccountCheck
 
         public DepositorCheckInfo CheckDepositorInfo(String MemberCorpNum, String BankCode, String AccountNumber, String IdentityNumType, String IdentityNum, String UserID)
         {
-            if (BankCode == null || BankCode == "")
-            {
-                throw new PopbillException(-99999999, "기관코드가 입력되지 않았습니다");
-            }
-
-            if (AccountNumber == null || AccountNumber == "")
-            {
-                throw new PopbillException(-99999999, "조회할 계좌번호가 입력되지 않았습니다");
-            }
-
-            if (IdentityNumType == null || IdentityNumType == "")
-            {
-                throw new PopbillException(-99999999, "등록번호 유형이 입력되지 않았습니다.");
-            }
-
-            Regex reg = new Regex(@"^[PB]$");
-            if (reg.IsMatch(IdentityNumType) == false){
-                throw new PopbillException(-99999999, "등록번호 유형이 유효하지 않습니다.");
-            }
-
-            if (IdentityNum == null || IdentityNum == "")
-            {
-                throw new PopbillException(-99999999, "등록번호가 입력되지 않았습니다.");
-            }
-
-            reg = new Regex(@"^\d+$");
-            if (reg.IsMatch(IdentityNum) == false)
-            {
-                throw new PopbillException(-99999999, "등록번호는 숫자만 입력할 수 있습니다.");
-            }
-
             String url = "/EasyFin/DepositorCheck";
             url += "?c=" + BankCode;
             url += "&n=" + AccountNumber;

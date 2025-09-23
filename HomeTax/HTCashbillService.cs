@@ -53,7 +53,7 @@ namespace Popbill.HomeTax
 
         public HTCashbillJobState GetJobState(String CorpNum, String JobID, String UserID)
         {
-            if (JobID.Length != 18) throw new PopbillException(-99999999, "작업아이디(jobID)가 올바르지 않습니다.");
+            if (JobID.Length != 18) throw new PopbillException(-99999999, "작업아이디가 올바르지 않습니다.");
 
             return httpget<HTCashbillJobState>("/HomeTax/Cashbill/" + JobID + "/State", CorpNum, UserID);
         }
@@ -75,15 +75,15 @@ namespace Popbill.HomeTax
 
         public HTCashbillSearch Search(String CorpNum, String JobID, String[] TradeType, String[] TradeUsage, int Page, int PerPage, String Order, String UserID)
         {
-            if (JobID.Length != 18) throw new PopbillException(-99999999, "작업아이디(jobID)가 올바르지 않습니다.");
+            if (JobID.Length != 18) throw new PopbillException(-99999999, "작업아이디가 올바르지 않습니다.");
 
-            String uri = "/HomeTax/Cashbill/" + JobID;
-            uri += "?TradeType=" + String.Join(",", TradeType);
-            uri += "&TradeUsage=" + String.Join(",", TradeUsage);
-
-            uri += "&Page=" + Page.ToString();
-            uri += "&PerPage=" + PerPage.ToString();
-            uri += "&Order=" + Order;
+            String uri = "/HomeTax/Cashbill/" + JobID + "?TradeType=";
+            
+            if (TradeType != null) uri += String.Join(",", TradeType);
+            if (TradeUsage != null) uri += "&TradeUsage=" + String.Join(",", TradeUsage);
+            if (Page > 0) uri += "&Page=" + Page.ToString();
+            if (PerPage > 0 && PerPage <= 1000) uri += "&PerPage=" + PerPage.ToString();
+            if (Order != null && Order != "") uri += "&Order=" + Order;
 
             return httpget<HTCashbillSearch>(uri, CorpNum, UserID);
         }
@@ -95,11 +95,13 @@ namespace Popbill.HomeTax
 
         public HTCashbillSummary Summary(String CorpNum, String JobID, String[] TradeType, String[] TradeUsage, String UserID)
         {
-            if (JobID.Length != 18) throw new PopbillException(-99999999, "작업아이디(jobID)가 올바르지 않습니다.");
+            if (JobID.Length != 18) throw new PopbillException(-99999999, "작업아이디가 올바르지 않습니다.");
 
-            String uri = "/HomeTax/Cashbill/" + JobID + "/Summary";
-            uri += "?TradeType=" + String.Join(",", TradeType);
-            uri += "&TradeUsage=" + String.Join(",", TradeUsage);
+            String uri = "/HomeTax/Cashbill/" + JobID + "/Summary" + "?TradeType=";
+
+
+            if (TradeType != null) uri += String.Join(",", TradeType);
+            if (TradeUsage != null) uri += "&TradeUsage=" + String.Join(",", TradeUsage);
 
             return httpget<HTCashbillSummary>(uri, CorpNum, UserID);
         }
@@ -147,26 +149,26 @@ namespace Popbill.HomeTax
 
         public Response CheckCertValidation(String corpNum, String userID)
         {
-            if (String.IsNullOrEmpty(corpNum)) throw new PopbillException(-99999999, "연동회원 사업자번호가 입력되지 않았습니다.");
-
             return httpget<Response>("/HomeTax/Cashbill/CertCheck", corpNum, userID);
         }
 
         public Response RegistDeptUser(String corpNum, String deptUserID, String deptUserPWD)
         {
-            return RegistDeptUser(corpNum, deptUserID, deptUserPWD, null);
+            return RegistDeptUser(corpNum, deptUserID, deptUserPWD, null, null);
         }
 
-        public Response RegistDeptUser(String corpNum, String deptUserID, String deptUserPWD, String userID)
+        public Response RegistDeptUser(String corpNum, String deptUserID, String deptUserPWD, String UserID)
         {
-            if (String.IsNullOrEmpty(corpNum)) throw new PopbillException(-99999999, "연동회원 사업자번호가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(deptUserID)) throw new PopbillException(-99999999, "홈택스 부서사용자 계정 아이디가 입력되지 않았습니다.");
-            if (String.IsNullOrEmpty(deptUserPWD)) throw new PopbillException(-99999999, "홈택스 부서사용자 계정 비밀번호가 입력되지 않았습니다.");
+            return RegistDeptUser(corpNum, deptUserID, deptUserPWD, null, UserID);
+        }
 
+        public Response RegistDeptUser(String corpNum, String deptUserID, String deptUserPWD, String identityNum, String userID)
+        {
             RegistDeptUserRequest request = new RegistDeptUserRequest();
 
             request.id = deptUserID;
             request.pwd = deptUserPWD;
+            request.secAuth = identityNum;
 
             String PostData = toJsonString(request);
 
@@ -181,8 +183,6 @@ namespace Popbill.HomeTax
 
         public Response CheckDeptUser(String corpNum, String userID)
         {
-            if (String.IsNullOrEmpty(corpNum)) throw new PopbillException(-99999999, "연동회원 사업자번호가 입력되지 않았습니다.");
-
             return httpget<Response>("/HomeTax/Cashbill/DeptUser", corpNum, userID);
         }
 
@@ -193,8 +193,6 @@ namespace Popbill.HomeTax
 
         public Response CheckLoginDeptUser(String corpNum, String userID)
         {
-            if (String.IsNullOrEmpty(corpNum)) throw new PopbillException(-99999999, "연동회원 사업자번호가 입력되지 않았습니다.");
-
             return httpget<Response>("/HomeTax/Cashbill/DeptUser/Check", corpNum, userID);
         }
 
@@ -205,8 +203,6 @@ namespace Popbill.HomeTax
 
         public Response DeleteDeptUser(String corpNum, String userID)
         {
-            if (String.IsNullOrEmpty(corpNum)) throw new PopbillException(-99999999, "연동회원 사업자번호가 입력되지 않았습니다.");
-
             return httppost<Response>("/HomeTax/Cashbill/DeptUser", corpNum, userID, null, "DELETE");
         }
 
@@ -231,6 +227,8 @@ namespace Popbill.HomeTax
             public String id;
             [DataMember]
             public String pwd;
+            [DataMember]
+            public String secAuth;
         }
     }
 
