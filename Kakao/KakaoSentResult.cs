@@ -39,10 +39,10 @@ namespace Popbill.Kakao
         public string cancelCnt;
         [DataMember]
         public string successCnt;
-
         [DataMember]
         public List<KakaoSentDetail> msgs;
         [DataMember]
         public List<KakaoButton> btns;
+
     }
 }

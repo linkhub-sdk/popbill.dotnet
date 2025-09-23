@@ -23,5 +23,7 @@ namespace Popbill.Kakao
         public string interOPRefKey;
         [DataMember]
         public List<KakaoButton> btns;
+        [DataMember]
+        public string emphasizeTitle;
     }
 }

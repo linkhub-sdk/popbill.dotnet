@@ -29,5 +29,9 @@ namespace Popbill.Kakao
         public string state;
         [DataMember]
         public string stateDT;
+        [DataMember]
+        public string emphasizeTitle;
+        [DataMember]
+        public string emphasizeSubTitle;
     }
 }
