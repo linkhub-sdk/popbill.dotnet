@@ -347,12 +347,6 @@ namespace Popbill.Kakao
             return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, receivers, UserID, requestNum, buttons, null);
         }
 
-        // 버튼, UserID, 전송요청번호, 강조표기 타이틀 추가
-        public String SendATS(String CorpNum, String templateCode, String snd, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, String UserID, String requestNum, List<KakaoButton> buttons, String emphasizeTitle)
-        {
-            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, receivers, UserID, requestNum, buttons, emphasizeTitle);
-        }
-
 
         ///////////////////////////////// 알림톡 동보전송 /////////////////////////////////
 
