@@ -241,7 +241,7 @@ namespace Popbill.Kakao
 
             messages.Add(messageObj);
 
-            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, messages, null, null, null, buttons);
+            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, messages, null, null, buttons, null);
         }
 
         // 전송요청번호 추가
@@ -271,7 +271,7 @@ namespace Popbill.Kakao
 
             messages.Add(messageObj);
 
-            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, messages, null, requestNum, null, buttons);
+            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, messages, null, requestNum, buttons, null);
         }
 
         // 버튼, 전송요청번호, 대체문자제목 추가
@@ -287,11 +287,11 @@ namespace Popbill.Kakao
 
             messages.Add(messageObj);
 
-            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, messages, null, requestNum, null, buttons);
+            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, messages, null, requestNum, buttons, null);
         }
 
         // 버튼, 전송요청번호, 대체문자제목, 강조표기 타이틀 추가
-        public String SendATS(String CorpNum, String templateCode, String snd, String altSubject, String altSendType, DateTime? sndDT, String receiveNum, String receiveName, String msg, String altmsg, String requestNum, String emphasizeTitle, List<KakaoButton> buttons)
+        public String SendATS(String CorpNum, String templateCode, String snd, String altSubject, String altSendType, DateTime? sndDT, String receiveNum, String receiveName, String msg, String altmsg, String requestNum, List<KakaoButton> buttons, String emphasizeTitle)
         {
             if (String.IsNullOrEmpty(receiveNum)) throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
 
@@ -306,7 +306,7 @@ namespace Popbill.Kakao
 
             messages.Add(messageObj);
 
-            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, messages, null, requestNum, emphasizeTitle, buttons);
+            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, messages, null, requestNum, buttons, emphasizeTitle);
         }
 
         ///////////////////////////////// 알림톡 대량전송 /////////////////////////////////
@@ -320,7 +320,7 @@ namespace Popbill.Kakao
         // 버튼 추가
         public String SendATS(String CorpNum, String templateCode, String snd, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons)
         {
-            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, receivers, null, null, null, buttons);
+            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, receivers, null, null, buttons, null);
         }
 
         // UserID 추가
@@ -332,7 +332,7 @@ namespace Popbill.Kakao
         // 버튼, UserID 추가
         public String SendATS(String CorpNum, String templateCode, String snd, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, String UserID, List<KakaoButton> buttons)
         {
-            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, receivers, UserID, null, null, buttons);
+            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, receivers, UserID, null, buttons, null);
         }
 
         // UserID, 전송요청번호 추가
@@ -344,13 +344,13 @@ namespace Popbill.Kakao
         // 버튼, UserID, 전송요청번호 추가
         public String SendATS(String CorpNum, String templateCode, String snd, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, String UserID, String requestNum, List<KakaoButton> buttons)
         {
-            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, receivers, UserID, requestNum, null, buttons);
+            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, receivers, UserID, requestNum, buttons, null);
         }
 
         // 버튼, UserID, 전송요청번호, 강조표기 타이틀 추가
-        public String SendATS(String CorpNum, String templateCode, String snd, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, String UserID, String requestNum, String emphasizeTitle, List<KakaoButton> buttons)
+        public String SendATS(String CorpNum, String templateCode, String snd, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, String UserID, String requestNum, List<KakaoButton> buttons, String emphasizeTitle)
         {
-            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, receivers, UserID, requestNum, emphasizeTitle, buttons);
+            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, receivers, UserID, requestNum, buttons, emphasizeTitle);
         }
 
 
@@ -365,7 +365,7 @@ namespace Popbill.Kakao
         // 버튼 추가
         public String SendATS(String CorpNum, String templateCode, String snd, String content, String altContent, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, List<KakaoButton> buttons)
         {
-            return SendATS(CorpNum, templateCode, snd, content, null, altContent, altSendType, sndDT, receivers, null, null, null, buttons);
+            return SendATS(CorpNum, templateCode, snd, content, null, altContent, altSendType, sndDT, receivers, null, null, buttons, null);
         }
 
         // UserID 추가
@@ -377,7 +377,7 @@ namespace Popbill.Kakao
         // 버튼, UserID 추가
         public String SendATS(String CorpNum, String templateCode, String snd, String content, String altContent, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, String UserID, List<KakaoButton> buttons)
         {
-            return SendATS(CorpNum, templateCode, snd, content, null, altContent, altSendType, sndDT, receivers, UserID, null, null, buttons);
+            return SendATS(CorpNum, templateCode, snd, content, null, altContent, altSendType, sndDT, receivers, UserID, null, buttons, null);
         }
 
         // UserID, 전송요청번호 추가
@@ -389,16 +389,16 @@ namespace Popbill.Kakao
         // 버튼, UserID, 전송요청번호 추가
         public String SendATS(String CorpNum, String templateCode, String snd, String content, String altContent, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, String UserID, String requestNum, List<KakaoButton> buttons)
         {
-            return SendATS(CorpNum, templateCode, snd, content, null, altContent, altSendType, sndDT, receivers, UserID, requestNum, null, buttons);
+            return SendATS(CorpNum, templateCode, snd, content, null, altContent, altSendType, sndDT, receivers, UserID, requestNum, buttons, null);
         }
 
-        // 버튼, UserID, 전송요청번호, 강조표기 타이틀 추가
-        public String SendATS(String CorpNum, String templateCode, String snd, String content, String altContent, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, String UserID, String requestNum, String emphasizeTitle, List<KakaoButton> buttons)
+        // 버튼, UserID, 전송요청 번호, 대체문자 제목 추가
+        public String SendATS(String CorpNum, String templateCode, String snd, String content, String altSubject, String altContent, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, String UserID, String requestNum, List<KakaoButton> buttons)
         {
-            return SendATS(CorpNum, templateCode, snd, content, null, altContent, altSendType, sndDT, receivers, UserID, requestNum, emphasizeTitle, buttons);
+            return SendATS(CorpNum, templateCode, snd, content, altSubject, altContent, altSendType, sndDT, receivers, UserID, requestNum, buttons, null);
         }
 
-        public String SendATS(String CorpNum, String templateCode, String snd, String content, String altSubject, String altContent, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, String UserID, String requestNum, String emphasizeTitle, List<KakaoButton> buttons)
+        public String SendATS(String CorpNum, String templateCode, String snd, String content, String altSubject, String altContent, String altSendType, DateTime? sndDT, List<KakaoReceiver> receivers, String UserID, String requestNum, List<KakaoButton> buttons, String emphasizeTitle)
         {  
 
             ATSSendRequest request = new ATSSendRequest();
