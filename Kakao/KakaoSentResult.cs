@@ -43,6 +43,8 @@ namespace Popbill.Kakao
         public List<KakaoSentDetail> msgs;
         [DataMember]
         public List<KakaoButton> btns;
+        [DataMember]
+        public string emphasizeTitle;
 
     }
 }
