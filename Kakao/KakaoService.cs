@@ -309,6 +309,25 @@ namespace Popbill.Kakao
             return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, messages, null, requestNum, buttons, emphasizeTitle);
         }
 
+        // 버튼, 전송요청번호, 대체문자제목, 강조표기 타이틀 추가, UserID 추가
+        public String SendATS(String CorpNum, String templateCode, String snd, String altSubject, String altSendType, DateTime? sndDT, String receiveNum, String receiveName, String msg, String altmsg, String requestNum, List<KakaoButton> buttons, String emphasizeTitle, String userID)
+        {
+            if (String.IsNullOrEmpty(receiveNum)) throw new PopbillException(-99999999, "수신번호가 입력되지 않았습니다.");
+
+            List<KakaoReceiver> messages = new List<KakaoReceiver>();
+            KakaoReceiver messageObj = new KakaoReceiver();
+            messageObj.rcv = receiveNum;
+            messageObj.rcvnm = receiveName;
+            messageObj.msg = msg;
+            messageObj.altsjt = altSubject;
+            messageObj.altmsg = altmsg;
+            messageObj.emphasizeTitle = emphasizeTitle;
+
+            messages.Add(messageObj);
+
+            return SendATS(CorpNum, templateCode, snd, null, null, null, altSendType, sndDT, messages, userID, requestNum, buttons, emphasizeTitle);
+        }
+
         ///////////////////////////////// 알림톡 대량전송 /////////////////////////////////
 
         // 알림톡 대량전송
